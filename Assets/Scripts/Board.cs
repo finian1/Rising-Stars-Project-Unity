@@ -7,8 +7,8 @@ public class Board : MonoBehaviour
     public enum Event { ClickedBlank, ClickedNearDanger, ClickedDanger, Win };
 
     [SerializeField] private Box BoxPrefab;
-    [SerializeField] private int Width = 10;
-    [SerializeField] private int Height = 10;
+    [SerializeField] private int Width = 5;
+    [SerializeField] private int Height = 5;
     [SerializeField] private int NumberOfDangerousBoxes = 10;
 
     //Grid is stored in a 1D array
@@ -207,5 +207,14 @@ public class Board : MonoBehaviour
                 }
             }
         }
+    }
+
+    public int GetWidth()
+    {
+        return Width;
+    }
+    public int GetHeight()
+    {
+        return Height;
     }
 }
