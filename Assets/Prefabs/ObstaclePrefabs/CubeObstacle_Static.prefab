@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1712966243101690328}
   - component: {fileID: 5108142298996279953}
   - component: {fileID: 7187961052562182359}
+  - component: {fileID: 4177433658366498768}
   m_Layer: 0
   m_Name: CubeObstacle_Static
   m_TagString: Untagged
@@ -95,3 +96,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4177433658366498768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5896957768316060419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427ed6db6c51e22478953c05be83dc40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tempPlayer: {fileID: 0}
+  revealSpeed: 5
+  spawnHeightStart: -5.1
+  spawnHeightEnd: 5

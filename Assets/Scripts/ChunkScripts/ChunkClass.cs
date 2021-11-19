@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChunkClass : MonoBehaviour
 {
     public GameObject[] obstacleArray;
+    public GameObject playerObject;
     private int chunkPosX;
     private int chunkPosY;
     private float chunkSizeX = 10.0f;
@@ -14,7 +15,7 @@ public class ChunkClass : MonoBehaviour
     {
         for(int i = 0; i < obstacleArray.Length; i++)
         {
-            obstacleArray[i].GetComponent<ObstacleScript>().BeginReveal();
+            obstacleArray[i].GetComponent<ObstacleScript>().BeginReveal(playerObject);
         }
     }
 

@@ -8,10 +8,11 @@ public class ObstacleScript : MonoBehaviour
     public float revealSpeed;
     public float spawnHeightStart;
     public float spawnHeightEnd;
+    private float depthSoftening = 2.0f;
 
     protected bool isRevealing = false;
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         isRevealing = false;
@@ -20,7 +21,10 @@ public class ObstacleScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        if (isRevealing)
+        {
+            MoveForReveal();
+        }
     }
 
     public void BeginReveal(GameObject playerObject)
@@ -29,19 +33,19 @@ public class ObstacleScript : MonoBehaviour
         //to create a wave effect
         gameObject.SetActive(true);
         float distToPlayer = Vector3.Magnitude(playerObject.transform.position - gameObject.transform.position);
-        transform.position = new Vector3(transform.position.x, spawnHeightStart - distToPlayer, transform.position.z);
+        transform.localPosition = new Vector3(transform.position.x, spawnHeightStart - (distToPlayer/depthSoftening), transform.position.z);
         isRevealing = true;
     }
 
     private void MoveForReveal()
     {
         //Move the object up until it reaches the required height
-        while(transform.position.y < spawnHeightEnd)
+        if(transform.localPosition.y < spawnHeightEnd)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + (revealSpeed * Time.deltaTime), transform.position.z);
-            if (transform.position.y >= spawnHeightEnd)
+            transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + (revealSpeed * Time.deltaTime), transform.localPosition.z);
+            if (transform.localPosition.y >= spawnHeightEnd)
             {
-                transform.position = new Vector3(transform.position.x, spawnHeightEnd, transform.position.z);
+                transform.localPosition = new Vector3(transform.localPosition.x, spawnHeightEnd, transform.localPosition.z);
                 isRevealing = false;
             }
         }
