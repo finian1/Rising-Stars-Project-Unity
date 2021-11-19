@@ -1,0 +1,198 @@
+{
+  "version": "0.8.0-alpha.2",
+  "root": {
+    "pagecontenttype": "PageContentFolder",
+    "name": "New Folder",
+    "contents": [
+      {
+        "pagecontenttype": "PageContentPage",
+        "name": "New Page",
+        "cards": [
+          {
+            "id": 0,
+            "rect": {
+              "X": -608,
+              "Y": -192,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Player "
+            }
+          },
+          {
+            "id": 12,
+            "rect": {
+              "X": -96,
+              "Y": -192,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Enemies"
+            }
+          },
+          {
+            "id": 2,
+            "rect": {
+              "X": -576,
+              "Y": -160,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Movement"
+            }
+          },
+          {
+            "id": 13,
+            "rect": {
+              "X": -64,
+              "Y": -160,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Standard Enemy"
+            }
+          },
+          {
+            "id": 3,
+            "rect": {
+              "X": -544,
+              "Y": -128,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "WASD Movement"
+            }
+          },
+          {
+            "id": 14,
+            "rect": {
+              "X": -64,
+              "Y": -128,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Shooting Enemy"
+            }
+          },
+          {
+            "id": 4,
+            "rect": {
+              "X": -544,
+              "Y": -96,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Jumping"
+            }
+          },
+          {
+            "id": 15,
+            "rect": {
+              "X": -64,
+              "Y": -96,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Spike"
+            }
+          },
+          {
+            "id": 5,
+            "rect": {
+              "X": -544,
+              "Y": -64,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Sprinting"
+            }
+          },
+          {
+            "id": 16,
+            "rect": {
+              "X": -64,
+              "Y": -64,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Beamer"
+            }
+          },
+          {
+            "id": 6,
+            "rect": {
+              "X": -576,
+              "Y": -32,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Abilities"
+            }
+          },
+          {
+            "id": 7,
+            "rect": {
+              "X": -544,
+              "Y": 0,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Teleportation"
+            }
+          },
+          {
+            "id": 8,
+            "rect": {
+              "X": -544,
+              "Y": 32,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Grenade Launcher"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "savedimages": {}
+}

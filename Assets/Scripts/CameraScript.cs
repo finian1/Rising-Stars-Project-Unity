@@ -7,6 +7,8 @@ public class CameraScript : MonoBehaviour
 
     public Transform m_cameraMapPosition;
     public GameObject m_playerGameObject;
+
+
     // Start is called before the first frame update
     void Start()
     {
