@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraScript : MonoBehaviour
+public class Chunk_Cubes : ChunkClass
 {
-
-    public Transform m_cameraMapPosition;
-    public GameObject m_playerGameObject;
-    
-
+    public GameObject cubeObstacle;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +16,4 @@ public class CameraScript : MonoBehaviour
     {
         
     }
-
-    
-
 }

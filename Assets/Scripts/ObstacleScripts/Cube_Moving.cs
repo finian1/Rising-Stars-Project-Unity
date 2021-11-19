@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraScript : MonoBehaviour
+public class Cube_Moving : ObstacleScript
 {
-
-    public Transform m_cameraMapPosition;
-    public GameObject m_playerGameObject;
-    
-
+    bool moving = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +12,11 @@ public class CameraScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (!isRevealing)
+        {
+
+        }
     }
-
-    
-
 }

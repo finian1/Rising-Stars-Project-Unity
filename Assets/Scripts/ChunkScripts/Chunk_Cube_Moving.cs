@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraScript : MonoBehaviour
+public class Chunk_Cube_Moving : Chunk_Cubes
 {
-
-    public Transform m_cameraMapPosition;
-    public GameObject m_playerGameObject;
+    public new GameObject cubeObstacle;
+    public float movementSpeed = 1.0f;
+    public float maxMovementVariation = 5.0f;
     
-
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +19,4 @@ public class CameraScript : MonoBehaviour
     {
         
     }
-
-    
-
 }

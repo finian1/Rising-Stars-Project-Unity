@@ -19,7 +19,8 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Player "
+              "description": "Player ",
+              "filepath": ""
             }
           },
           {
@@ -33,7 +34,23 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Enemies"
+              "description": "Enemies",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 13,
+            "rect": {
+              "X": 224,
+              "Y": -192,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Basic Terrain",
+              "filepath": ""
             }
           },
           {
@@ -47,7 +64,8 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Movement"
+              "description": "Movement",
+              "filepath": ""
             }
           },
           {
@@ -61,7 +79,23 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Standard Enemy"
+              "description": "Standard Enemy",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 14,
+            "rect": {
+              "X": 256,
+              "Y": -160,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Generate Chunks",
+              "filepath": ""
             }
           },
           {
@@ -75,7 +109,8 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "WASD Movement"
+              "description": "WASD Movement",
+              "filepath": ""
             }
           },
           {
@@ -89,7 +124,23 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Shooting Enemy"
+              "description": "Shooting Enemy",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 15,
+            "rect": {
+              "X": 288,
+              "Y": -128,
+              "W": 288,
+              "H": 96
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Ensure each cell has the correct number of chunks",
+              "filepath": ""
             }
           },
           {
@@ -103,7 +154,8 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Jumping"
+              "description": "Jumping",
+              "filepath": ""
             }
           },
           {
@@ -117,7 +169,8 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Spike"
+              "description": "Spike",
+              "filepath": ""
             }
           },
           {
@@ -131,7 +184,8 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Sprinting"
+              "description": "Sprinting",
+              "filepath": ""
             }
           },
           {
@@ -145,7 +199,8 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Beamer"
+              "description": "Beamer",
+              "filepath": ""
             }
           },
           {
@@ -159,7 +214,23 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Abilities"
+              "description": "Abilities",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 16,
+            "rect": {
+              "X": 288,
+              "Y": -32,
+              "W": 288,
+              "H": 64
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Number of cells can be changed",
+              "filepath": ""
             }
           },
           {
@@ -173,7 +244,8 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Teleportation"
+              "description": "Teleportation",
+              "filepath": ""
             }
           },
           {
@@ -187,7 +259,113 @@
             "contents": "Checkbox",
             "properties": {
               "checked": false,
-              "description": "Grenade Launcher"
+              "description": "Grenade Launcher",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 17,
+            "rect": {
+              "X": 288,
+              "Y": 32,
+              "W": 288,
+              "H": 96
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Number of chunks per cell can be changed",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 18,
+            "rect": {
+              "X": 256,
+              "Y": 128,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Generate Obstacles",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 19,
+            "rect": {
+              "X": 288,
+              "Y": 160,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Cubic",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 20,
+            "rect": {
+              "X": 288,
+              "Y": 192,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Cubic-moving",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 21,
+            "rect": {
+              "X": 288,
+              "Y": 224,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Room",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 22,
+            "rect": {
+              "X": 288,
+              "Y": 256,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Plain",
+              "filepath": ""
+            }
+          },
+          {
+            "id": 23,
+            "rect": {
+              "X": 288,
+              "Y": 288,
+              "W": 288,
+              "H": 32
+            },
+            "contents": "Checkbox",
+            "properties": {
+              "checked": false,
+              "description": "Void",
+              "filepath": ""
             }
           }
         ]
