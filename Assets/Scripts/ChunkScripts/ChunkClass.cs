@@ -6,6 +6,7 @@ public class ChunkClass : MonoBehaviour
 {
     public GameObject[] obstacleArray;
     public GameObject playerObject;
+    private int cellID;
     private int chunkPosX;
     private int chunkPosY;
     private float chunkSizeX = 10.0f;

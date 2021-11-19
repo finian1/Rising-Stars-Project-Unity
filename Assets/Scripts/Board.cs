@@ -11,6 +11,7 @@ public class Board : MonoBehaviour
     [SerializeField] private int Height = 10;
     [SerializeField] private int NumberOfDangerousBoxes = 10;
 
+    //Grid is stored in a 1D array
     private Box[] _grid;
     private Vector2Int[] _neighbours;
     private RectTransform _rect;

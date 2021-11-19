@@ -8,6 +8,7 @@ public class ObstacleScript : MonoBehaviour
     public float revealSpeed;
     public float spawnHeightStart;
     public float spawnHeightEnd;
+    public float obstacleSize = 1.0f;
     private float depthSoftening = 2.0f;
 
     protected bool isRevealing = false;
