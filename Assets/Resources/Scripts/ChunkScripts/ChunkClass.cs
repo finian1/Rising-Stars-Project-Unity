@@ -22,6 +22,7 @@ public class ChunkClass : MonoBehaviour
     protected float chunkSizeY = 10.0f;
 
 
+
     public virtual void SpawnObjects() {
 
         

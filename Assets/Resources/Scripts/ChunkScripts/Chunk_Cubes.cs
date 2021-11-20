@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Chunk_Cubes : ChunkClass
 {
-    private GameObject cubeObstacle;
+    public GameObject cubeObstacle;
     private ObstacleScript obstacleScript;
     private float cubeSize = 2.5f;
     private int numOfCubesX;

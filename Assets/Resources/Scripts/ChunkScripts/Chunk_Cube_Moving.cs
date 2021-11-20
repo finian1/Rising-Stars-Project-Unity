@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Chunk_Cube_Moving : Chunk_Cubes
 {
-    public new GameObject cubeObstacle;
-    public float movementSpeed = 1.0f;
-    public float maxMovementVariation = 5.0f;
+    private GameObject movingCubeObstacle;
+    private float movementSpeed = 1.0f;
+    private float maxMovementVariation = 5.0f;
     
     // Start is called before the first frame update
     void Start()

@@ -13,7 +13,8 @@ public class ChunkController : MonoBehaviour
         new Chunk_Cubes(),
         new Chunk_Cube_Moving(),
         new Chunk_Plain(),
-        new Chunk_Room()
+        new Chunk_Room(),
+        new Chunk_Void()
     };
     private Cell[] cells;
     public GameObject chunkBase;
