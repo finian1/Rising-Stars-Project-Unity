@@ -11,13 +11,13 @@ public class ObstacleScript : MonoBehaviour
     public float obstacleSize = 1.0f;
     private float depthSoftening = 2.0f;
 
-    protected bool isRevealing = false;
+    [SerializeField]protected bool isRevealing = false;
 
     
     void Start()
     {
-        isRevealing = false;
-        gameObject.SetActive(false);
+        //isRevealing = false;
+        //gameObject.SetActive(false);
     }
 
     void FixedUpdate()
@@ -36,6 +36,11 @@ public class ObstacleScript : MonoBehaviour
         float distToPlayer = Vector3.Magnitude(playerObject.transform.position - gameObject.transform.position);
         transform.localPosition = new Vector3(transform.position.x, spawnHeightStart - (distToPlayer/depthSoftening), transform.position.z);
         isRevealing = true;
+    }
+
+    public void SetFinalHeight(float val)
+    {
+        spawnHeightEnd = val;
     }
 
     private void MoveForReveal()

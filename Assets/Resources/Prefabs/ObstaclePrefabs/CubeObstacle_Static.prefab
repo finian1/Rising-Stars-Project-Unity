@@ -108,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427ed6db6c51e22478953c05be83dc40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempPlayer: {fileID: 0}
-  revealSpeed: 5
+  revealSpeed: 10
   spawnHeightStart: -5.1
   spawnHeightEnd: 5
+  obstacleSize: 1
+  isRevealing: 0
