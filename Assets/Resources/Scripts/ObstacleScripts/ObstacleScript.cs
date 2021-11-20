@@ -5,11 +5,11 @@ using UnityEngine;
 public class ObstacleScript : MonoBehaviour
 {
 
-    public float revealSpeed;
+    private float revealSpeed = 50.0f;
     public float spawnHeightStart;
     public float spawnHeightEnd;
-    public float obstacleSize = 1.0f;
-    private float depthSoftening = 2.0f;
+    public float obstacleSize = 2.5f;
+    private float depthSoftening = 0.75f;
 
     [SerializeField]protected bool isRevealing = false;
 
@@ -34,7 +34,7 @@ public class ObstacleScript : MonoBehaviour
         //to create a wave effect
         gameObject.SetActive(true);
         float distToPlayer = Vector3.Magnitude(playerObject.transform.position - gameObject.transform.position);
-        transform.localPosition = new Vector3(transform.position.x, spawnHeightStart - (distToPlayer/depthSoftening), transform.position.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, spawnHeightStart - (distToPlayer/depthSoftening), transform.localPosition.z);
         isRevealing = true;
     }
 

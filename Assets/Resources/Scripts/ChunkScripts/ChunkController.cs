@@ -11,9 +11,9 @@ public class ChunkController : MonoBehaviour
     private ChunkClass[] chunkTypes =
     {
         new Chunk_Cubes(),
-        //new Chunk_Cube_Moving(),
-        //new Chunk_Plain(),
-        //new Chunk_Room()
+        new Chunk_Cube_Moving(),
+        new Chunk_Plain(),
+        new Chunk_Room()
     };
     private Cell[] cells;
     public GameObject chunkBase;
@@ -82,7 +82,7 @@ public class ChunkController : MonoBehaviour
 }
 
 
-public class Cell
+public class Cell : MonoBehaviour
 {
     private float triggerHeight = 20.0f;
     private int cellID;
@@ -136,6 +136,7 @@ public class Cell
 
                 chunkClass.SpawnObjects();
                 chunkClass.RevealObstacles();
+                cellTrigger.SetActive(false);
             }
         }
     }

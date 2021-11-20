@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5896957768316060419}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 10, z: 1}
+  m_LocalScale: {x: 2.5, y: 7, z: 2.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c77f6d214015c2b4f933a0762d978e2a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,8 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427ed6db6c51e22478953c05be83dc40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  revealSpeed: 10
   spawnHeightStart: -5.1
-  spawnHeightEnd: 5
-  obstacleSize: 1
+  spawnHeightEnd: 1
+  obstacleSize: 2.5
   isRevealing: 0

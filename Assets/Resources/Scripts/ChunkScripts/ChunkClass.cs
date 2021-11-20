@@ -29,12 +29,15 @@ public class ChunkClass : MonoBehaviour
     }
     public void RevealObstacles()
     {
-        for(int i = 0; i < obstacleArray.Length; i++)
+        if (obstacleArray != null)
         {
-            if (obstacleArray[i] != null)
+            for (int i = 0; i < obstacleArray.Length; i++)
             {
-                
-                obstacleArray[i].GetComponent<ObstacleScript>().BeginReveal(playerObject);
+                if (obstacleArray[i] != null)
+                {
+
+                    obstacleArray[i].GetComponent<ObstacleScript>().BeginReveal(playerObject);
+                }
             }
         }
     }
