@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Chunk_Cubes : ChunkClass
 {
-    public GameObject cubeObstacle;
+    private GameObject cubeObstacle;
     private ObstacleScript obstacleScript;
     private float cubeSize = 2.5f;
     private int numOfCubesX;
@@ -23,7 +23,6 @@ public class Chunk_Cubes : ChunkClass
         //This isn't working just yet
         cubeObstacle = Resources.Load("Prefabs/ObstaclePrefabs/CubeObstacle_Static", typeof(GameObject)) as GameObject;
         obstacleScript = cubeObstacle.GetComponent<ObstacleScript>();
-        cubeSize = cubeObstacle.GetComponent<ObstacleScript>().obstacleSize;
         numOfCubesX = (int)(chunkSizeX / cubeSize);
         numOfCubesY = (int)(chunkSizeY / cubeSize);
 

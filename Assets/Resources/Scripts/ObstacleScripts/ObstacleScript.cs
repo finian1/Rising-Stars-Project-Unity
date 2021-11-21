@@ -8,7 +8,6 @@ public class ObstacleScript : MonoBehaviour
     private float revealSpeed = 50.0f;
     public float spawnHeightStart;
     public float spawnHeightEnd;
-    public float obstacleSize = 2.5f;
     private float depthSoftening = 0.75f;
 
     [SerializeField]protected bool isRevealing = false;
