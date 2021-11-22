@@ -16,6 +16,8 @@ public class Board : MonoBehaviour
     private Vector2Int[] _neighbours;
     private RectTransform _rect;
     private Action<Event> _clickEvent;
+    private Vector3 boardTopRightPosition;
+    private Vector3 boardBottomLeftPosition;
 
     public void Setup(Action<Event> onClickEvent)
     {
@@ -108,6 +110,11 @@ public class Board : MonoBehaviour
                 gridBoxTransform.anchoredPosition = new Vector2( startPosition.x + (boxRect.sizeDelta.x * column), 0.0f);
             }
         }
+
+        boardTopRightPosition = new Vector3(_grid[Width - 1].transform.position.x + (boxRect.sizeDelta.x*transform.parent.lossyScale.x)/2, _grid[Width - 1].transform.position.y + (boxRect.sizeDelta.x * transform.parent.lossyScale.y)/2, 0.0f);
+        boardBottomLeftPosition = new Vector3(_grid[Width * Height - Width].transform.position.x - (boxRect.sizeDelta.x * transform.parent.lossyScale.x) / 2, _grid[Width * Height - Width].transform.position.y - (boxRect.sizeDelta.x * transform.parent.lossyScale.y) / 2, 0.0f);
+
+
 
         // Sanity check... Failed
         for(int count = 0; count < _grid.Length; ++count)
@@ -216,5 +223,33 @@ public class Board : MonoBehaviour
     public int GetHeight()
     {
         return Height;
+    }
+
+    public bool CheckIfDanger(int index)
+    {
+        return _grid[index].IsDangerous;
+    }
+}
+
+static public class RectTransformExt
+{
+    /// <summary>
+    /// Converts RectTransform.rect's local coordinates to world space
+    /// Usage example RectTransformExt.GetWorldRect(myRect, Vector2.one);
+    /// </summary>
+    /// <returns>The world rect.</returns>
+    /// <param name="rt">RectangleTransform we want to convert to world coordinates.</param>
+    /// <param name="scale">Optional scale pulled from the CanvasScaler. Default to using Vector2.one.</param>
+    static public Rect GetWorldRect(RectTransform rt, Vector2 scale)
+    {
+        // Convert the rectangle to world corners and grab the top left
+        Vector3[] corners = new Vector3[4];
+        rt.GetWorldCorners(corners);
+        Vector3 topLeft = corners[0];
+
+        // Rescale the size appropriately based on the current Canvas scale
+        Vector2 scaledSize = new Vector2(scale.x * rt.rect.size.x, scale.y * rt.rect.size.y);
+
+        return new Rect(topLeft, scaledSize);
     }
 }

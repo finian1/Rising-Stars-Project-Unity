@@ -20,6 +20,7 @@ public class ChunkController : MonoBehaviour
     public GameObject chunkBase;
     public GameObject[] chunkObjects;
     public GameObject playerObject;
+    public Board gameplayBoard;
 
     public void PopulateArrays(int widthX, int widthY)
     {
@@ -38,8 +39,9 @@ public class ChunkController : MonoBehaviour
                 cellRow++;
             }
             cells[i].SetID(i);
+            cells[i].SetBoard(gameplayBoard);
             cells[i].SetController(this);
-            cells[i].SetStartPosition(cellColumn * chunksPerCellX * chunkSizeX, cellRow * chunksPerCellY * chunkSizeY);
+            cells[i].SetStartPosition(-cellColumn * chunksPerCellX * chunkSizeX, cellRow * chunksPerCellY * chunkSizeY);
 
             //Set chunk positions
             cells[i].cellChunks = new GameObject[chunksPerCellX * chunksPerCellY];
@@ -91,6 +93,7 @@ public class Cell : MonoBehaviour
     private float cellStartPosZ;
     private ChunkController controller;
     private GameObject cellTrigger;
+    private Board gameplayBoard;
     public GameObject[] cellChunks;
 
     public float GetX()
@@ -109,6 +112,11 @@ public class Cell : MonoBehaviour
     {
         controller = cont;
     }
+    public void SetBoard(Board gameBoard)
+    {
+        gameplayBoard = gameBoard;
+    }
+
     public void SetStartPosition(float X, float Z)
     {
         cellStartPosX = X;
@@ -131,11 +139,16 @@ public class Cell : MonoBehaviour
     public void TriggerEntered(Collider other)
     {        if (other.CompareTag("Player"))
         {
+            bool isDanger = gameplayBoard.CheckIfDanger(cellID);
             foreach (GameObject chunk in cellChunks)
             {
                 ChunkClass chunkClass = chunk.GetComponent<ChunkClass>();
 
                 chunkClass.SpawnObjects();
+                if (isDanger)
+                {
+                    chunkClass.SetObstacleColours(new Color(1, 0, 0));
+                }
                 chunkClass.RevealObstacles();
                 cellTrigger.SetActive(false);
             }
