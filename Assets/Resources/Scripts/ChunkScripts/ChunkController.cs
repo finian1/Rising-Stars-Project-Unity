@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class ChunkController : MonoBehaviour
@@ -21,6 +22,30 @@ public class ChunkController : MonoBehaviour
     public GameObject[] chunkObjects;
     public GameObject playerObject;
     public Board gameplayBoard;
+    public Vector3 FPSTopRightPosition;
+    public Vector3 FPSBottomLeftPosition;
+    public Vector3 playerPositionOnMinimap;
+    public GameObject testMarker;
+
+    //Variables to get scale from map to board
+    private float XMapSize;
+    private float YMapSize;
+    private float scaleX;
+    private float scaleY;
+
+    private void FixedUpdate()
+    {
+        UpdateMinimapPosition();
+    }
+
+    private void UpdateMinimapPosition()
+    {
+        Vector3 playerPos = playerObject.transform.position - FPSBottomLeftPosition;
+        playerPos = new Vector3(playerPos.x * scaleX, 0, playerPos.z * scaleY);
+        Debug.Log(playerPos);
+        playerPositionOnMinimap = new Vector3(gameplayBoard.boardBottomLeftPosition.x + playerPos.x, gameplayBoard.boardBottomLeftPosition.y + playerPos.z, -5.0f);
+        testMarker.transform.position = playerPositionOnMinimap;
+    }
 
     public void PopulateArrays(int widthX, int widthY)
     {
@@ -60,10 +85,25 @@ public class ChunkController : MonoBehaviour
                 cells[i].cellChunks[j] = Instantiate(chunkBase, transform);
                 cells[i].cellChunks[j].AddComponent(chunkTypes[Random.Range(0, chunkTypes.Length)].GetType());
                 cells[i].cellChunks[j].GetComponent<ChunkClass>().playerObject = playerObject;
-                cells[i].cellChunks[j].transform.localPosition = new Vector3(cells[i].GetX() + chunkColumn * chunkSizeX, 0,cells[i].GetY() + chunkRow * chunkSizeY);
+                cells[i].cellChunks[j].transform.localPosition = new Vector3(cells[i].GetStartX() + chunkColumn * chunkSizeX, 0,cells[i].GetStartY() + chunkRow * chunkSizeY);
                 
             }
         }
+ 
+        FPSTopRightPosition = new Vector3(cells[widthX - 1].GetPositionX() + (chunkSizeX * chunksPerCellX) / 2, cells[widthX - 1].GetPositionY(), cells[widthX - 1].GetPositionZ() + (chunkSizeY * chunksPerCellY) / 2);
+        FPSBottomLeftPosition = new Vector3(cells[widthX * widthY - widthX].GetPositionX() - (chunkSizeX * chunksPerCellX) / 2, cells[widthX * widthY - widthX].GetPositionY(), cells[widthX * widthY - widthX].GetPositionZ() - (chunkSizeY * chunksPerCellY) / 2);
+        XMapSize = Mathf.Abs(FPSTopRightPosition.x - FPSBottomLeftPosition.x);
+        YMapSize = Mathf.Abs(FPSTopRightPosition.z - FPSBottomLeftPosition.z);
+        scaleX = gameplayBoard.XBoardSize / XMapSize;
+        scaleY = gameplayBoard.YBoardSize / YMapSize;
+        Debug.Log(scaleX);
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(FPSTopRightPosition, 1);
+        Gizmos.DrawSphere(FPSBottomLeftPosition, 1);
     }
 
     public float GetChunkSizeX()
@@ -96,14 +136,30 @@ public class Cell : MonoBehaviour
     private Board gameplayBoard;
     public GameObject[] cellChunks;
 
-    public float GetX()
+    public float GetStartX()
     {
         return cellStartPosX;
     }
-    public float GetY()
+
+    public float GetPositionX()
+    {
+        return cellTrigger.transform.position.x;
+    }
+    public float GetStartY()
     {
         return cellStartPosZ;
     }
+
+    public float GetPositionY()
+    {
+        return cellTrigger.transform.position.y;
+    }
+
+    public float GetPositionZ()
+    {
+        return cellTrigger.transform.position.z;
+    }
+
     public void SetID(int id)
     {
         cellID = id;

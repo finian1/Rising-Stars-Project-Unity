@@ -16,8 +16,11 @@ public class Board : MonoBehaviour
     private Vector2Int[] _neighbours;
     private RectTransform _rect;
     private Action<Event> _clickEvent;
-    private Vector3 boardTopRightPosition;
-    private Vector3 boardBottomLeftPosition;
+    public Vector3 boardTopRightPosition;
+    public Vector3 boardBottomLeftPosition;
+
+    public float XBoardSize;
+    public float YBoardSize;
 
     public void Setup(Action<Event> onClickEvent)
     {
@@ -35,6 +38,12 @@ public class Board : MonoBehaviour
                 _grid[index].StandDown();
             }
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(boardTopRightPosition, 1);
+        Gizmos.DrawSphere(boardBottomLeftPosition, 1);
     }
 
     public void RechargeBoxes()
@@ -111,17 +120,20 @@ public class Board : MonoBehaviour
             }
         }
 
-        boardTopRightPosition = new Vector3(_grid[Width - 1].transform.position.x + (boxRect.sizeDelta.x*transform.parent.lossyScale.x)/2, _grid[Width - 1].transform.position.y + (boxRect.sizeDelta.x * transform.parent.lossyScale.y)/2, 0.0f);
-        boardBottomLeftPosition = new Vector3(_grid[Width * Height - Width].transform.position.x - (boxRect.sizeDelta.x * transform.parent.lossyScale.x) / 2, _grid[Width * Height - Width].transform.position.y - (boxRect.sizeDelta.x * transform.parent.lossyScale.y) / 2, 0.0f);
-
+        boardTopRightPosition = new Vector3(_grid[Width - 1].transform.position.x + (boxRect.sizeDelta.x*transform.parent.lossyScale.x)/2, _grid[Width - 1].transform.position.y + (boxRect.sizeDelta.x * transform.parent.lossyScale.y)/2, _grid[Width - 1].transform.position.z);
+        boardBottomLeftPosition = new Vector3(_grid[Width * Height - Width].transform.position.x - (boxRect.sizeDelta.x * transform.parent.lossyScale.x) / 2, _grid[Width * Height - Width].transform.position.y - (boxRect.sizeDelta.x * transform.parent.lossyScale.y) / 2, _grid[Width * Height - Width].transform.position.z);
+        XBoardSize = Mathf.Abs(boardTopRightPosition.x - boardBottomLeftPosition.x);
+        YBoardSize = Mathf.Abs(boardTopRightPosition.y - boardBottomLeftPosition.y);
 
 
         // Sanity check... Failed
-        for(int count = 0; count < _grid.Length; ++count)
+        for (int count = 0; count < _grid.Length; ++count)
         {
             Debug.LogFormat("Count: {0}  ID: {1}  Row: {2}  Column: {3}", count, _grid[count].ID, _grid[count].RowIndex, _grid[count].ColumnIndex);
         }
     }
+
+    
 
     private int CountDangerNearby(List<bool> danger, int index)
     {
@@ -231,25 +243,4 @@ public class Board : MonoBehaviour
     }
 }
 
-static public class RectTransformExt
-{
-    /// <summary>
-    /// Converts RectTransform.rect's local coordinates to world space
-    /// Usage example RectTransformExt.GetWorldRect(myRect, Vector2.one);
-    /// </summary>
-    /// <returns>The world rect.</returns>
-    /// <param name="rt">RectangleTransform we want to convert to world coordinates.</param>
-    /// <param name="scale">Optional scale pulled from the CanvasScaler. Default to using Vector2.one.</param>
-    static public Rect GetWorldRect(RectTransform rt, Vector2 scale)
-    {
-        // Convert the rectangle to world corners and grab the top left
-        Vector3[] corners = new Vector3[4];
-        rt.GetWorldCorners(corners);
-        Vector3 topLeft = corners[0];
 
-        // Rescale the size appropriately based on the current Canvas scale
-        Vector2 scaledSize = new Vector2(scale.x * rt.rect.size.x, scale.y * rt.rect.size.y);
-
-        return new Rect(topLeft, scaledSize);
-    }
-}
