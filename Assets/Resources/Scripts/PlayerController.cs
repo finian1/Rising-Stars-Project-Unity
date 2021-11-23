@@ -129,7 +129,8 @@ public class PlayerController : MonoBehaviour
             directionVector += transform.right * Input.GetAxisRaw("Horizontal");
         }
         directionVector.Normalize();
-        rb.velocity = new Vector3(directionVector.x * Time.deltaTime * movementSpeed, rb.velocity.y, directionVector.z * Time.deltaTime * movementSpeed);
+        rb.MovePosition(transform.position + directionVector * Time.deltaTime * movementSpeed);
+        //rb.velocity = new Vector3(directionVector.x * Time.deltaTime * movementSpeed, rb.velocity.y, directionVector.z * Time.deltaTime * movementSpeed);
 
     }
 

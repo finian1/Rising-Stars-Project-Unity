@@ -2039,8 +2039,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1702373777}
   maxVerticalRotation: 30
-  rotationSpeed: 360
-  movementSpeed: 500
+  rotationSpeed: 90
+  movementSpeed: 10
   jumpForce: 10
   maxCameraMovement: 90
   allowCameraMovement: 1
