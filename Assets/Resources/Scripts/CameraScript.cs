@@ -5,8 +5,8 @@ using UnityEngine;
 public class CameraScript : MonoBehaviour
 {
 
-    public Transform m_cameraMapPosition;
-    public GameObject m_playerGameObject;
+    public Transform cameraMapPosition;
+    public GameObject playerGameObject;
     
 
     // Start is called before the first frame update

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3586675099207430467}
   - component: {fileID: 1864381149159084981}
   - component: {fileID: 8873482074783675296}
+  - component: {fileID: 8043829898217702392}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -89,12 +90,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39257931213385338}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &8043829898217702392
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39257931213385338}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &655972219378140079
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,6 +124,7 @@ GameObject:
   - component: {fileID: 6010820105910246067}
   - component: {fileID: 8513219140285405841}
   - component: {fileID: 8746217571380644055}
+  - component: {fileID: 8057642037116787137}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -184,12 +202,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655972219378140079}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &8057642037116787137
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655972219378140079}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3079033482017065979
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,6 +236,7 @@ GameObject:
   - component: {fileID: 9097179761388570212}
   - component: {fileID: 4003818226921058452}
   - component: {fileID: 6559359475420080338}
+  - component: {fileID: 9155511888236512790}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -279,12 +314,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3079033482017065979}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &9155511888236512790
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3079033482017065979}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3098102362247948276
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,6 +348,7 @@ GameObject:
   - component: {fileID: 3525137411970082274}
   - component: {fileID: 9137280412430179892}
   - component: {fileID: 4819453944946904031}
+  - component: {fileID: 8360912944508937037}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -374,12 +426,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3098102362247948276}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &8360912944508937037
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3098102362247948276}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &3710030406270831646
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,6 +460,7 @@ GameObject:
   - component: {fileID: 254385405357794687}
   - component: {fileID: 3855100467527949203}
   - component: {fileID: 673606564754793235}
+  - component: {fileID: 4481866237279469220}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -469,12 +538,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3710030406270831646}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &4481866237279469220
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3710030406270831646}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &4551486361397369422
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +572,7 @@ GameObject:
   - component: {fileID: 1934235352088597424}
   - component: {fileID: 8581390715350499575}
   - component: {fileID: 1691242298314591588}
+  - component: {fileID: 3937589938565448951}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -564,12 +650,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4551486361397369422}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &3937589938565448951
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4551486361397369422}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &5108939882396092870
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,6 +684,7 @@ GameObject:
   - component: {fileID: 6643936293914470178}
   - component: {fileID: 1928669176484008295}
   - component: {fileID: 4457969168155550264}
+  - component: {fileID: 6058571480843586630}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -659,12 +762,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5108939882396092870}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &6058571480843586630
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108939882396092870}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &6124035678258708538
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +796,7 @@ GameObject:
   - component: {fileID: 7390990256652837506}
   - component: {fileID: 697245711060205261}
   - component: {fileID: 5052945772912373595}
+  - component: {fileID: 5832155498163216045}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -754,12 +874,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6124035678258708538}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5832155498163216045
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6124035678258708538}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8006521260603364254
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,6 +908,7 @@ GameObject:
   - component: {fileID: 6201896443706825227}
   - component: {fileID: 3708421272967862242}
   - component: {fileID: 3923773964964673638}
+  - component: {fileID: 2670320762019362698}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -849,12 +986,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8006521260603364254}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2670320762019362698
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8006521260603364254}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8494851601727682932
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +1020,7 @@ GameObject:
   - component: {fileID: 3146366372011312851}
   - component: {fileID: 6146609100458049003}
   - component: {fileID: 6895280017118248735}
+  - component: {fileID: 3344605748887107363}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -944,12 +1098,28 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8494851601727682932}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: ffe274d0283bc0f42a517ad15718d92d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &3344605748887107363
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8494851601727682932}
+  serializedVersion: 2
+  m_Mass: 10000
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &8846806365674419570
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,6 +1130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3793647641402635708}
   - component: {fileID: -8800781635290914627}
+  - component: {fileID: 5115288843902598576}
   m_Layer: 0
   m_Name: RoomPrefab
   m_TagString: Untagged
@@ -1006,3 +1177,19 @@ MonoBehaviour:
   spawnHeightStart: -16
   spawnHeightEnd: 0
   isRevealing: 0
+--- !u!54 &5115288843902598576
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8846806365674419570}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0

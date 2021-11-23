@@ -3,6 +3,7 @@ using UnityEngine;
 public class Game : MonoBehaviour
 {
     public ChunkController chunkController;
+    public GameObject playerObject;
     private Board _board;
     private UI _ui;
     private double _gameStartTime;
@@ -15,6 +16,7 @@ public class Game : MonoBehaviour
             //If board is initialized
             _board.RechargeBoxes();
             chunkController.PopulateArrays(_board.GetWidth(), _board.GetHeight());
+            playerObject.SetActive(true);
         }
 
         if (_ui != null)
