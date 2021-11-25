@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float maxCameraMovement;
 
-    public bool allowCameraMovement = true;
+    public bool allowPlayerMovement = true;
 
     private Rigidbody rb;
     private CharacterController characterController;
@@ -46,6 +46,36 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        if (allowPlayerMovement)
+        {
+            UpdatePlayer();
+        }
+    }
+
+    void FixedUpdate()
+    {
+        
+        if (allowPlayerMovement)
+        {
+            //Jump();
+            //UpdatePlayer();
+            MoveCamera();
+            
+            //MovePlayer();
+            //characterController.Move(playerVelocity * Time.deltaTime);
+            /*if (Input.GetKey(KeyCode.B))
+            {
+                allowCameraMovement = false;
+                bookUI.SetActive(true);
+                bookUI.GetComponent<UIController>().SetPage();
+                Cursor.lockState = CursorLockMode.None;
+            }*/
+
+        }
+    }
+
+    void UpdatePlayer()
+    {
         groundedPlayer = characterController.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -62,36 +92,14 @@ public class PlayerController : MonoBehaviour
         }*/
 
         // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        if (Input.GetKey(KeyCode.Space) && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
-        
+        characterController.Move(playerVelocity * Time.deltaTime);
     }
-
-    void FixedUpdate()
-    {
-        
-        if (allowCameraMovement)
-        {
-            Jump();
-            MoveCamera();
-            MovePlayer();
-            characterController.Move(playerVelocity * Time.deltaTime);
-            /*if (Input.GetKey(KeyCode.B))
-            {
-                allowCameraMovement = false;
-                bookUI.SetActive(true);
-                bookUI.GetComponent<UIController>().SetPage();
-                Cursor.lockState = CursorLockMode.None;
-            }*/
-
-        }
-    }
-
-
 
 
 
@@ -102,110 +110,75 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Mouse X") != 0)
         {
             Quaternion rotation;
-            if(Input.GetAxis("Mouse X") >= maxCameraMovement)
-            {
-                rotation = Quaternion.Euler(0, maxCameraMovement * Time.deltaTime * rotationSpeed, 0);
-                //rb.MoveRotation(Quaternion.Euler(0, gameObject.transform.rotation.y + maxCameraMovement * Time.deltaTime * rotationSpeed, 0));
-            }else if(Input.GetAxis("Mouse X") <= -maxCameraMovement)
-            {
-                rotation = Quaternion.Euler(0, -maxCameraMovement * Time.deltaTime * rotationSpeed, 0);
-                
-            }
-            else
-            {
-                rotation = Quaternion.Euler(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed, 0);
-               
-            }
+            rotation = Quaternion.Euler(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed, 0);
             rb.MoveRotation(rb.rotation * rotation);
             
-        }
+            
+    }
         if (Input.GetAxis("Mouse Y") != 0)
         {
-            if (Input.GetAxis("Mouse Y") >= maxCameraMovement)
-            {
-                currentVerticalRotation += maxCameraMovement;
-            }
-            else if (Input.GetAxis("Mouse Y") <= -maxCameraMovement)
-            {
-                currentVerticalRotation -= maxCameraMovement;
-            }
-            else
-            {
-
-                currentVerticalRotation += Input.GetAxis("Mouse Y");
-            }
-            float rotationCorrection = 0;
-
-            if (currentVerticalRotation >= maxVerticalRotation)
-            {
-                rotationCorrection = currentVerticalRotation - maxVerticalRotation;
-                currentVerticalRotation = maxVerticalRotation;
-            }
-            else if (currentVerticalRotation <= -maxVerticalRotation)
-            {
-                rotationCorrection = currentVerticalRotation + maxVerticalRotation;
-                currentVerticalRotation = -maxVerticalRotation;
-            }
-
-            playerCamera.transform.Rotate(new Vector3(-(Input.GetAxis("Mouse Y") - rotationCorrection) * Time.deltaTime * rotationSpeed, 0, 0));
+            float camRotation;
+            camRotation = -Input.GetAxis("Mouse Y") * Time.deltaTime * rotationSpeed;
+            currentVerticalRotation = Mathf.Clamp(currentVerticalRotation + camRotation, -maxVerticalRotation, maxVerticalRotation);
+            Debug.Log(camRotation);
+            playerCamera.transform.localRotation = Quaternion.Euler(new Vector3(currentVerticalRotation, 0, 0));
 
         }
     }
 
-    private void MovePlayer()
-    {
-        /*Vector3 directionVector = new Vector3(0, 0, 0);
-        if (Input.GetAxisRaw("Vertical") != 0)
-        {
-            directionVector += transform.forward * Input.GetAxisRaw("Vertical");
-        }
-        if (Input.GetAxisRaw("Horizontal") != 0)
-        {
-            directionVector += transform.right * Input.GetAxisRaw("Horizontal");
-        }
-        directionVector.Normalize();
-        //rb.MovePosition(transform.position + directionVector * Time.deltaTime * movementSpeed);
-        //rb.velocity = new Vector3(directionVector.x * Time.deltaTime * movementSpeed, rb.velocity.y, directionVector.z * Time.deltaTime * movementSpeed);
-        characterController.Move(directionVector * Time.deltaTime * movementSpeed);
-        characterController.Move(new Vector3(0, gravityValue, 0) * Time.deltaTime);*/
-        Vector3 move = new Vector3((transform.forward * Input.GetAxisRaw("Vertical")).x + (transform.right * Input.GetAxisRaw("Horizontal")).x, 0, (transform.forward * Input.GetAxisRaw("Vertical")).z + (transform.right * Input.GetAxisRaw("Horizontal")).z);
-        move.Normalize();
-        characterController.Move(move * Time.deltaTime * movementSpeed);
-        playerVelocity.y += gravityValue * Time.deltaTime;
-        characterController.Move(playerVelocity * Time.deltaTime);
-    }
+    //private void MovePlayer()
+    //{
+    //    /*Vector3 directionVector = new Vector3(0, 0, 0);
+    //    if (Input.GetAxisRaw("Vertical") != 0)
+    //    {
+    //        directionVector += transform.forward * Input.GetAxisRaw("Vertical");
+    //    }
+    //    if (Input.GetAxisRaw("Horizontal") != 0)
+    //    {
+    //        directionVector += transform.right * Input.GetAxisRaw("Horizontal");
+    //    }
+    //    directionVector.Normalize();
+    //    //rb.MovePosition(transform.position + directionVector * Time.deltaTime * movementSpeed);
+    //    //rb.velocity = new Vector3(directionVector.x * Time.deltaTime * movementSpeed, rb.velocity.y, directionVector.z * Time.deltaTime * movementSpeed);
+    //    characterController.Move(directionVector * Time.deltaTime * movementSpeed);
+    //    characterController.Move(new Vector3(0, gravityValue, 0) * Time.deltaTime);*/
+    //    Vector3 move = new Vector3((transform.forward * Input.GetAxisRaw("Vertical")).x + (transform.right * Input.GetAxisRaw("Horizontal")).x, 0, (transform.forward * Input.GetAxisRaw("Vertical")).z + (transform.right * Input.GetAxisRaw("Horizontal")).z);
+    //    move.Normalize();
+    //    characterController.Move(move * Time.deltaTime * movementSpeed);
+    //    playerVelocity.y += gravityValue * Time.deltaTime;
+    //    characterController.Move(playerVelocity * Time.deltaTime);
+    //}
 
-    private void Jump()
-    {
-        float offsetX = 0.48f;
-        float offsetZ = 0.48f;
-        if (Input.GetKey(KeyCode.Space))
-        {
-            int layerMask = 1 << 8;
-            layerMask = ~layerMask;
-            RaycastHit hit;
-            /*groundedPlayer = (Physics.Raycast(transform.position, -Vector3.up, out hit, 1.05f, layerMask) ||
-                Physics.Raycast(new Vector3(transform.position.x + offsetX, transform.position.y, transform.position.z + offsetZ), -Vector3.up, out hit, 1.1f, layerMask) ||
-                Physics.Raycast(new Vector3(transform.position.x - offsetX, transform.position.y, transform.position.z + offsetZ), -Vector3.up, out hit, 1.1f, layerMask) ||
-                Physics.Raycast(new Vector3(transform.position.x + offsetX, transform.position.y, transform.position.z - offsetZ), -Vector3.up, out hit, 1.1f, layerMask) ||
-                Physics.Raycast(new Vector3(transform.position.x - offsetX, transform.position.y, transform.position.z - offsetZ), -Vector3.up, out hit, 1.1f, layerMask)
-                );*/
+    //private void Jump()
+    //{
+    //    float offsetX = 0.48f;
+    //    float offsetZ = 0.48f;
+    //    if (Input.GetKey(KeyCode.Space))
+    //    {
+    //        int layerMask = 1 << 8;
+    //        layerMask = ~layerMask;
+    //        RaycastHit hit;
+    //        /*groundedPlayer = (Physics.Raycast(transform.position, -Vector3.up, out hit, 1.05f, layerMask) ||
+    //            Physics.Raycast(new Vector3(transform.position.x + offsetX, transform.position.y, transform.position.z + offsetZ), -Vector3.up, out hit, 1.1f, layerMask) ||
+    //            Physics.Raycast(new Vector3(transform.position.x - offsetX, transform.position.y, transform.position.z + offsetZ), -Vector3.up, out hit, 1.1f, layerMask) ||
+    //            Physics.Raycast(new Vector3(transform.position.x + offsetX, transform.position.y, transform.position.z - offsetZ), -Vector3.up, out hit, 1.1f, layerMask) ||
+    //            Physics.Raycast(new Vector3(transform.position.x - offsetX, transform.position.y, transform.position.z - offsetZ), -Vector3.up, out hit, 1.1f, layerMask)
+    //            );*/
 
-            groundedPlayer = characterController.isGrounded;
-            /*if (groundedPlayer && playerVelocity.y < 0)
-            {
-                playerVelocity.y = 0f;
-            }*/
+    //        groundedPlayer = characterController.isGrounded;
+    //        /*if (groundedPlayer && playerVelocity.y < 0)
+    //        {
+    //            playerVelocity.y = 0f;
+    //        }*/
 
-            Debug.Log("Attempting Jump");
-            Debug.Log(groundedPlayer);
-            if (groundedPlayer)
-            {
-                playerVelocity.y += Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
-            }
-        }
-
-    }
+    //        Debug.Log("Attempting Jump");
+    //        Debug.Log(groundedPlayer);
+    //        if (groundedPlayer)
+    //        {
+    //            playerVelocity.y += Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
+    //        }
+    //    }
+    //}
 
 
 }

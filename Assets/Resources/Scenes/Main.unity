@@ -2040,11 +2040,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1702373777}
   maxVerticalRotation: 30
-  rotationSpeed: 180
-  movementSpeed: 6
-  jumpForce: 3
+  rotationSpeed: 360
+  movementSpeed: 10
+  jumpForce: 2
   maxCameraMovement: 90
-  allowCameraMovement: 1
+  allowPlayerMovement: 1
 --- !u!65 &2076198016
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2072,7 +2072,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
