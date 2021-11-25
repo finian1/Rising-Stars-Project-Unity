@@ -55,6 +55,7 @@ public class ObstacleScript : MonoBehaviour
             {
                 transform.localPosition = new Vector3(transform.localPosition.x, spawnHeightEnd, transform.localPosition.z);
                 isRevealing = false;
+                Destroy(gameObject.GetComponent<Rigidbody>());
             }
         }
     }

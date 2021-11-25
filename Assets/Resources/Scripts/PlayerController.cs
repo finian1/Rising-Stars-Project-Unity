@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     /*private float playerSpeed = 10.0f;
     private float jumpHeight = 1.0f;*/
     private float gravityValue = -20f;
-
+    public KeyCode jumpKey = KeyCode.Space;
 
 
     private Vector3 spawnPosition;
@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
         if (allowPlayerMovement)
         {
             UpdatePlayer();
+            
         }
     }
 
@@ -92,7 +93,7 @@ public class PlayerController : MonoBehaviour
         }*/
 
         // Changes the height position of the player..
-        if (Input.GetKey(KeyCode.Space) && groundedPlayer)
+        if (Input.GetKey(jumpKey) && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
         }
@@ -111,16 +112,14 @@ public class PlayerController : MonoBehaviour
         {
             Quaternion rotation;
             rotation = Quaternion.Euler(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed, 0);
+            Debug.Log(Input.GetAxis("Mouse X"));
             rb.MoveRotation(rb.rotation * rotation);
-            
-            
     }
         if (Input.GetAxis("Mouse Y") != 0)
         {
             float camRotation;
             camRotation = -Input.GetAxis("Mouse Y") * Time.deltaTime * rotationSpeed;
             currentVerticalRotation = Mathf.Clamp(currentVerticalRotation + camRotation, -maxVerticalRotation, maxVerticalRotation);
-            Debug.Log(camRotation);
             playerCamera.transform.localRotation = Quaternion.Euler(new Vector3(currentVerticalRotation, 0, 0));
 
         }

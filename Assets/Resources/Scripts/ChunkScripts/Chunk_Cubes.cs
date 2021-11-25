@@ -62,7 +62,14 @@ public class Chunk_Cubes : ChunkClass
         }
         for (int i = 0; i < obstacleArray.Length; i++)
         {
-            obstacleArray[i].GetComponent<ObstacleScript>().SetFinalHeight(yArray[i]);
+            if (yArray[i] <= -obstacleArray[i].transform.localScale.y / 2)
+            {
+                Destroy(obstacleArray[i]);
+            }
+            else
+            {
+                obstacleArray[i].GetComponent<ObstacleScript>().SetFinalHeight(yArray[i]);
+            }
         }
 
     }

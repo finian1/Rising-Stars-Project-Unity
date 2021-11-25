@@ -1639,8 +1639,8 @@ Camera:
   m_GameObject: {fileID: 1702373777}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.6839622, g: 1, b: 0.91392815, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1654,7 +1654,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -2039,12 +2039,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1702373777}
-  maxVerticalRotation: 30
+  maxVerticalRotation: 80
   rotationSpeed: 360
   movementSpeed: 10
   jumpForce: 2
   maxCameraMovement: 90
   allowPlayerMovement: 1
+  jumpKey: 32
 --- !u!65 &2076198016
 BoxCollider:
   m_ObjectHideFlags: 0
