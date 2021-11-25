@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private float jumpHeight = 1.0f;*/
     private float gravityValue = -20f;
     public KeyCode jumpKey = KeyCode.Space;
-
+    private bool doubleJumped = false;
 
     private Vector3 spawnPosition;
   
@@ -42,10 +42,14 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        
     }
     private void Update()
     {
+        if (characterController.isGrounded)
+        {
+            doubleJumped = false;
+        }
+        
         if (allowPlayerMovement)
         {
             UpdatePlayer();
@@ -93,11 +97,15 @@ public class PlayerController : MonoBehaviour
         }*/
 
         // Changes the height position of the player..
-        if (Input.GetKey(jumpKey) && groundedPlayer)
+        if (Input.GetKeyDown(jumpKey) && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
+        }else if(Input.GetKeyDown(jumpKey) && !doubleJumped)
+        {
+            doubleJumped = true;
+            playerVelocity.y = Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
         }
-
+        Debug.Log(doubleJumped);
         playerVelocity.y += gravityValue * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
     }
