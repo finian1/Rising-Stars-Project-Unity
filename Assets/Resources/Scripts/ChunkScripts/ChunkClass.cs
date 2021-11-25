@@ -20,8 +20,45 @@ public class ChunkClass : MonoBehaviour
     private ChunkType chunkType;
     protected float chunkSizeX = 10.0f;
     protected float chunkSizeY = 10.0f;
+    private Color currentChunkColour;
+    private Color newChunkColour;
 
-    
+    private bool fadingColour = false;
+    private float colourChangeSpeed = 2.0f;
+    private float currentColourFade = 0.0f;
+
+    private void Awake()
+    {
+        currentChunkColour = Color.white;
+        SetObstacleColours(currentChunkColour);
+    }
+    private void Update()
+    {
+        if (fadingColour)
+        {
+            Color tempColor = Color.Lerp(currentChunkColour, newChunkColour, currentColourFade);
+            SetObstacleColours(tempColor);
+            //Debug.Log("Setting colour to: " + tempColor);
+            currentColourFade += Time.deltaTime * colourChangeSpeed;
+            Debug.Log(currentColourFade);
+            if (currentColourFade >= 1.0f)
+            {
+                Debug.Log("Succesfully faded.");
+                SetObstacleColours(newChunkColour);
+                currentChunkColour = newChunkColour;
+                fadingColour = false;
+                currentColourFade = 0.0f;
+            }
+        }
+    }
+
+    public void FadeToColour(Color newColour)
+    {
+        Debug.Log("Trying to fade!");
+        newChunkColour = newColour;
+        fadingColour = true;
+    }
+
     public void SetObstacleColours(Color newColour)
     {
         foreach(Transform child in this.transform)

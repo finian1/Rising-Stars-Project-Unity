@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
             doubleJumped = true;
             playerVelocity.y = Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
         }
-        Debug.Log(doubleJumped);
+        //Debug.Log(doubleJumped);
         playerVelocity.y += gravityValue * Time.deltaTime;
         characterController.Move(playerVelocity * Time.deltaTime);
     }
@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
         {
             Quaternion rotation;
             rotation = Quaternion.Euler(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed, 0);
-            Debug.Log(Input.GetAxis("Mouse X"));
+            //Debug.Log(Input.GetAxis("Mouse X"));
             rb.MoveRotation(rb.rotation * rotation);
     }
         if (Input.GetAxis("Mouse Y") != 0)

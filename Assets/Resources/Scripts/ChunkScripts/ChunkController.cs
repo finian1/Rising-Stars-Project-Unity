@@ -14,7 +14,7 @@ public class ChunkController : MonoBehaviour
     private ChunkClass[] chunkTypes =
     {
         new Chunk_Cubes(),
-        new Chunk_Cube_Moving(),
+        //new Chunk_Cube_Moving(),
         new Chunk_Plain(),
         new Chunk_Room(),
         new Chunk_Void()
@@ -195,7 +195,7 @@ public class Cell : MonoBehaviour
         foreach (GameObject chunk in cellChunks)
         {
             ChunkClass chunkClass = chunk.GetComponent<ChunkClass>();
-            chunkClass.SetObstacleColours(newColour);
+            chunkClass.FadeToColour(newColour);
         }
     }
 
