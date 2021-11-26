@@ -5,12 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private KeyCode mapKey = KeyCode.M;
     public GameObject playerCamera;
     public float maxVerticalRotation = 0;
     private float currentVerticalRotation = 0;
 
     public float rotationSpeed;
     public float movementSpeed;
+    private float startSpeed;
     public float jumpForce;
     public float maxCameraMovement;
 
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour
   
     void Start()
     {
+        startSpeed = movementSpeed;
         rb = GetComponent<Rigidbody>();
         characterController = GetComponent<CharacterController>();
         
@@ -45,6 +48,16 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKey(mapKey) && movementSpeed == startSpeed)
+        {
+            movementSpeed = 0.0f;
+            playerCamera.SetActive(false);
+        }else if(!Input.GetKey(mapKey) && movementSpeed == 0)
+        {
+            movementSpeed = startSpeed;
+            playerCamera.SetActive(true);
+        }
+
         if (characterController.isGrounded)
         {
             doubleJumped = false;

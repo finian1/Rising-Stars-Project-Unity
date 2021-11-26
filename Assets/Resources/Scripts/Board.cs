@@ -40,6 +40,11 @@ public class Board : MonoBehaviour
         }
     }
 
+    public void ClickBox(int index)
+    {
+        _grid[index].Selected();
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(boardTopRightPosition, 1);

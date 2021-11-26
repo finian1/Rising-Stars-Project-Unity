@@ -38,6 +38,8 @@ public class Game : MonoBehaviour
         if (_board != null)
         {
             _board.Clear();
+            chunkController.DestroyCells();
+            playerObject.SetActive(false);
         }
 
         if (_ui != null)
@@ -80,6 +82,8 @@ public class Game : MonoBehaviour
         if(eventType == Board.Event.ClickedDanger && _ui != null)
         {
             _ui.HideGame();
+            playerObject.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
             _ui.ShowResult(success: false);
         }
 

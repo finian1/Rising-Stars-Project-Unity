@@ -65,18 +65,37 @@ public class Box : MonoBehaviour
         }
     }
 
-    public void OnClick()
+    //public void OnClick()
+    //{
+    //    if(_button != null)
+    //    {
+    //        _button.interactable = false;
+    //    }
+
+    //    if(IsDangerous && Danger != null)
+    //    {
+    //        Danger.enabled = true;
+    //    }
+    //    else if(_textDisplay != null)
+    //    {
+    //        _textDisplay.enabled = true;
+    //    }
+
+    //    _changeCallback?.Invoke(this);
+    //}
+
+    public void Selected()
     {
-        if(_button != null)
+        if (_button != null)
         {
             _button.interactable = false;
         }
 
-        if(IsDangerous && Danger != null)
+        if (IsDangerous && Danger != null)
         {
             Danger.enabled = true;
         }
-        else if(_textDisplay != null)
+        else if (_textDisplay != null)
         {
             _textDisplay.enabled = true;
         }
@@ -88,7 +107,7 @@ public class Box : MonoBehaviour
     {
         _textDisplay = GetComponentInChildren<TMP_Text>(true);
         _button = GetComponent<Button>();
-        _button.onClick.AddListener(OnClick);
+        _button.onClick.AddListener(Selected);
 
         ResetState();
     }

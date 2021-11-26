@@ -21,7 +21,6 @@ public class ChunkController : MonoBehaviour
     };
     private Cell[] cells;
     public GameObject chunkBase;
-    public GameObject[] chunkObjects;
     public GameObject playerObject;
     public Board gameplayBoard;
     public Vector3 FPSTopRightPosition;
@@ -40,6 +39,16 @@ public class ChunkController : MonoBehaviour
         UpdateMinimapPosition();
     }
 
+    public void DestroyCells()
+    {
+        foreach (Cell cell in cells)
+        {
+            cell.DestroyCell();
+            Destroy(cell);
+        }
+        
+    }
+
     private void UpdateMinimapPosition()
     {
         Vector3 playerPos = playerObject.transform.position - FPSBottomLeftPosition;
@@ -47,10 +56,12 @@ public class ChunkController : MonoBehaviour
         //Debug.Log(playerPos);
         playerPositionOnMinimap = new Vector3(gameplayBoard.boardBottomLeftPosition.x + playerPos.x, gameplayBoard.boardBottomLeftPosition.y + playerPos.z, -5.0f);
         testMarker.transform.position = playerPositionOnMinimap;
+        testMarker.transform.rotation = Quaternion.Euler(180, 0, (playerObject.transform.rotation.eulerAngles.y - 90.0f));
     }
 
     public void PopulateArrays(int widthX, int widthY)
     {
+        Cursor.lockState = CursorLockMode.Locked;
         cells = new Cell[widthX * widthY];
         numOfCellsX = widthX;
         numOfCellsY = widthY;
@@ -152,6 +163,15 @@ public class Cell : MonoBehaviour
     private bool revealed = false;
     public GameObject[] cellChunks;
     Vector2Int[] _neighbours;
+
+    public void DestroyCell()
+    {
+        Destroy(cellTrigger);
+        foreach(GameObject chunk in cellChunks)
+        {
+            Destroy(chunk);
+        }
+    }
 
     public float GetStartX()
     {
@@ -266,6 +286,7 @@ public class Cell : MonoBehaviour
                     controller.RevealCell(neighbourIndex);
                 }
             }
+            gameplayBoard.ClickBox(cellID);
             cellTrigger.SetActive(false);
 
 
