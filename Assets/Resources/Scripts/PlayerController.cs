@@ -45,16 +45,17 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        allowPlayerMovement = true;
     }
     private void Update()
     {
-        if (Input.GetKey(mapKey) && movementSpeed == startSpeed)
+        if (Input.GetKey(mapKey) && allowPlayerMovement)
         {
-            movementSpeed = 0.0f;
+            allowPlayerMovement = false;
             playerCamera.SetActive(false);
-        }else if(!Input.GetKey(mapKey) && movementSpeed == 0)
+        }else if(!Input.GetKey(mapKey) && !allowPlayerMovement)
         {
-            movementSpeed = startSpeed;
+            allowPlayerMovement=true;
             playerCamera.SetActive(true);
         }
 
@@ -66,7 +67,11 @@ public class PlayerController : MonoBehaviour
         if (allowPlayerMovement)
         {
             UpdatePlayer();
-            
+
+        }
+        else
+        {
+            characterController.Move(Vector3.zero);
         }
     }
 
@@ -102,6 +107,7 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = new Vector3((transform.forward * Input.GetAxisRaw("Vertical")).x + (transform.right * Input.GetAxisRaw("Horizontal")).x, 0, (transform.forward * Input.GetAxisRaw("Vertical")).z + (transform.right * Input.GetAxisRaw("Horizontal")).z);
         move.Normalize();
+        Debug.Log(move);
         characterController.Move(move * Time.deltaTime * movementSpeed);
 
         /*if (move != Vector3.zero)

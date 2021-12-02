@@ -21,6 +21,12 @@ public class Board : MonoBehaviour
 
     public float XBoardSize;
     public float YBoardSize;
+    public bool gameStarted = false;
+
+    public ChunkController chunkController;
+    public GameObject playerObject;
+    public float platformSpawnHeight;
+    public GameObject spawnPlatform;
 
     public void Setup(Action<Event> onClickEvent)
     {
@@ -38,6 +44,21 @@ public class Board : MonoBehaviour
                 _grid[index].StandDown();
             }
         }
+    }
+
+    public void BeginFPSPlay()
+    {
+        chunkController.PopulateArrays(GetWidth(), GetHeight());
+        playerObject.SetActive(true);
+    }
+
+    public void SetPlayerSpawnPoint(int cellID)
+    {
+        Vector3 cellPos = chunkController.GetCellPosition(cellID);
+        Debug.Log(cellPos);
+        GameObject temp = Instantiate(spawnPlatform);
+        temp.transform.position = new Vector3(cellPos.x, cellPos.y + platformSpawnHeight, cellPos.z);
+        playerObject.transform.position = new Vector3(cellPos.x, cellPos.y + platformSpawnHeight + 1.0f, cellPos.z);
     }
 
     public void ClickBox(int index)
@@ -81,6 +102,11 @@ public class Board : MonoBehaviour
 
     private void Awake()
     {
+        InitializeEverything();
+    }
+
+    public void InitializeEverything()
+    {
         //Create a grid of boxes
         _grid = new Box[Width * Height];
 
@@ -118,15 +144,19 @@ public class Board : MonoBehaviour
             {
                 int index = row * Width + column;
                 _grid[index] = Instantiate(BoxPrefab, rowObj.transform);
-                _grid[index].Setup(index, row, column);
+                _grid[index].Setup(index, row, column, this);
                 RectTransform gridBoxTransform = _grid[index].transform as RectTransform;
                 _grid[index].name = string.Format("ID{0}, Row{1}, Column{2}", index, row, column);
-                gridBoxTransform.anchoredPosition = new Vector2( startPosition.x + (boxRect.sizeDelta.x * column), 0.0f);
+                gridBoxTransform.anchoredPosition = new Vector2(startPosition.x + (boxRect.sizeDelta.x * column), 0.0f);
             }
         }
 
-        boardTopRightPosition = new Vector3(_grid[Width - 1].transform.position.x + (boxRect.sizeDelta.x*transform.parent.lossyScale.x)/2, _grid[Width - 1].transform.position.y + (boxRect.sizeDelta.x * transform.parent.lossyScale.y)/2, _grid[Width - 1].transform.position.z);
-        boardBottomLeftPosition = new Vector3(_grid[Width * Height - Width].transform.position.x - (boxRect.sizeDelta.x * transform.parent.lossyScale.x) / 2, _grid[Width * Height - Width].transform.position.y - (boxRect.sizeDelta.x * transform.parent.lossyScale.y) / 2, _grid[Width * Height - Width].transform.position.z);
+        float scaledPositionTopRightX = _grid[Width - 1].transform.position.x + (boxRect.sizeDelta.x * transform.parent.lossyScale.x) / 2;
+        float scaledPositionTopRightY = _grid[Width - 1].transform.position.y + (boxRect.sizeDelta.x * transform.parent.lossyScale.y) / 2;
+        boardTopRightPosition = new Vector3(scaledPositionTopRightX, scaledPositionTopRightY, _grid[Width - 1].transform.position.z);
+        float scaledPositionBottomLeftX = _grid[Width * Height - Width].transform.position.x - (boxRect.sizeDelta.x * transform.parent.lossyScale.x) / 2;
+        float scaledPositionBottomLeftY = _grid[Width * Height - Width].transform.position.y - (boxRect.sizeDelta.x * transform.parent.lossyScale.y) / 2;
+        boardBottomLeftPosition = new Vector3(scaledPositionBottomLeftX, scaledPositionBottomLeftY, _grid[Width * Height - Width].transform.position.z);
         XBoardSize = Mathf.Abs(boardTopRightPosition.x - boardBottomLeftPosition.x);
         YBoardSize = Mathf.Abs(boardTopRightPosition.y - boardBottomLeftPosition.y);
 
@@ -137,8 +167,6 @@ public class Board : MonoBehaviour
             Debug.LogFormat("Count: {0}  ID: {1}  Row: {2}  Column: {3}", count, _grid[count].ID, _grid[count].RowIndex, _grid[count].ColumnIndex);
         }
     }
-
-    
 
     private int CountDangerNearby(List<bool> danger, int index)
     {

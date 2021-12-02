@@ -26,7 +26,7 @@ public class ChunkController : MonoBehaviour
     public Vector3 FPSTopRightPosition;
     public Vector3 FPSBottomLeftPosition;
     public Vector3 playerPositionOnMinimap;
-    public GameObject testMarker;
+    public GameObject playerMarker;
 
     //Variables to get scale from map to board
     private float XMapSize;
@@ -37,6 +37,22 @@ public class ChunkController : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateMinimapPosition();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        for(int i = 0; i < cells.Length; i++)
+        {
+            if(i == 0)
+            {
+                Gizmos.color = Color.green;
+            }
+            else
+            {
+                Gizmos.color = Color.grey;
+            }
+            Gizmos.DrawSphere(cells[i].GetCellPosition(), 1);
+        }
     }
 
     public void DestroyCells()
@@ -55,8 +71,8 @@ public class ChunkController : MonoBehaviour
         playerPos = new Vector3(playerPos.x * scaleX, 0, playerPos.z * scaleY);
         //Debug.Log(playerPos);
         playerPositionOnMinimap = new Vector3(gameplayBoard.boardBottomLeftPosition.x + playerPos.x, gameplayBoard.boardBottomLeftPosition.y + playerPos.z, -5.0f);
-        testMarker.transform.position = playerPositionOnMinimap;
-        testMarker.transform.rotation = Quaternion.Euler(180, 0, (playerObject.transform.rotation.eulerAngles.y - 90.0f));
+        playerMarker.transform.position = playerPositionOnMinimap;
+        playerMarker.transform.rotation = Quaternion.Euler(180, 0, (playerObject.transform.rotation.eulerAngles.y - 90.0f));
     }
 
     public void PopulateArrays(int widthX, int widthY)
@@ -114,6 +130,10 @@ public class ChunkController : MonoBehaviour
 
     }
 
+    public Vector3 GetCellPosition(int ID)
+    {
+        return cells[ID].GetCellPosition();
+    }
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(FPSTopRightPosition, 1);
@@ -153,7 +173,7 @@ public class Cell : MonoBehaviour
     private int cellsY;
     private Color hiddenColor = Color.white;
     private Color shownColor = Color.cyan;
-    private float triggerHeight = 20.0f;
+    private float triggerHeight = 50.0f;
     private int cellID;
     private float cellStartPosX;
     private float cellStartPosZ;
@@ -185,6 +205,10 @@ public class Cell : MonoBehaviour
     public float GetStartY()
     {
         return cellStartPosZ;
+    }
+    public Vector3 GetCellPosition()
+    {
+        return cellTrigger.transform.position;
     }
 
     public float GetPositionY()
@@ -221,19 +245,24 @@ public class Cell : MonoBehaviour
 
     public void SetStartPosition(float X, float Z)
     {
+        float posShiftX = (controller.GetChunkSizeX() * controller.GetChunksPerCellX()) / 2 - (controller.GetChunkSizeX() / 2);
+        float posShiftZ = (controller.GetChunkSizeY() * controller.GetChunksPerCellY()) / 2 - (controller.GetChunkSizeY() / 2);
         cellStartPosX = X;
         cellStartPosZ = Z;
+
         cellTrigger = new GameObject();
         cellTrigger.transform.SetParent(controller.transform);
+        cellTrigger.transform.localPosition = new Vector3(X + posShiftX, triggerHeight/2, Z + posShiftZ);
         cellTrigger.AddComponent<BoxCollider>().isTrigger = true;
+        cellTrigger.AddComponent<CellTriggerScript>().thisCell = this;
+        cellTrigger.GetComponent<BoxCollider>().size = new Vector3((controller.GetChunkSizeX() * controller.GetChunksPerCellX()), triggerHeight, (controller.GetChunkSizeY() * controller.GetChunksPerCellY()));
+        
         Rigidbody rigidBody = cellTrigger.AddComponent<Rigidbody>();
         rigidBody.useGravity = false;
         rigidBody.constraints = RigidbodyConstraints.FreezeAll;
-        cellTrigger.AddComponent<CellTriggerScript>().thisCell = this;
-        float posShiftX = (controller.GetChunkSizeX() * controller.GetChunksPerCellX())/2 - (controller.GetChunkSizeX()/2);
-        float posShiftZ = (controller.GetChunkSizeY() * controller.GetChunksPerCellY()) / 2 - (controller.GetChunkSizeY() / 2); ;
-        cellTrigger.transform.localPosition = new Vector3(X + posShiftX, 0 , Z + posShiftZ);
-        cellTrigger.GetComponent<BoxCollider>().size = new Vector3((controller.GetChunkSizeX() * controller.GetChunksPerCellX()), triggerHeight,(controller.GetChunkSizeY() * controller.GetChunksPerCellY()));
+        
+        
+        
         controller.GetBoardDimensions(ref cellsX, ref cellsY);
         _neighbours = new Vector2Int[8]
         {
@@ -246,6 +275,7 @@ public class Cell : MonoBehaviour
             new Vector2Int(cellsX, 1 ),
             new Vector2Int(cellsX + 1, 1)
         };
+
     }
 
     public void RevealCell()

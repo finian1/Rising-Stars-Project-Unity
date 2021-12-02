@@ -11,6 +11,8 @@ public class Box : MonoBehaviour
     private TMP_Text _textDisplay;
     private Button _button;
     private Action<Box> _changeCallback;
+    private Board _board;
+    
 
     public int RowIndex { get; private set; }
     public int ColumnIndex { get; private set; }
@@ -19,11 +21,24 @@ public class Box : MonoBehaviour
     public bool IsDangerous { get; private set; }
     public bool IsActive { get { return _button != null && _button.interactable; } }
 
-    public void Setup(int id, int row, int column)
+    private void OnDrawGizmos()
+    {
+        if (_board != null && _board.gameStarted)
+        {
+            if(ID == 0)
+            {
+                Gizmos.color = Color.green;
+            }
+            //Gizmos.DrawSphere(_board.chunkController.GetCellPosition(ID), 1);
+        }
+    }
+
+    public void Setup(int id, int row, int column, Board board)
     {
         ID = id;
         RowIndex = row;
         ColumnIndex = column;
+        _board = board;
     }
 
     public void Charge(int dangerNearby, bool danger, Action<Box> onChange)
@@ -86,21 +101,30 @@ public class Box : MonoBehaviour
 
     public void Selected()
     {
-        if (_button != null)
+        if (_board.gameStarted)
         {
-            _button.interactable = false;
-        }
+            if (_button != null)
+            {
+                _button.interactable = false;
+            }
 
-        if (IsDangerous && Danger != null)
-        {
-            Danger.enabled = true;
-        }
-        else if (_textDisplay != null)
-        {
-            _textDisplay.enabled = true;
-        }
+            if (IsDangerous && Danger != null)
+            {
+                Danger.enabled = true;
+            }
+            else if (_textDisplay != null)
+            {
+                _textDisplay.enabled = true;
+            }
 
-        _changeCallback?.Invoke(this);
+            _changeCallback?.Invoke(this);
+        }
+        else
+        {
+            _board.gameStarted = true;
+            _board.BeginFPSPlay();
+            _board.SetPlayerSpawnPoint(ID);
+        }
     }
 
     private void Awake()

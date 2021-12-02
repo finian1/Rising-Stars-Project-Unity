@@ -9,14 +9,16 @@ public class Game : MonoBehaviour
     private double _gameStartTime;
     private bool _gameInProgress;
 
+    
+
     public void OnClickedNewGame()
     {
         if (_board != null)
         {
             //If board is initialized
             _board.RechargeBoxes();
-            chunkController.PopulateArrays(_board.GetWidth(), _board.GetHeight());
-            playerObject.SetActive(true);
+            //chunkController.PopulateArrays(_board.GetWidth(), _board.GetHeight());
+            //playerObject.SetActive(true);
         }
 
         if (_ui != null)
@@ -47,6 +49,11 @@ public class Game : MonoBehaviour
             _ui.HideResult();
             _ui.ShowMenu();
         }
+    }
+
+    public void OnClickedSettings()
+    {
+
     }
 
     private void Awake()

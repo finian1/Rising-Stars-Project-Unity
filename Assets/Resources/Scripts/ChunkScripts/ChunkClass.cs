@@ -40,10 +40,10 @@ public class ChunkClass : MonoBehaviour
             SetObstacleColours(tempColor);
             //Debug.Log("Setting colour to: " + tempColor);
             currentColourFade += Time.deltaTime * colourChangeSpeed;
-            Debug.Log(currentColourFade);
+            //Debug.Log(currentColourFade);
             if (currentColourFade >= 1.0f)
             {
-                Debug.Log("Succesfully faded.");
+                //Debug.Log("Succesfully faded.");
                 SetObstacleColours(newChunkColour);
                 currentChunkColour = newChunkColour;
                 fadingColour = false;
@@ -54,7 +54,7 @@ public class ChunkClass : MonoBehaviour
 
     public void FadeToColour(Color newColour)
     {
-        Debug.Log("Trying to fade!");
+        //Debug.Log("Trying to fade!");
         newChunkColour = newColour;
         fadingColour = true;
     }
