@@ -45,6 +45,19 @@ public class Board : MonoBehaviour
             }
         }
     }
+    public void SetDangerAmount(int val)
+    {
+        NumberOfDangerousBoxes = val;
+    }
+
+    public void SetWidth(int val)
+    {
+        Width = val;
+    }
+    public void SetHeight(int val)
+    {
+        Height = val;
+    }
 
     public void BeginFPSPlay()
     {
@@ -105,6 +118,14 @@ public class Board : MonoBehaviour
         InitializeEverything();
     }
 
+    public void InitializeBoxes()
+    {
+        foreach(Box box in _grid)
+        {
+            box.Initialize();
+        }
+    }
+
     public void InitializeEverything()
     {
         //Create a grid of boxes
@@ -131,7 +152,7 @@ public class Board : MonoBehaviour
             new Vector2Int(Width + 1, 1)
         };
 
-        for (int row = 0; row < Width; ++row)
+        for (int row = 0; row < Height; ++row)
         {
             GameObject rowObj = new GameObject(string.Format("Row{0}", row), typeof(RectTransform));
             RectTransform rowRect = rowObj.transform as RectTransform;
@@ -140,7 +161,7 @@ public class Board : MonoBehaviour
             rowRect.sizeDelta = new Vector2(boxRect.sizeDelta.x * Width, boxRect.sizeDelta.y);
             rowRect.localScale = Vector2.one;
 
-            for (int column = 0; column < Height; ++column)
+            for (int column = 0; column < Width; ++column)
             {
                 int index = row * Width + column;
                 _grid[index] = Instantiate(BoxPrefab, rowObj.transform);
@@ -165,6 +186,14 @@ public class Board : MonoBehaviour
         for (int count = 0; count < _grid.Length; ++count)
         {
             Debug.LogFormat("Count: {0}  ID: {1}  Row: {2}  Column: {3}", count, _grid[count].ID, _grid[count].RowIndex, _grid[count].ColumnIndex);
+        }
+    }
+
+    public void DestroyBoxes()
+    {
+        foreach(Transform child in transform)
+        {
+            Destroy(child.gameObject);
         }
     }
 

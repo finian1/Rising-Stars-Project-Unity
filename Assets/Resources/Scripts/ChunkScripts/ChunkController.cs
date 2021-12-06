@@ -57,12 +57,21 @@ public class ChunkController : MonoBehaviour
 
     public void DestroyCells()
     {
-        foreach (Cell cell in cells)
+        if (cells != null)
         {
-            cell.DestroyCell();
-            Destroy(cell);
+            foreach (Cell cell in cells)
+            {
+                cell.DestroyCell();
+                Destroy(cell);
+            }
         }
         
+    }
+
+    public void SetCellSizes(int X, int Y)
+    {
+        chunksPerCellX = X;
+        chunksPerCellY = Y;
     }
 
     private void UpdateMinimapPosition()

@@ -8,7 +8,8 @@ public class Game : MonoBehaviour
     private UI _ui;
     private double _gameStartTime;
     private bool _gameInProgress;
-
+    public GameObject mainMenu;
+    public GameObject settingMenu;
     
 
     public void OnClickedNewGame()
@@ -53,7 +54,8 @@ public class Game : MonoBehaviour
 
     public void OnClickedSettings()
     {
-
+        settingMenu.SetActive(true);
+        mainMenu.SetActive(false);
     }
 
     private void Awake()
@@ -63,11 +65,16 @@ public class Game : MonoBehaviour
         _gameInProgress = false;
     }
 
+    public void SetupBoard()
+    {
+        _board.Setup(BoardEvent);
+    }
+
     private void Start()
     {
         if (_board != null)
         {
-            _board.Setup(BoardEvent);
+            SetupBoard();
         }
 
         if (_ui != null)

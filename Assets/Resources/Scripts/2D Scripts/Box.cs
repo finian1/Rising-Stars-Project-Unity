@@ -33,6 +33,7 @@ public class Box : MonoBehaviour
         }
     }
 
+
     public void Setup(int id, int row, int column, Board board)
     {
         ID = id;
@@ -128,6 +129,11 @@ public class Box : MonoBehaviour
     }
 
     private void Awake()
+    {
+        Initialize();
+    }
+
+    public void Initialize()
     {
         _textDisplay = GetComponentInChildren<TMP_Text>(true);
         _button = GetComponent<Button>();
