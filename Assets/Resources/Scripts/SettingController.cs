@@ -64,7 +64,9 @@ public class SettingController : MonoBehaviour
     }
     public void Done()
     {
-        
+        boardController.DestroyBoxes();
+        boardController.Clear();
+        chunkController.DestroyCells();
         if (newDangerSize != 0)
         {
             boardController.SetDangerAmount(newDangerSize);
@@ -81,11 +83,8 @@ public class SettingController : MonoBehaviour
         {
             chunkController.SetCellSizes(newCellSizeX, newCellSizeY);
         }
-        boardController.DestroyBoxes();
-        gameController.SetupBoard();
         boardController.InitializeEverything();
-        boardController.Clear();
-        chunkController.DestroyCells();
+        gameController.SetupBoard();
         mainMenu.SetActive(true);
         settingMenu.SetActive(false);
     }

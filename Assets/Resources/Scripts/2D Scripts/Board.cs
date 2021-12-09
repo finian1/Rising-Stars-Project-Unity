@@ -33,38 +33,62 @@ public class Board : MonoBehaviour
         _clickEvent = onClickEvent;
         Clear();
     }
-
+    /// <summary>
+    /// Clear boxes, but do not destroy them.
+    /// </summary>
     public void Clear()
     {
+        //Clearing all of the boxes (does not delete them)
         for (int row = 0; row < Height; ++row)
         {
             for (int column = 0; column < Width; ++column)
             {
                 int index = row * Width + column;
-                _grid[index].StandDown();
+
+                if (_grid[index] != null)
+                {
+                    _grid[index].StandDown();
+                }
+
             }
         }
     }
+    /// <summary>
+    /// Set the number of dangerous boxes.
+    /// </summary>
+    /// <param name="val"></param>
     public void SetDangerAmount(int val)
     {
         NumberOfDangerousBoxes = val;
     }
-
+    /// <summary>
+    /// Set width of board.
+    /// </summary>
+    /// <param name="val"></param>
     public void SetWidth(int val)
     {
         Width = val;
     }
+    /// <summary>
+    /// Set height of board.
+    /// </summary>
+    /// <param name="val"></param>
     public void SetHeight(int val)
     {
         Height = val;
     }
-
+    /// <summary>
+    /// Begin the First Person Shooter area of play.
+    /// </summary>
     public void BeginFPSPlay()
     {
         chunkController.PopulateArrays(GetWidth(), GetHeight());
         playerObject.SetActive(true);
     }
-
+    /// <summary>
+    /// Set the player's spawn point to be in the middle of the given cell, and spawn on top of the spawn platform.
+    /// </summary>
+    /// <param name="cellID"></param>
     public void SetPlayerSpawnPoint(int cellID)
     {
         Vector3 cellPos = chunkController.GetCellPosition(cellID);
@@ -73,7 +97,10 @@ public class Board : MonoBehaviour
         temp.transform.position = new Vector3(cellPos.x, cellPos.y + platformSpawnHeight, cellPos.z);
         playerObject.transform.position = new Vector3(cellPos.x, cellPos.y + platformSpawnHeight + 1.0f, cellPos.z);
     }
-
+    /// <summary>
+    /// Simulates a click on a given box.
+    /// </summary>
+    /// <param name="index"></param>
     public void ClickBox(int index)
     {
         _grid[index].Selected();
@@ -84,7 +111,9 @@ public class Board : MonoBehaviour
         Gizmos.DrawSphere(boardTopRightPosition, 1);
         Gizmos.DrawSphere(boardBottomLeftPosition, 1);
     }
-
+    /// <summary>
+    /// Goes through each box and randomises danger state.
+    /// </summary>
     public void RechargeBoxes()
     { 
         //Get the number of items on the board and create a boolean list containing if the item is dangerous or not
@@ -125,7 +154,9 @@ public class Board : MonoBehaviour
             box.Initialize();
         }
     }
-
+    /// <summary>
+    /// Creates grid and does a whole bunch of vital calculations.
+    /// </summary>
     public void InitializeEverything()
     {
         //Create a grid of boxes
@@ -188,7 +219,9 @@ public class Board : MonoBehaviour
             Debug.LogFormat("Count: {0}  ID: {1}  Row: {2}  Column: {3}", count, _grid[count].ID, _grid[count].RowIndex, _grid[count].ColumnIndex);
         }
     }
-
+    /// <summary>
+    /// Physically destroy the box buttons. Make sure to Clear too
+    /// </summary>
     public void DestroyBoxes()
     {
         foreach(Transform child in transform)

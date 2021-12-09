@@ -22,6 +22,7 @@ public class ChunkController : MonoBehaviour
     private Cell[] cells;
     public GameObject chunkBase;
     public GameObject playerObject;
+    public GameObject boarderTrigger;
     public Board gameplayBoard;
     public Vector3 FPSTopRightPosition;
     public Vector3 FPSBottomLeftPosition;
@@ -33,27 +34,28 @@ public class ChunkController : MonoBehaviour
     private float YMapSize;
     private float scaleX;
     private float scaleY;
+    private Vector3 boardMidpoint;
 
     private void FixedUpdate()
     {
         UpdateMinimapPosition();
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        for(int i = 0; i < cells.Length; i++)
-        {
-            if(i == 0)
-            {
-                Gizmos.color = Color.green;
-            }
-            else
-            {
-                Gizmos.color = Color.grey;
-            }
-            Gizmos.DrawSphere(cells[i].GetCellPosition(), 1);
-        }
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    for(int i = 0; i < cells.Length; i++)
+    //    {
+    //        if(i == 0)
+    //        {
+    //            Gizmos.color = Color.green;
+    //        }
+    //        else
+    //        {
+    //            Gizmos.color = Color.grey;
+    //        }
+    //        Gizmos.DrawSphere(cells[i].GetCellPosition(), 1);
+    //    }
+    //}
 
     public void DestroyCells()
     {
@@ -83,7 +85,11 @@ public class ChunkController : MonoBehaviour
         playerMarker.transform.position = playerPositionOnMinimap;
         playerMarker.transform.rotation = Quaternion.Euler(180, 0, (playerObject.transform.rotation.eulerAngles.y - 90.0f));
     }
-
+    /// <summary>
+    /// Populate all arrays and spawn in the board
+    /// </summary>
+    /// <param name="widthX"></param>
+    /// <param name="widthY"></param>
     public void PopulateArrays(int widthX, int widthY)
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -137,6 +143,10 @@ public class ChunkController : MonoBehaviour
         scaleX = gameplayBoard.XBoardSize / XMapSize;
         scaleY = gameplayBoard.YBoardSize / YMapSize;
 
+        boarderTrigger.transform.localScale = new Vector3(XMapSize, 50, YMapSize);
+        Vector3 midpointIsh = (FPSBottomLeftPosition - FPSTopRightPosition) / 2;
+        boardMidpoint = new Vector3(-midpointIsh.x - (cells[0].GetCellSizeX() / 2) - chunkSizeX / 2, 0, midpointIsh.z + (cells[0].GetCellSizeZ() / 2) - chunkSizeY / 2);
+        boarderTrigger.transform.localPosition = boardMidpoint;
     }
 
     public Vector3 GetCellPosition(int ID)
@@ -190,6 +200,8 @@ public class Cell : MonoBehaviour
     private GameObject cellTrigger;
     private Board gameplayBoard;
     private bool revealed = false;
+    private float cellSizeX;
+    private float cellSizeZ;
     public GameObject[] cellChunks;
     Vector2Int[] _neighbours;
 
@@ -200,6 +212,16 @@ public class Cell : MonoBehaviour
         {
             Destroy(chunk);
         }
+    }
+
+    public float GetCellSizeX()
+    {
+        return cellSizeX;
+    }
+
+    public float GetCellSizeZ()
+    {
+        return cellSizeZ;
     }
 
     public float GetStartX()
@@ -259,12 +281,15 @@ public class Cell : MonoBehaviour
         cellStartPosX = X;
         cellStartPosZ = Z;
 
+        cellSizeX = (controller.GetChunkSizeX() * controller.GetChunksPerCellX());
+        cellSizeZ = (controller.GetChunkSizeY() * controller.GetChunksPerCellY());
+
         cellTrigger = new GameObject();
         cellTrigger.transform.SetParent(controller.transform);
         cellTrigger.transform.localPosition = new Vector3(X + posShiftX, triggerHeight/2, Z + posShiftZ);
         cellTrigger.AddComponent<BoxCollider>().isTrigger = true;
         cellTrigger.AddComponent<CellTriggerScript>().thisCell = this;
-        cellTrigger.GetComponent<BoxCollider>().size = new Vector3((controller.GetChunkSizeX() * controller.GetChunksPerCellX()), triggerHeight, (controller.GetChunkSizeY() * controller.GetChunksPerCellY()));
+        cellTrigger.GetComponent<BoxCollider>().size = new Vector3(cellSizeX, triggerHeight, cellSizeZ);
         
         Rigidbody rigidBody = cellTrigger.AddComponent<Rigidbody>();
         rigidBody.useGravity = false;

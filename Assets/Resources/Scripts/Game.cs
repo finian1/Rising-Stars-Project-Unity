@@ -95,16 +95,12 @@ public class Game : MonoBehaviour
     {
         if(eventType == Board.Event.ClickedDanger && _ui != null)
         {
-            _ui.HideGame();
-            playerObject.SetActive(false);
-            Cursor.lockState = CursorLockMode.None;
-            _ui.ShowResult(success: false);
+            EndGame(false);
         }
 
         if (eventType == Board.Event.Win && _ui != null)
         {
-            _ui.HideGame();
-            _ui.ShowResult(success: true);
+            EndGame(true);
         }
 
         if (!_gameInProgress)
@@ -112,5 +108,20 @@ public class Game : MonoBehaviour
             _gameInProgress = true;
             _gameStartTime = Time.realtimeSinceStartupAsDouble;
         }
+    }
+
+    public void EndGame(bool winGame)
+    {
+        _ui.HideGame();
+        Reset();
+        _ui.ShowResult(success: winGame);
+    }
+
+    private void Reset()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        playerObject.transform.position = new Vector3(0, 0, 0);
+        playerObject.SetActive(false);
+        _board.gameStarted = false;
     }
 }
