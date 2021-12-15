@@ -4423,6 +4423,9 @@ MonoBehaviour:
   FPSBottomLeftPosition: {x: 0, y: 0, z: 0}
   playerPositionOnMinimap: {x: 0, y: 0, z: 0}
   playerMarker: {fileID: 1307933323}
+  boarderObject: {fileID: 4655630117121288973, guid: 907f24e4884bf274eaa67ceda63e2a14, type: 3}
+  boarderThickness: 0.5
+  boarderHeight: 150
 --- !u!23 &1871643077
 MeshRenderer:
   m_ObjectHideFlags: 0

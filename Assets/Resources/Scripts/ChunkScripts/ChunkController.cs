@@ -28,6 +28,10 @@ public class ChunkController : MonoBehaviour
     public Vector3 FPSBottomLeftPosition;
     public Vector3 playerPositionOnMinimap;
     public GameObject playerMarker;
+    public GameObject boarderObject;
+    public float boarderThickness;
+    public float boarderHeight;
+    private GameObject[] boarders;
 
     //Variables to get scale from map to board
     private float XMapSize;
@@ -41,21 +45,10 @@ public class ChunkController : MonoBehaviour
         UpdateMinimapPosition();
     }
 
-    //private void OnDrawGizmosSelected()
-    //{
-    //    for(int i = 0; i < cells.Length; i++)
-    //    {
-    //        if(i == 0)
-    //        {
-    //            Gizmos.color = Color.green;
-    //        }
-    //        else
-    //        {
-    //            Gizmos.color = Color.grey;
-    //        }
-    //        Gizmos.DrawSphere(cells[i].GetCellPosition(), 1);
-    //    }
-    //}
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawSphere(boardMidpoint, 1.0f);
+    }
 
     public void DestroyCells()
     {
@@ -135,9 +128,8 @@ public class ChunkController : MonoBehaviour
                 
             }
         }
- 
-        FPSTopRightPosition = new Vector3(cells[widthX - 1].GetPositionX() + (chunkSizeX * chunksPerCellX) / 2, cells[widthX - 1].GetPositionY(), cells[widthX - 1].GetPositionZ() + (chunkSizeY * chunksPerCellY) / 2);
-        FPSBottomLeftPosition = new Vector3(cells[widthX * widthY - widthX].GetPositionX() - (chunkSizeX * chunksPerCellX) / 2, cells[widthX * widthY - widthX].GetPositionY(), cells[widthX * widthY - widthX].GetPositionZ() - (chunkSizeY * chunksPerCellY) / 2);
+
+        FindCornerPositions(widthX, widthY);
         XMapSize = Mathf.Abs(FPSTopRightPosition.x - FPSBottomLeftPosition.x);
         YMapSize = Mathf.Abs(FPSTopRightPosition.z - FPSBottomLeftPosition.z);
         scaleX = gameplayBoard.XBoardSize / XMapSize;
@@ -145,8 +137,48 @@ public class ChunkController : MonoBehaviour
 
         boarderTrigger.transform.localScale = new Vector3(XMapSize, 50, YMapSize);
         Vector3 midpointIsh = (FPSBottomLeftPosition - FPSTopRightPosition) / 2;
-        boardMidpoint = new Vector3(-midpointIsh.x - (cells[0].GetCellSizeX() / 2) - chunkSizeX / 2, 0, midpointIsh.z + (cells[0].GetCellSizeZ() / 2) - chunkSizeY / 2);
-        boarderTrigger.transform.localPosition = boardMidpoint;
+        boardMidpoint = new Vector3(-midpointIsh.x - (cells[0].GetCellSizeX() / 2) - chunkSizeX / 2, transform.position.y , midpointIsh.z + (cells[0].GetCellSizeZ() / 2) - chunkSizeY / 2);
+        boarderTrigger.transform.position = boardMidpoint;
+        SetBoarders();
+    }
+
+    private void FindCornerPositions(int widthX, int widthY)
+    {
+        float topRightX = cells[widthX - 1].GetPositionX() + (chunkSizeX * chunksPerCellX) / 2;
+        float topRightY = cells[widthX - 1].GetPositionY();
+        float topRightZ = cells[widthX - 1].GetPositionZ() + (chunkSizeY * chunksPerCellY) / 2;
+        FPSTopRightPosition = new Vector3(topRightX, topRightY, topRightZ);
+
+        float bottomLeftX = cells[widthX * widthY - widthX].GetPositionX() - (chunkSizeX * chunksPerCellX) / 2;
+        float bottomLeftY = cells[widthX * widthY - widthX].GetPositionY();
+        float bottomLeftZ = cells[widthX * widthY - widthX].GetPositionZ() - (chunkSizeY * chunksPerCellY) / 2;
+        FPSBottomLeftPosition = new Vector3(bottomLeftX, bottomLeftY, bottomLeftZ);
+    }
+
+    private void SetBoarders()
+    {
+        boarders = new GameObject[4];
+        for (int i = 0; i < boarders.Length; i++)
+        {
+            boarders[i] = Instantiate(boarderObject, transform);
+
+        }
+        boarders[0].transform.position = new Vector3(boardMidpoint.x, boardMidpoint.y, boardMidpoint.z + YMapSize / 2);
+        boarders[0].transform.localScale = new Vector3(XMapSize, boarderHeight, boarderThickness);
+
+        boarders[1].transform.position = new Vector3(boardMidpoint.x, boardMidpoint.y, boardMidpoint.z - YMapSize / 2);
+        boarders[1].transform.localScale = new Vector3(XMapSize, boarderHeight, boarderThickness);
+
+        boarders[2].transform.position = new Vector3(boardMidpoint.x + XMapSize / 2, boardMidpoint.y, boardMidpoint.z);
+        boarders[2].transform.rotation = Quaternion.Euler(0, 90, 0);
+        boarders[2].transform.localScale = new Vector3(YMapSize, boarderHeight, boarderThickness);
+
+        boarders[3].transform.position = new Vector3(boardMidpoint.x - XMapSize / 2, boardMidpoint.y, boardMidpoint.z);
+        boarders[3].transform.rotation = Quaternion.Euler(0, 90, 0);
+        boarders[3].transform.localScale = new Vector3(YMapSize, boarderHeight, boarderThickness);
+
+
+
     }
 
     public Vector3 GetCellPosition(int ID)
