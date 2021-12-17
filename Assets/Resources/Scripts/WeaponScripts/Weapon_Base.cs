@@ -16,6 +16,7 @@ public class Weapon_Base : MonoBehaviour
     [SerializeField] protected Material shotMat;
 
     protected float currentShotTimer;
+    protected bool isFiring;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +24,7 @@ public class Weapon_Base : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         currentShotTimer += Time.deltaTime;
     }
@@ -33,6 +34,10 @@ public class Weapon_Base : MonoBehaviour
 
     }
 
+    public virtual void StopFiring()
+    {
+
+    }
 
     public void FireHitscanShot(bool isPlayer, ref GameObject hitObject)
     {
@@ -88,7 +93,7 @@ public class Weapon_Base : MonoBehaviour
             lr.startColor = color;
             lr.endColor = color;
             lr.startWidth = shotWidth;
-            lr.endWidth = shotWidth;
+            lr.endWidth = 0;
             lr.SetPosition(0, start);
             lr.SetPosition(1, end);
             Destroy(myLine, shotLifetime);

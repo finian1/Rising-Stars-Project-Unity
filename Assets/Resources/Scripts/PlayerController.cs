@@ -101,6 +101,10 @@ public class PlayerController : MonoBehaviour
         {
             weapon.FireWeapon(true);
         }
+        else
+        {
+            weapon.StopFiring();
+        }
     }
 
     void UpdatePlayer()
