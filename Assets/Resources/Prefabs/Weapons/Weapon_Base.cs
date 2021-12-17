@@ -5,15 +5,17 @@ using UnityEngine;
 public class Weapon_Base : MonoBehaviour
 {
     [Header("Base Weapon Settings")]
-    [SerializeField] private Transform firingOrigin;
-    [SerializeField] private float shotDamage;
-    [SerializeField] private float range;
-    [SerializeField] private float innacuracy;
-    [SerializeField] private float fireRate;
-    [SerializeField] private Camera playerCamera;
-    [SerializeField] private float shotLifetime;
-    [SerializeField] private float shotWidth;
-    [SerializeField] private Material shotMat;
+    [SerializeField] protected Transform firingOrigin;
+    [SerializeField] protected float shotDamage;
+    [SerializeField] protected float range;
+    [SerializeField] protected float innacuracy;
+    [SerializeField] protected float fireRate;
+    [SerializeField] protected Camera playerCamera;
+    [SerializeField] protected float shotLifetime;
+    [SerializeField] protected float shotWidth;
+    [SerializeField] protected Material shotMat;
+
+    protected float currentShotTimer;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +25,13 @@ public class Weapon_Base : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        currentShotTimer += Time.deltaTime;
     }
 
+    public virtual void FireWeapon(bool isFiredByPlayer)
+    {
+
+    }
 
 
     public void FireHitscanShot(bool isPlayer, ref GameObject hitObject)

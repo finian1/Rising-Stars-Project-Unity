@@ -99,8 +99,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            GameObject test = new GameObject();
-            weapon.FireHitscanShot(true, ref test);
+            weapon.FireWeapon(true);
         }
     }
 
