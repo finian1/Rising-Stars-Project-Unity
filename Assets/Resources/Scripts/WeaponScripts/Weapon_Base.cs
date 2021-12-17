@@ -61,7 +61,7 @@ public class Weapon_Base : MonoBehaviour
         }
         
         //Shift firing direction by random amount based on innacuracy
-        tempFireDirection += new Vector3(Random.Range(-innacuracyScaled, innacuracyScaled), Random.Range(-innacuracyScaled, innacuracyScaled), 0);
+        tempFireDirection += new Vector3(Random.Range(-innacuracyScaled, innacuracyScaled), Random.Range(-innacuracyScaled, innacuracyScaled), Random.Range(-innacuracyScaled, innacuracyScaled));
 
         //Shoot a raycast out in firing direction and set hitObject to the object hit
         RaycastHit fireHit;

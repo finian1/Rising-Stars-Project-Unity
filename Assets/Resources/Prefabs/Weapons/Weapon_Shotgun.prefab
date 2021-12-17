@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 3248054293320712442}
   - component: {fileID: 3248054293320712441}
   - component: {fileID: 3248054293320712440}
-  - component: {fileID: -1263126056468228071}
+  - component: {fileID: 4674179431666138106}
   m_Layer: 0
-  m_Name: Weapon_AssaultRifle 1
+  m_Name: Weapon_Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,7 +127,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-1263126056468228071
+--- !u!114 &4674179431666138106
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,15 +136,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3248054293320712447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8586cbe664773e94f8692353d8b243c6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a4449b623ed0d4408121e77869bf6d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   firingOrigin: {fileID: 5608096572500112012}
   shotDamage: 0
-  range: 0
-  innacuracy: 0
-  fireRate: 0
+  range: 20
+  innacuracy: 90
+  fireRate: 1
   playerCamera: {fileID: 0}
-  shotLifetime: 0
-  shotWidth: 0
-  shotMat: {fileID: 0}
+  shotLifetime: 0.2
+  shotWidth: 0.1
+  shotMat: {fileID: 2100000, guid: 5d7072a3608af2d4c8bdbf7f9ec4655e, type: 2}
+  shotCount: 5

@@ -202,6 +202,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 22913736}
   m_CullTransparentMesh: 1
+--- !u!114 &109017365 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 881439413077069703, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+  m_PrefabInstance: {fileID: 3029761216133517584}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4449b623ed0d4408121e77869bf6d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &159724144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,17 +1226,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677850020}
   m_CullTransparentMesh: 1
---- !u!114 &679661571 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1795826258968533922, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-  m_PrefabInstance: {fileID: 3029761216133517584}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8586cbe664773e94f8692353d8b243c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &684156256
 GameObject:
   m_ObjectHideFlags: 0
@@ -5045,6 +5045,18 @@ PrefabInstance:
       propertyPath: shotLifetime
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 881439413077069703, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: fireRate
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 881439413077069703, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: shotCount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 881439413077069703, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: innacuracy
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 3029761217614091625, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
       propertyPath: m_Name
       value: PlayerCharacter
@@ -5100,7 +5112,11 @@ PrefabInstance:
     - target: {fileID: 3029761217614091631, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
       propertyPath: weapon
       value: 
-      objectReference: {fileID: 679661571}
+      objectReference: {fileID: 109017365}
+    - target: {fileID: 6595275188543734596, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: m_Name
+      value: Weapon_AssaultRifle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
 --- !u!1001 &5647471243644405654
