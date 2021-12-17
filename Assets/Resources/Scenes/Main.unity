@@ -2164,7 +2164,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+  m_BackGroundColor: {r: 0, g: 0.3584906, b: 0.3516678, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3637,7 +3637,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1461980027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5014,6 +5014,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 33515155853329997, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: range
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 33515155853329997, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: shotMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 9ab540356f7d4404290570aa87631cc0, type: 2}
+    - target: {fileID: 33515155853329997, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: shotWidth
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 33515155853329997, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: innacuracy
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 33515155853329997, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: shotLifetime
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 3029761217614091625, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
       propertyPath: m_Name
       value: PlayerCharacter
@@ -5061,10 +5081,6 @@ PrefabInstance:
     - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091630, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_Constraints
-      value: 126
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}

@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private bool doubleJumped = false;
 
     private Vector3 spawnPosition;
+
+    public Weapon_Base weapon;
   
     void Start()
     {
@@ -95,6 +97,11 @@ public class PlayerController : MonoBehaviour
             }*/
 
         }
+        if (Input.GetMouseButton(0))
+        {
+            GameObject test = new GameObject();
+            weapon.FireHitscanShot(true, ref test);
+        }
     }
 
     void UpdatePlayer()
@@ -107,7 +114,6 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = new Vector3((transform.forward * Input.GetAxisRaw("Vertical")).x + (transform.right * Input.GetAxisRaw("Horizontal")).x, 0, (transform.forward * Input.GetAxisRaw("Vertical")).z + (transform.right * Input.GetAxisRaw("Horizontal")).z);
         move.Normalize();
-        Debug.Log(move);
         characterController.Move(move * Time.deltaTime * movementSpeed);
 
         /*if (move != Vector3.zero)
@@ -129,7 +135,7 @@ public class PlayerController : MonoBehaviour
         characterController.Move(playerVelocity * Time.deltaTime);
     }
 
-
+    
 
 
     

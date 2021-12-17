@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7187961052562182359}
   - component: {fileID: 4177433658366498768}
   - component: {fileID: -1346371975902826356}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CubeObstacle_Static
   m_TagString: Untagged
   m_Icon: {fileID: 0}

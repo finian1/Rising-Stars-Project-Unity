@@ -47,7 +47,7 @@ public class ChunkController : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.DrawSphere(boardMidpoint, 1.0f);
+        Gizmos.DrawSphere(boardMidpoint, 10.0f);
     }
 
     public void DestroyCells()
@@ -136,8 +136,8 @@ public class ChunkController : MonoBehaviour
         scaleY = gameplayBoard.YBoardSize / YMapSize;
 
         boarderTrigger.transform.localScale = new Vector3(XMapSize, 50, YMapSize);
-        Vector3 midpointIsh = (FPSBottomLeftPosition - FPSTopRightPosition) / 2;
-        boardMidpoint = new Vector3(-midpointIsh.x - (cells[0].GetCellSizeX() / 2) - chunkSizeX / 2, transform.position.y , midpointIsh.z + (cells[0].GetCellSizeZ() / 2) - chunkSizeY / 2);
+        
+        boardMidpoint = Vector3.Lerp(FPSTopRightPosition, FPSBottomLeftPosition, 0.5f);
         boarderTrigger.transform.position = boardMidpoint;
         SetBoarders();
     }
