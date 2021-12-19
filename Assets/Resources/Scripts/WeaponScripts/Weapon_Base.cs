@@ -5,6 +5,7 @@ using UnityEngine;
 public class Weapon_Base : MonoBehaviour
 {
     [Header("Base Weapon Settings")]
+    [SerializeField] protected string weaponNickname;
     [SerializeField] protected Transform firingOrigin;
     [SerializeField] protected float shotDamage;
     [SerializeField] protected float range;
@@ -21,6 +22,17 @@ public class Weapon_Base : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public Weapon_Base(float wepDamage, float wepRange, float wepInnacuracy, float wepFireRate, float wepShotLifetime, float wepShotWidth, string wepNickname = "Nameless")
+    {
+        weaponNickname = wepNickname;
+        shotDamage = wepDamage;
+        range = wepRange;
+        innacuracy = wepInnacuracy;
+        fireRate = wepFireRate;
+        shotLifetime = wepShotLifetime;
+        shotWidth = wepShotWidth;
     }
 
     // Update is called once per frame

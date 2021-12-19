@@ -140,6 +140,12 @@ public class ChunkController : MonoBehaviour
         boardMidpoint = Vector3.Lerp(FPSTopRightPosition, FPSBottomLeftPosition, 0.5f);
         boarderTrigger.transform.position = boardMidpoint;
         SetBoarders();
+        SetPlayerMarkerActive(true);
+    }
+
+    public void SetPlayerMarkerActive(bool val)
+    {
+        playerMarker.SetActive(val);
     }
 
     private void FindCornerPositions(int widthX, int widthY)
@@ -179,6 +185,14 @@ public class ChunkController : MonoBehaviour
 
 
 
+    }
+
+    public void DestroyBoarders()
+    {
+        foreach(GameObject boarder in boarders)
+        {
+            Destroy(boarder);
+        }
     }
 
     public Vector3 GetCellPosition(int ID)

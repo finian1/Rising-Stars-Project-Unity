@@ -83,6 +83,7 @@ public class Board : MonoBehaviour
     public void BeginFPSPlay()
     {
         chunkController.PopulateArrays(GetWidth(), GetHeight());
+        chunkController.SetPlayerMarkerActive(true);
         playerObject.SetActive(true);
     }
     /// <summary>

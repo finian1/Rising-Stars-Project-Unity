@@ -12,6 +12,15 @@ public class Weapon_MiniGun : Weapon_Base
     private float currentRevPercent;
     private float currentFireRate;
 
+    public Weapon_MiniGun(float wepDamage, float wepRange, float wepInnacuracy, float wepFireRate, float wepShotLifetime, float wepShotWidth,
+        float wepStartFireRate, float wepTimeToRevUp, float wepCoolDownSpeed, string wepNickname = "Nameless")
+        : base(wepDamage, wepRange, wepInnacuracy, wepFireRate, wepShotLifetime, wepShotWidth, wepNickname)
+    {
+        startFireRate = wepStartFireRate;
+        timeToRevUp = wepTimeToRevUp;
+        coolDownSpeed = wepCoolDownSpeed;
+    }
+
     protected override void Update()
     {
         base.Update();

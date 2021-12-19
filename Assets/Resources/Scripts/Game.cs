@@ -42,6 +42,8 @@ public class Game : MonoBehaviour
         {
             _board.Clear();
             chunkController.DestroyCells();
+            chunkController.DestroyBoarders();
+            chunkController.SetPlayerMarkerActive(false);
             playerObject.SetActive(false);
         }
 
@@ -74,6 +76,7 @@ public class Game : MonoBehaviour
     {
         if (_board != null)
         {
+            chunkController.SetPlayerMarkerActive(false);
             SetupBoard();
         }
 
@@ -114,6 +117,7 @@ public class Game : MonoBehaviour
     {
         _ui.HideGame();
         Reset();
+        chunkController.SetPlayerMarkerActive(false);
         _ui.ShowResult(success: winGame);
     }
 
