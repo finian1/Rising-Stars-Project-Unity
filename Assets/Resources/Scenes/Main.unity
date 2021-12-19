@@ -4177,6 +4177,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654402031}
   m_CullTransparentMesh: 1
+--- !u!1 &1699487736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3205696332502393107, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+  m_PrefabInstance: {fileID: 3029761216133517584}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1740374725
 GameObject:
   m_ObjectHideFlags: 0
@@ -5107,7 +5112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3029761217614091625, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
       propertyPath: m_RootOrder
@@ -5156,7 +5161,11 @@ PrefabInstance:
     - target: {fileID: 3029761217614091631, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
       propertyPath: weapon
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1699487736}
+    - target: {fileID: 3029761217614091631, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: shotMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: f4e0bfb4c082f72469533623b5fdf9b5, type: 2}
     - target: {fileID: 6595275188543734596, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
       propertyPath: m_Name
       value: Weapon_AssaultRifle

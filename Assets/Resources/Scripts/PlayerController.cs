@@ -32,7 +32,9 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 spawnPosition;
 
-    public Weapon_Base weapon;
+    public GameObject weapon;
+    public Material shotMaterial;
+    private Weapon_Base currentWeaponScript;
   
     void Start()
     {
@@ -75,6 +77,19 @@ public class PlayerController : MonoBehaviour
         {
             characterController.Move(Vector3.zero);
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            EquipWeapon(PlayerStats.weaponsOwned[0]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            EquipWeapon(PlayerStats.weaponsOwned[1]);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            EquipWeapon(PlayerStats.weaponsOwned[2]);
+        }
     }
 
     void FixedUpdate()
@@ -99,12 +114,36 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetMouseButton(0))
         {
-            weapon.FireWeapon(true);
+
+            if(weapon.GetComponent<Weapon_Base>() != null)
+            {
+                weapon.GetComponent<Weapon_Base>().FireWeapon(true);
+            }
         }
         else
         {
-            weapon.StopFiring();
+            if (weapon.GetComponent<Weapon_Base>() != null)
+            {
+                weapon.GetComponent<Weapon_Base>().StopFiring();
+            }
         }
+
+        
+
+    }
+
+    public void EquipWeapon(WeaponStatHolderBase newWeapon)
+    {
+        if(weapon.GetComponent<Weapon_Base>() != null)
+        {
+            Destroy(weapon.GetComponent<Weapon_Base>());
+        }
+        System.Type wepType = newWeapon.weaponType;
+
+        Weapon_Base temp = weapon.AddComponent(newWeapon.weaponType) as Weapon_Base;
+        currentWeaponScript = temp;
+        temp.init(newWeapon);
+        temp.SetupBase(playerCamera.GetComponent<Camera>(), shotMaterial);
     }
 
     void UpdatePlayer()

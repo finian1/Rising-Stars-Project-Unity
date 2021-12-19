@@ -7,11 +7,10 @@ public class Weapon_Shotgun : Weapon_Base
     [Header("Shotgun Weapon Settings")]
     [SerializeField] private int shotCount;
 
-    public Weapon_Shotgun(float wepDamage, float wepRange, float wepInnacuracy, float wepFireRate, float wepShotLifetime, float wepShotWidth, 
-        int wepShotCount, string wepNickname = "Nameless")
-        : base(wepDamage, wepRange, wepInnacuracy, wepFireRate, wepShotLifetime, wepShotWidth, wepNickname)
+    public override void init(WeaponStatHolderBase stats)
     {
-        shotCount = wepShotCount;
+        base.init(stats);
+        shotCount = stats.shotCount;
     }
 
     public override void FireWeapon(bool isFiredByPlayer)
@@ -20,7 +19,7 @@ public class Weapon_Shotgun : Weapon_Base
         {
             for (int i = 0; i < shotCount; i++)
             {
-                GameObject hitObject = new GameObject();
+                GameObject hitObject = null;
                 FireHitscanShot(isFiredByPlayer, ref hitObject);
             }
             currentShotTimer = 0;

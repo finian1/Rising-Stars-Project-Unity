@@ -24,15 +24,22 @@ public class Weapon_Base : MonoBehaviour
         
     }
 
-    public Weapon_Base(float wepDamage, float wepRange, float wepInnacuracy, float wepFireRate, float wepShotLifetime, float wepShotWidth, string wepNickname = "Nameless")
+    public virtual void init(WeaponStatHolderBase stats)
     {
-        weaponNickname = wepNickname;
-        shotDamage = wepDamage;
-        range = wepRange;
-        innacuracy = wepInnacuracy;
-        fireRate = wepFireRate;
-        shotLifetime = wepShotLifetime;
-        shotWidth = wepShotWidth;
+        weaponNickname = stats.weaponNickname;
+        shotDamage = stats.shotDamage;
+        range = stats.range;
+        innacuracy = stats.innacuracy;
+        fireRate = stats.fireRate;
+        shotLifetime = stats.shotLifetime;
+        shotWidth = stats.shotWidth;
+        firingOrigin = transform.GetChild(0).transform;
+    }
+
+    public void SetupBase(Camera playerCam, Material shotMaterial)
+    {
+        playerCamera = playerCam;
+        shotMat = shotMaterial;
     }
 
     // Update is called once per frame
@@ -108,7 +115,8 @@ public class Weapon_Base : MonoBehaviour
             lr.endWidth = 0;
             lr.SetPosition(0, start);
             lr.SetPosition(1, end);
-            Destroy(myLine, shotLifetime);
+            myLine.AddComponent<DestructionScript>();
+            myLine.GetComponent<DestructionScript>().Destruct(shotLifetime);
         }
     }
 

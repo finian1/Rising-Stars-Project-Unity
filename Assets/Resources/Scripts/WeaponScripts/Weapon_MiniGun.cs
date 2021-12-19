@@ -12,13 +12,12 @@ public class Weapon_MiniGun : Weapon_Base
     private float currentRevPercent;
     private float currentFireRate;
 
-    public Weapon_MiniGun(float wepDamage, float wepRange, float wepInnacuracy, float wepFireRate, float wepShotLifetime, float wepShotWidth,
-        float wepStartFireRate, float wepTimeToRevUp, float wepCoolDownSpeed, string wepNickname = "Nameless")
-        : base(wepDamage, wepRange, wepInnacuracy, wepFireRate, wepShotLifetime, wepShotWidth, wepNickname)
+    public override void init(WeaponStatHolderBase stats)
     {
-        startFireRate = wepStartFireRate;
-        timeToRevUp = wepTimeToRevUp;
-        coolDownSpeed = wepCoolDownSpeed;
+        base.init(stats);
+        startFireRate = stats.startFireRate;
+        timeToRevUp = stats.timeToRevUp;
+        coolDownSpeed = stats.coolDownSpeed;
     }
 
     protected override void Update()
@@ -59,7 +58,7 @@ public class Weapon_MiniGun : Weapon_Base
         Debug.Log(currentRevPercent);
         if (currentShotTimer >= 1 / currentFireRate)
         {
-            GameObject hitObject = new GameObject();
+            GameObject hitObject = null;
             FireHitscanShot(isFiredByPlayer, ref hitObject);
             currentShotTimer = 0;
         }
