@@ -10,6 +10,7 @@ public class ObstacleScript : MonoBehaviour
     public float spawnHeightEnd;
     private float depthSoftening = 0.75f;
     private Rigidbody rb;
+    public List <GameObject> nodes;
 
     [SerializeField]protected bool isRevealing = false;
 
@@ -18,6 +19,7 @@ public class ObstacleScript : MonoBehaviour
     {
         //isRevealing = false;
         //gameObject.SetActive(false);
+        
     }
 
     void FixedUpdate()
@@ -55,8 +57,17 @@ public class ObstacleScript : MonoBehaviour
             {
                 transform.localPosition = new Vector3(transform.localPosition.x, spawnHeightEnd, transform.localPosition.z);
                 isRevealing = false;
+                transform.parent.SendMessage("FinishObstacleReveal");
                 Destroy(gameObject.GetComponent<Rigidbody>());
             }
+        }
+    }
+
+    public void ActivateNodes()
+    {
+        foreach (GameObject node in nodes)
+        {
+            node.GetComponent<NavNodeScript>().LinkNode();
         }
     }
 

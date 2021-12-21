@@ -27,6 +27,11 @@ public class ChunkClass : MonoBehaviour
     private float colourChangeSpeed = 2.0f;
     private float currentColourFade = 0.0f;
 
+    protected int finishedObstacles = 0;
+    private bool activatedNavPoints = false;
+
+    public List<GameObject> nodes;
+
     private void Awake()
     {
         currentChunkColour = Color.white;
@@ -50,6 +55,30 @@ public class ChunkClass : MonoBehaviour
                 currentColourFade = 0.0f;
             }
         }
+        
+    }
+
+    public void ActivateNodes()
+    {
+        foreach (GameObject obstacle in obstacleArray)
+        {
+            if (obstacle != null)
+            {
+                obstacle.GetComponent<ObstacleScript>().ActivateNodes();
+            }
+        }
+        foreach(Transform node in transform)
+        {
+            if (node.CompareTag("Navigation"))
+            {
+                node.GetComponent<NavNodeScript>().LinkNode();
+            }
+        }
+    }
+
+    public void FinishObstacleReveal()
+    {
+        finishedObstacles++;
     }
 
     public void FadeToColour(Color newColour)

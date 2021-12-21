@@ -21,6 +21,7 @@ public class ChunkController : MonoBehaviour
     };
     private Cell[] cells;
     public GameObject chunkBase;
+    public GameObject voidChunk;
     public GameObject playerObject;
     public GameObject boarderTrigger;
     public Board gameplayBoard;
@@ -106,7 +107,7 @@ public class ChunkController : MonoBehaviour
             cells[i].SetBoard(gameplayBoard);
             cells[i].SetController(this);
             cells[i].SetStartPosition(-cellColumn * chunksPerCellX * chunkSizeX, cellRow * chunksPerCellY * chunkSizeY);
-
+            
             //Set chunk positions
             cells[i].cellChunks = new GameObject[chunksPerCellX * chunksPerCellY];
             for(int j = 0; j < cells[i].cellChunks.Length; j++)
@@ -120,13 +121,21 @@ public class ChunkController : MonoBehaviour
                     currIndex -= chunksPerCellX;
                     chunkRow++;
                 }
-
-                cells[i].cellChunks[j] = Instantiate(chunkBase, transform);
-                cells[i].cellChunks[j].AddComponent(chunkTypes[Random.Range(0, chunkTypes.Length)].GetType());
+                System.Type chunkType = chunkTypes[Random.Range(0, chunkTypes.Length)].GetType();
+                if (chunkType == typeof(Chunk_Void))
+                {
+                    cells[i].cellChunks[j] = Instantiate(voidChunk, transform);
+                }
+                else
+                {
+                    cells[i].cellChunks[j] = Instantiate(chunkBase, transform);
+                }
+                cells[i].cellChunks[j].AddComponent(chunkType);
                 cells[i].cellChunks[j].GetComponent<ChunkClass>().playerObject = playerObject;
                 cells[i].cellChunks[j].transform.localPosition = new Vector3(cells[i].GetStartX() + chunkColumn * chunkSizeX, 0,cells[i].GetStartY() + chunkRow * chunkSizeY);
                 
             }
+            
         }
 
         FindCornerPositions(widthX, widthY);
@@ -331,6 +340,7 @@ public class Cell : MonoBehaviour
         cellSizeZ = (controller.GetChunkSizeY() * controller.GetChunksPerCellY());
 
         cellTrigger = new GameObject();
+        cellTrigger.name = string.Format("Cell {0}", cellID);
         cellTrigger.transform.SetParent(controller.transform);
         cellTrigger.transform.localPosition = new Vector3(X + posShiftX, triggerHeight/2, Z + posShiftZ);
         cellTrigger.AddComponent<BoxCollider>().isTrigger = true;

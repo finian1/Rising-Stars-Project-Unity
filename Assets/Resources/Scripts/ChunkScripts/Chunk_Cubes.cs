@@ -65,6 +65,7 @@ public class Chunk_Cubes : ChunkClass
             if (yArray[i] <= -obstacleArray[i].transform.localScale.y / 2)
             {
                 Destroy(obstacleArray[i]);
+                finishedObstacles++;
             }
             else
             {

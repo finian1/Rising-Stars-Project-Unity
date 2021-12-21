@@ -4451,7 +4451,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf81ba5f03ef124cb8379e83547bd6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunkBase: {fileID: 5131038892230026013, guid: 7b0002ac81522754ca71e40d8465cecb, type: 3}
+  chunkBase: {fileID: 5131038892230026013, guid: 43c72ff4660b5734bb28207d83798a29, type: 3}
+  voidChunk: {fileID: 5131038892230026013, guid: 7b0002ac81522754ca71e40d8465cecb, type: 3}
   playerObject: {fileID: 2076198009}
   boarderTrigger: {fileID: 1795158878}
   gameplayBoard: {fileID: 1312689710}
