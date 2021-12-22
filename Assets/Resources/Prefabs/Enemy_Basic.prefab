@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 7893159740739853825}
   - component: {fileID: 7893159740739853824}
   - component: {fileID: 7893159740739853836}
-  m_Layer: 0
+  - component: {fileID: 3290503786656381171}
+  m_Layer: 8
   m_Name: Enemy_Basic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,3 +115,19 @@ MonoBehaviour:
   currentNodeTarget: {fileID: 0}
   nodeSearchRange: 10
   player: {fileID: 0}
+  nodeMemory: []
+  navLayer: 7
+  solidLayer: 6
+--- !u!114 &3290503786656381171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7893159740739853827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a8cca0a14bf254da49d8065488a886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeeds: {x: 123, y: 213, z: 321}

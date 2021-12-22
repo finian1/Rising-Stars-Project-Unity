@@ -346,7 +346,7 @@ public class Cell : MonoBehaviour
         cellTrigger.AddComponent<BoxCollider>().isTrigger = true;
         cellTrigger.AddComponent<CellTriggerScript>().thisCell = this;
         cellTrigger.GetComponent<BoxCollider>().size = new Vector3(cellSizeX, triggerHeight, cellSizeZ);
-        
+        cellTrigger.layer = 9;
         Rigidbody rigidBody = cellTrigger.AddComponent<Rigidbody>();
         rigidBody.useGravity = false;
         rigidBody.constraints = RigidbodyConstraints.FreezeAll;
