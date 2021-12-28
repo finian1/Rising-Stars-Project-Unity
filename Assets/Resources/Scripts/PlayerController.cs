@@ -177,7 +177,10 @@ public class PlayerController : MonoBehaviour
         characterController.Move(playerVelocity * Time.deltaTime);
     }
 
-    
+    private void TakeDamage(float val)
+    {
+        PlayerStats.health -= val;
+    }
 
 
     

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    public ChunkController chunkController;
+    public MapController chunkController;
     public GameObject playerObject;
     private Board _board;
     private UI _ui;

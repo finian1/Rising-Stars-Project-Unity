@@ -79,9 +79,14 @@ public class Weapon_Base : MonoBehaviour
             {
                 tempFireDirection = playerCamera.transform.TransformDirection(Vector3.forward);
             }
-            
-            
+
+
             //Get directional vector from firingOrigin to the point
+        }
+        else
+        {
+            tempFireDirection = gameObject.transform.TransformDirection(Vector3.forward);
+
         }
         
         //Shift firing direction by random amount based on innacuracy
@@ -94,6 +99,7 @@ public class Weapon_Base : MonoBehaviour
         {
             DrawLine(firingOrigin.transform.position, firingOrigin.transform.position + (tempFireDirection * fireHit.distance), Color.red);
             hitObject = fireHit.collider.gameObject;
+            hitObject.SendMessage("TakeDamage", shotDamage);
         }
         else
         {

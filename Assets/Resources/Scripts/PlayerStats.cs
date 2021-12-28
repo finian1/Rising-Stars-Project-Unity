@@ -7,6 +7,7 @@ public static class PlayerStats
     public static float health;
     public static int points;
     public static int currency;
+    public static float difficulty = 1.0f;
     public static WeaponStatHolderBase[] weaponsOwned =
     {
         new WeaponStatHolderBase(typeof(Weapon_AssRifle), 10, 50, 10, 5, 0.1f, 0.1f, "TestyAssault"),
@@ -36,6 +37,23 @@ public class WeaponStatHolderBase
         coolDownSpeed = wepCoolDownSpeed;
 
         shotCount = wepShotCount;
+    }
+    public WeaponStatHolderBase()
+    {
+        weaponType = null;
+        weaponNickname = "";
+        shotDamage = 0.0f;
+        range = 0.0f;
+        innacuracy =0.0f;
+        fireRate = 0.0f;
+        shotLifetime = 0.0f;
+        shotWidth = 0.0f;
+
+        startFireRate = 0.0f;
+        timeToRevUp = 0.0f;
+        coolDownSpeed = 0.0f;
+
+        shotCount = 0;
     }
 
     public System.Type weaponType;

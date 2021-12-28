@@ -23,7 +23,7 @@ public class Board : MonoBehaviour
     public float YBoardSize;
     public bool gameStarted = false;
 
-    public ChunkController chunkController;
+    public MapController chunkController;
     public GameObject playerObject;
     public float platformSpawnHeight;
     public GameObject spawnPlatform;

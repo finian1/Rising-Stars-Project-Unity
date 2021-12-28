@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SettingController : MonoBehaviour
 {
-    public ChunkController chunkController;
+    public MapController chunkController;
     public Board boardController;
     public Game gameController;
     public Button[] cellSizeButtons;

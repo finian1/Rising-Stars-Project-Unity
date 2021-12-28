@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class ChunkController : MonoBehaviour
+public class MapController : MonoBehaviour
 {
     private int numOfCellsX;
     private int numOfCellsY;
@@ -40,6 +40,8 @@ public class ChunkController : MonoBehaviour
     private float scaleX;
     private float scaleY;
     private Vector3 boardMidpoint;
+
+    public GameObject[] enemyPrefabs;
 
     private void FixedUpdate()
     {
@@ -251,7 +253,7 @@ public class Cell : MonoBehaviour
     private int cellID;
     private float cellStartPosX;
     private float cellStartPosZ;
-    private ChunkController controller;
+    private MapController controller;
     private GameObject cellTrigger;
     private Board gameplayBoard;
     private bool revealed = false;
@@ -311,7 +313,7 @@ public class Cell : MonoBehaviour
     {
         cellID = id;
     }
-    public void SetController(ChunkController cont)
+    public void SetController(MapController cont)
     {
         controller = cont;
     }

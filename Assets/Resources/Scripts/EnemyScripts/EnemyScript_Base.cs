@@ -14,14 +14,16 @@ public class EnemyScript_Base : MonoBehaviour
     }
     public EnemyStates currentState;
 
-    [SerializeField] private float movementSpeed;
-    [SerializeField] private Weapon_Base enemyWeapon;
-    [SerializeField] private GameObject currentNodeTarget;
-    [SerializeField] private float nodeSearchRange;
+    [SerializeField] protected float movementSpeed;
+    [SerializeField] protected WeaponStatHolderBase weaponStatHolder;
+    [SerializeField] protected Weapon_Base enemyWeapon;
+    [SerializeField] protected GameObject currentNodeTarget;
+    [SerializeField] protected float nodeSearchRange;
     [SerializeField] public GameObject player;
-    [SerializeField] private List<GameObject> nodeMemory = new List<GameObject>();
-    [SerializeField] private int navLayer = 7;
-    [SerializeField] private int solidLayer = 6;
+    [SerializeField] protected List<GameObject> nodeMemory = new List<GameObject>();
+    [SerializeField] protected int navLayer = 7;
+    [SerializeField] protected int solidLayer = 6;
+    [SerializeField] protected float enemyHealth = 10.0f;
 
     private GameObject prevNode;
     private GameObject[] prevCheckDebug;
@@ -33,33 +35,42 @@ public class EnemyScript_Base : MonoBehaviour
     private void Start()
     {
         currentNodeTarget = FindClosestNode();
+        CreateWeaponStats();
     }
-    private void Update()
+    protected virtual void Update()
     {
-        if (currentNodeTarget != null)
-        {
-            MoveTowards(currentNodeTarget);
-            Debug.DrawLine(transform.position, currentNodeTarget.transform.position, Color.green);
-            if (transform.position == currentNodeTarget.transform.position)
-            {
-                if (player != null)
-                {
-                    currentNodeTarget = PickAgressiveNode();
-                    if (currentNodeTarget != null)
-                    {
-                        nodeMemory.Add(currentNodeTarget);
-                    }
-                }
-            }
-        }
-        else
-        {
-            currentNodeTarget = FindClosestNode();
-        }
         if (debug)
         {
             DebugThis();
         }
+    }
+
+    private void TakeDamage(float val)
+    {
+        enemyHealth -= val;
+
+        //Temp
+        if(enemyHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    protected void CreateWeaponStats()
+    {
+        if (enemyWeapon != null)
+        {
+            weaponStatHolder = new WeaponStatHolderBase();
+            if (enemyWeapon.GetType() == typeof(Weapon_AssRifle))
+            {
+                CreateAssaultRifle(ref weaponStatHolder, PlayerStats.difficulty);
+            }
+            if(enemyWeapon.GetType() == typeof(Weapon_Shotgun))
+            {
+                CreateShotGun(ref weaponStatHolder, PlayerStats.difficulty);
+            }
+        }
+        enemyWeapon.init(weaponStatHolder);
     }
 
     private void DebugThis()
@@ -106,7 +117,7 @@ public class EnemyScript_Base : MonoBehaviour
         return null;
     }
 
-    private void GetPossibleNodes(ref List<GameObject> possibleNodes)
+    protected void GetPossibleNodes(ref List<GameObject> possibleNodes)
     {
         int layerMask = 1 << navLayer;
         int solidLayerMask = 1 << solidLayer;
@@ -124,7 +135,7 @@ public class EnemyScript_Base : MonoBehaviour
         }
     }
 
-    private GameObject PickAgressiveNode()
+    protected GameObject PickAgressiveNode()
     {
         
         List<GameObject> possibleNodes = new List<GameObject>();
@@ -158,7 +169,7 @@ public class EnemyScript_Base : MonoBehaviour
         
     }
 
-    private GameObject PickRandomNode()
+    protected GameObject PickRandomNode()
     {
 
         List<GameObject> possibleNodes = new List<GameObject>();
@@ -174,10 +185,95 @@ public class EnemyScript_Base : MonoBehaviour
         }
 
     }
-    
-    private void MoveTowards(GameObject node)
+
+    protected void FireAtPlayer()
+    {
+        enemyWeapon.gameObject.transform.LookAt(player.transform.position, Vector3.up);
+        enemyWeapon.FireWeapon(false);
+    }
+
+    protected void MoveTowards(GameObject node)
     {
         transform.position = Vector3.MoveTowards(transform.position, node.transform.position, movementSpeed * Time.deltaTime);
+    }
+
+    private void SetBaseStats(ref WeaponStatHolderBase wep, float difficulty,
+        float minInaccuracy, float maxInaccuracy,
+        float minRange, float maxRange,
+        float minDamage, float maxDamage,
+        float minFireRate, float maxFireRate,
+        float shotWidth,
+        float shotLifetime)
+    {
+        wep.shotDamage = Mathf.Clamp(minDamage + difficulty, minDamage, maxDamage);
+        wep.range = Mathf.Clamp(minRange + difficulty, minRange, maxRange);
+        wep.innacuracy = Mathf.Clamp(maxInaccuracy - difficulty, minInaccuracy, maxInaccuracy);
+        wep.fireRate = Mathf.Clamp(minFireRate + difficulty, minFireRate, maxFireRate);
+
+        wep.shotWidth = shotWidth;
+        wep.shotLifetime = shotLifetime;
+        
+    }
+
+    protected void CreateAssaultRifle(ref WeaponStatHolderBase wep, float difficulty)
+    {
+        wep.weaponType = typeof(Weapon_AssRifle);
+
+        float minInaccuracy = 5;
+        float maxInaccuracy = 90;
+
+        float minRange = 20;
+        float maxRange = 50;
+
+        float minDamage = 5;
+        float maxDamage = 20;
+
+        float minFireRate = 4;
+        float maxFireRate = 8;
+
+        float shotWidth = 0.1f;
+        float shotLifetime = 0.2f;
+
+        SetBaseStats(ref wep, difficulty, 
+            minInaccuracy, maxInaccuracy,
+            minRange, maxRange,
+            minDamage, maxDamage,
+            minFireRate, maxFireRate,
+            shotWidth,
+            shotLifetime);
+    }
+
+    protected void CreateShotGun(ref WeaponStatHolderBase wep, float difficulty)
+    {
+        wep.weaponType = typeof(Weapon_Shotgun);
+
+        float minInaccuracy = 30;
+        float maxInaccuracy = 180;
+
+        float minRange = 5;
+        float maxRange = 20;
+
+        float minDamage = 1;
+        float maxDamage = 10;
+
+        float minFireRate = 0.2f;
+        float maxFireRate = 3;
+
+        float shotWidth = 0.1f;
+        float shotLifetime = 0.2f;
+
+        int minShotCount = 5;
+        int maxShotCount = 10;
+
+        SetBaseStats(ref wep, difficulty,
+            minInaccuracy, maxInaccuracy,
+            minRange, maxRange,
+            minDamage, maxDamage,
+            minFireRate, maxFireRate,
+            shotWidth,
+            shotLifetime);
+
+        wep.shotCount = (int)Mathf.Clamp(minShotCount + difficulty, minShotCount, maxShotCount);
     }
 
 }
