@@ -63,6 +63,11 @@ public class ObstacleScript : MonoBehaviour
         }
     }
 
+    public List<GameObject> GetNodes()
+    {
+        return nodes;
+    }
+
     public void ActivateNodes()
     {
         foreach (GameObject node in nodes)

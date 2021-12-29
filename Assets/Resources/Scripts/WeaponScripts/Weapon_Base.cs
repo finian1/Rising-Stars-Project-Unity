@@ -63,13 +63,14 @@ public class Weapon_Base : MonoBehaviour
         Vector3 tempFireDirection = new Vector3();
         int layerMask = 1 << 6;
         int playerMask = 1 << 3;
-        int multiMask = layerMask | playerMask;
+        int enemyMask = 1 << 8;
+        int multiMask = layerMask | playerMask | enemyMask;
         float innacuracyScaled = innacuracy / 360;
         if (isPlayer)
         {
             //Get point that camera is looking at
             RaycastHit cameraHit;
-            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out cameraHit, Mathf.Infinity, layerMask)){
+            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward), out cameraHit, Mathf.Infinity, layerMask | enemyMask)){
                 //Debug.DrawRay(playerCamera.transform.position, playerCamera.transform.TransformDirection(Vector3.forward) * cameraHit.distance, Color.yellow);
                 Debug.Log("Hit");
                 tempFireDirection = (cameraHit.point - firingOrigin.transform.position).normalized;
@@ -99,7 +100,7 @@ public class Weapon_Base : MonoBehaviour
         {
             DrawLine(firingOrigin.transform.position, firingOrigin.transform.position + (tempFireDirection * fireHit.distance), Color.red);
             hitObject = fireHit.collider.gameObject;
-            hitObject.SendMessage("TakeDamage", shotDamage);
+            hitObject.SendMessage("TakeDamage", shotDamage, SendMessageOptions.DontRequireReceiver);
         }
         else
         {

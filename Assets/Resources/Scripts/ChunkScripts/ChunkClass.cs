@@ -30,7 +30,12 @@ public class ChunkClass : MonoBehaviour
     protected int finishedObstacles = 0;
     private bool activatedNavPoints = false;
 
-    public List<GameObject> nodes;
+    public List<GameObject> nodes = new List<GameObject>();
+
+    private float spawnChance = 10;
+    private bool spawnedEnemies = false;
+
+    public MapController mapController;
 
     private void Awake()
     {
@@ -55,7 +60,41 @@ public class ChunkClass : MonoBehaviour
                 currentColourFade = 0.0f;
             }
         }
+
+        if (obstacleArray != null)
+        {
+            //Prepare for enemy spawns
+            if (finishedObstacles >= obstacleArray.Length && !spawnedEnemies)
+            {
+                GetAllAccesibleNodes();
+                if (Random.Range(0, 100) < spawnChance)
+                {
+                    GameObject[] enemyPrefabs = mapController.enemyPrefabs;
+                    GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
+                    temp.GetComponent<EnemyScript_Base>().player = playerObject;
+                }
+                spawnedEnemies = true;
+            }
+        }
         
+    }
+    public void GetAllAccesibleNodes()
+    {
+        foreach (Transform obj in transform)
+        {
+            if (obj.CompareTag("Navigation") && !Physics2D.OverlapPoint(obj.transform.position))
+            {
+                nodes.Add(obj.gameObject);
+            }
+            else
+            {
+                ObstacleScript temp = obj.GetComponent<ObstacleScript>();
+                if (temp != null)
+                {
+                    nodes.AddRange(temp.GetNodes());
+                }
+            }
+        }
     }
 
     public void ActivateNodes()

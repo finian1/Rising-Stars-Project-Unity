@@ -108,7 +108,7 @@ public class MapController : MonoBehaviour
             cells[i].SetID(i);
             cells[i].SetBoard(gameplayBoard);
             cells[i].SetController(this);
-            cells[i].SetStartPosition(-cellColumn * chunksPerCellX * chunkSizeX, cellRow * chunksPerCellY * chunkSizeY);
+            cells[i].InitializeCellPositions(-cellColumn * chunksPerCellX * chunkSizeX, cellRow * chunksPerCellY * chunkSizeY);
             
             //Set chunk positions
             cells[i].cellChunks = new GameObject[chunksPerCellX * chunksPerCellY];
@@ -132,7 +132,9 @@ public class MapController : MonoBehaviour
                 {
                     cells[i].cellChunks[j] = Instantiate(chunkBase, transform);
                 }
+                
                 cells[i].cellChunks[j].AddComponent(chunkType);
+                cells[i].cellChunks[j].GetComponent<ChunkClass>().mapController = this;
                 cells[i].cellChunks[j].GetComponent<ChunkClass>().playerObject = playerObject;
                 cells[i].cellChunks[j].transform.localPosition = new Vector3(cells[i].GetStartX() + chunkColumn * chunkSizeX, 0,cells[i].GetStartY() + chunkRow * chunkSizeY);
                 
@@ -331,7 +333,7 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void SetStartPosition(float X, float Z)
+    public void InitializeCellPositions(float X, float Z)
     {
         float posShiftX = (controller.GetChunkSizeX() * controller.GetChunksPerCellX()) / 2 - (controller.GetChunkSizeX() / 2);
         float posShiftZ = (controller.GetChunkSizeY() * controller.GetChunksPerCellY()) / 2 - (controller.GetChunkSizeY() / 2);
