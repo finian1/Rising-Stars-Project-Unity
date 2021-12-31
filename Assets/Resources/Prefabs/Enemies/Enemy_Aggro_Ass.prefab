@@ -22,6 +22,7 @@ MonoBehaviour:
   shotLifetime: 0
   shotWidth: 0
   shotMat: {fileID: 0}
+  shotSound: {fileID: 8300000, guid: 50a3bbf21efcec74f826a1911496bc78, type: 3}
 --- !u!1 &7893159740739853827
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,9 +167,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9dbc3d52ba764ae4399f38a48ce1ad2d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9e1d9dd71180e41468ee73c0da845b61, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.097
   m_Pitch: 1
   Loop: 1
   Mute: 0

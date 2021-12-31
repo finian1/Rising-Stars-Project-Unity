@@ -9,12 +9,15 @@ public class Weapon_Shotgun : Weapon_Base
 
     public override void init(WeaponStatHolderBase stats)
     {
+        weaponSoundName = "ShotGunSound";
         base.init(stats);
+        //Extra shotgun-specific stats
         shotCount = stats.shotCount;
     }
 
     public override void FireWeapon(bool isFiredByPlayer)
     {
+        base.FireWeapon(isFiredByPlayer);
         if (currentShotTimer >= 1 / fireRate)
         {
             for (int i = 0; i < shotCount; i++)

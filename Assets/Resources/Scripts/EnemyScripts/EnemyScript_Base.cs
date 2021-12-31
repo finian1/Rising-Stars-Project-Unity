@@ -52,6 +52,7 @@ public class EnemyScript_Base : MonoBehaviour
         //Temp
         if(enemyHealth <= 0)
         {
+            PlayerStats.points += (int)PlayerStats.difficulty*10;
             Destroy(gameObject);
         }
     }

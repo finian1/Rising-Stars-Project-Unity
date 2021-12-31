@@ -4,7 +4,8 @@ using UnityEngine;
 
 public static class PlayerStats
 {
-    public static float health;
+    public static float initialHealth = 100.0f;
+    public static float health = initialHealth;
     public static int points;
     public static int currency;
     public static float difficulty = 1.0f;
@@ -20,7 +21,8 @@ public class WeaponStatHolderBase
 {
     public WeaponStatHolderBase(System.Type wepType, float wepDamage, float wepRange, float wepInnacuracy, float wepFireRate, float wepShotLifetime, float wepShotWidth, string wepNickname = "Nameless",
         /*minigun vars*/float wepStartFireRate = 0.0f, float wepTimeToRevUp = 0.0f, float wepCoolDownSpeed = 0.0f,
-        /*shotgun vars*/int wepShotCount = 0
+        /*shotgun vars*/int wepShotCount = 0,
+        /*assault vars*/float wepInitInaccuracy = 0.0f
         )
     {
         weaponType = wepType;
@@ -37,6 +39,7 @@ public class WeaponStatHolderBase
         coolDownSpeed = wepCoolDownSpeed;
 
         shotCount = wepShotCount;
+        initInaccuracy = wepInitInaccuracy;
     }
     public WeaponStatHolderBase()
     {
@@ -54,6 +57,8 @@ public class WeaponStatHolderBase
         coolDownSpeed = 0.0f;
 
         shotCount = 0;
+
+        initInaccuracy = 0.0f;
     }
 
     public System.Type weaponType;
@@ -70,6 +75,8 @@ public class WeaponStatHolderBase
     public float coolDownSpeed;
     //Shotgun vars
     public int shotCount;
+    //Assault vars
+    public float initInaccuracy;
 }
 
 

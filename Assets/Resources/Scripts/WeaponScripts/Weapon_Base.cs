@@ -15,6 +15,12 @@ public class Weapon_Base : MonoBehaviour
     [SerializeField] protected float shotLifetime;
     [SerializeField] protected float shotWidth;
     [SerializeField] protected Material shotMat;
+    [SerializeField] protected AudioClip shotSound;
+
+    protected string weaponSoundName;
+
+    
+
 
     protected float currentShotTimer;
     protected bool isFiring;
@@ -24,8 +30,15 @@ public class Weapon_Base : MonoBehaviour
         
     }
 
+    //Loads the weapon sound based on the current weapon type
+    private void LoadWeaponSound()
+    {
+        shotSound = Resources.Load<AudioClip>("Sounds/WeaponSounds/" + weaponSoundName);
+    }
+
     public virtual void init(WeaponStatHolderBase stats)
     {
+        LoadWeaponSound();
         weaponNickname = stats.weaponNickname;
         shotDamage = stats.shotDamage;
         range = stats.range;
@@ -60,6 +73,7 @@ public class Weapon_Base : MonoBehaviour
 
     public void FireHitscanShot(bool isPlayer, ref GameObject hitObject)
     {
+
         Vector3 tempFireDirection = new Vector3();
         int layerMask = 1 << 6;
         int playerMask = 1 << 3;
@@ -108,23 +122,27 @@ public class Weapon_Base : MonoBehaviour
         }
     }
 
+    
+
     private void DrawLine(Vector3 start, Vector3 end, Color color)
     {
+        if (shotSound != null)
         {
-            GameObject myLine = new GameObject();
-            myLine.transform.position = start;
-            myLine.AddComponent<LineRenderer>();
-            LineRenderer lr = myLine.GetComponent<LineRenderer>();
-            lr.material = shotMat;
-            lr.startColor = color;
-            lr.endColor = color;
-            lr.startWidth = shotWidth;
-            lr.endWidth = 0;
-            lr.SetPosition(0, start);
-            lr.SetPosition(1, end);
-            myLine.AddComponent<DestructionScript>();
-            myLine.GetComponent<DestructionScript>().Destruct(shotLifetime);
+            AudioSource.PlayClipAtPoint(shotSound, transform.position, 0.1f);
         }
+        GameObject myLine = new GameObject();
+        myLine.transform.position = start;
+        myLine.AddComponent<LineRenderer>();
+        LineRenderer lr = myLine.GetComponent<LineRenderer>();
+        lr.material = shotMat;
+        lr.startColor = color;
+        lr.endColor = color;
+        lr.startWidth = shotWidth;
+        lr.endWidth = shotWidth;
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
+        myLine.AddComponent<DestructionScript>();
+        myLine.GetComponent<DestructionScript>().Destruct(shotLifetime);
     }
 
 }

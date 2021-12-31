@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8586cbe664773e94f8692353d8b243c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponNickname: 
   firingOrigin: {fileID: 5608096572500112012}
   shotDamage: 0
   range: 0
@@ -148,3 +149,4 @@ MonoBehaviour:
   shotLifetime: 0
   shotWidth: 0
   shotMat: {fileID: 0}
+  shotSound: {fileID: 8300000, guid: 50a3bbf21efcec74f826a1911496bc78, type: 3}

@@ -84,6 +84,7 @@ public class Board : MonoBehaviour
     {
         chunkController.PopulateArrays(GetWidth(), GetHeight());
         chunkController.SetPlayerMarkerActive(true);
+        PlayerStats.health = PlayerStats.initialHealth;
         playerObject.SetActive(true);
     }
     /// <summary>

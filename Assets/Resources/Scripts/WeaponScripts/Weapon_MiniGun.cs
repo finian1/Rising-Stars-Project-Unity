@@ -14,6 +14,7 @@ public class Weapon_MiniGun : Weapon_Base
 
     public override void init(WeaponStatHolderBase stats)
     {
+        weaponSoundName = "MiniGunSound";
         base.init(stats);
         startFireRate = stats.startFireRate;
         timeToRevUp = stats.timeToRevUp;
@@ -43,6 +44,7 @@ public class Weapon_MiniGun : Weapon_Base
 
     public override void FireWeapon(bool isFiredByPlayer)
     {
+        base.FireWeapon(isFiredByPlayer);
         isFiring = true;
         if(currentRevPercent < 1)
         {

@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Weapon_AssRifle : Weapon_Base
 {
+    
     public override void init(WeaponStatHolderBase stats)
     {
+        weaponSoundName = "AssaultRifleSound";
         base.init(stats);
     }
 
     public override void FireWeapon(bool isFiredByPlayer)
     {
+        base.FireWeapon(isFiredByPlayer);
         if(currentShotTimer >= 1/fireRate)
         {
             GameObject hitObject = null;
