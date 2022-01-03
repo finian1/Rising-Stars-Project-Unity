@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Weapon_AssRifle : Weapon_Base
 {
-    
+    [Header("Assault Weapon Settings")]
+    [SerializeField] protected float initInaccuracy;
+
     public override void init(WeaponStatHolderBase stats)
     {
         weaponSoundName = "AssaultRifleSound";

@@ -98,7 +98,7 @@ public class Game : MonoBehaviour
     {
         if(eventType == Board.Event.ClickedDanger && _ui != null)
         {
-            EndGame(false);
+            //EndGame(false);
         }
 
         if (eventType == Board.Event.Win && _ui != null)

@@ -46,6 +46,15 @@ public class PlayerController : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Crystal"))
+        {
+            PlayerStats.currency += collision.gameObject.GetComponent<CrystalScript>().crystalCost;
+            Destroy(collision.gameObject);
+        }
+    }
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;

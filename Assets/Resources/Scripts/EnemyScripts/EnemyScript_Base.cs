@@ -24,12 +24,54 @@ public class EnemyScript_Base : MonoBehaviour
     [SerializeField] protected int navLayer = 7;
     [SerializeField] protected int solidLayer = 6;
     [SerializeField] protected float enemyHealth = 10.0f;
+    [SerializeField] protected GameObject scoreCrystalPrefab;
+    [SerializeField] int numOfScoreCrystals = 5;
+    [SerializeField] AudioClip destructionSound;
 
     private GameObject prevNode;
     private GameObject[] prevCheckDebug;
     private Collider[] fullPrevCheckDebug;
 
     private bool debug = true;
+
+    private void OnDestroy()
+    {
+        if (destructionSound != null)
+        {
+            AudioSource.PlayClipAtPoint(destructionSound, transform.position, 1.0f);
+        }
+        Color thisColor = GetComponent<MeshRenderer>().material.color;
+        for (int i = 0; i < numOfScoreCrystals; i++)
+        {
+            GameObject crystalTemp = Instantiate(scoreCrystalPrefab, transform.position, transform.rotation);
+
+            crystalTemp.GetComponent<MeshRenderer>().material.color = new Color(thisColor.r, thisColor.g, thisColor.b, crystalTemp.GetComponent<MeshRenderer>().material.color.a);
+        }
+    }
+
+    protected bool CanSeePlayer()
+    {
+        int layerMask = 1 << 6;
+        int playerMask = 1 << 3;
+        int enemyMask = 1 << 8;
+        int multiMask = layerMask | playerMask | enemyMask;
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, player.transform.position-transform.position, out hit, Mathf.Infinity, multiMask))
+        {
+            if (hit.collider.gameObject.CompareTag("Player"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 
     private void Start()
@@ -69,6 +111,10 @@ public class EnemyScript_Base : MonoBehaviour
             if(enemyWeapon.GetType() == typeof(Weapon_Shotgun))
             {
                 CreateShotGun(ref weaponStatHolder, PlayerStats.difficulty);
+            }
+            if (enemyWeapon.GetType() == typeof(Weapon_MiniGun))
+            {
+                CreateMiniGun(ref weaponStatHolder, PlayerStats.difficulty);
             }
         }
         enemyWeapon.init(weaponStatHolder);
@@ -275,6 +321,44 @@ public class EnemyScript_Base : MonoBehaviour
             shotLifetime);
 
         wep.shotCount = (int)Mathf.Clamp(minShotCount + difficulty, minShotCount, maxShotCount);
+    }
+
+    protected void CreateMiniGun(ref WeaponStatHolderBase wep, float difficulty)
+    {
+        wep.weaponType = typeof(Weapon_Shotgun);
+
+        float minInaccuracy = 30;
+        float maxInaccuracy = 90;
+
+        float minRange = 10;
+        float maxRange = 50;
+
+        float minDamage = 2;
+        float maxDamage = 10;
+
+        float minFireRate = 5;
+        float maxFireRate = 10;
+
+        float shotWidth = 0.1f;
+        float shotLifetime = 0.2f;
+
+        float minStartFireRate = 1;
+        float maxStartFireRate = 4;
+
+        float minTimeToRev = 4;
+        float maxTimeToRev = 10;
+
+        SetBaseStats(ref wep, difficulty,
+            minInaccuracy, maxInaccuracy,
+            minRange, maxRange,
+            minDamage, maxDamage,
+            minFireRate, maxFireRate,
+            shotWidth,
+            shotLifetime);
+
+        wep.timeToRevUp = (int) Mathf.Clamp(maxTimeToRev - difficulty, minTimeToRev, maxTimeToRev);
+        wep.startFireRate = (int) Mathf.Clamp(minStartFireRate + difficulty, minStartFireRate, maxStartFireRate);
+
     }
 
 }

@@ -39,6 +39,7 @@ public class WeaponStatHolderBase
         coolDownSpeed = wepCoolDownSpeed;
 
         shotCount = wepShotCount;
+
         initInaccuracy = wepInitInaccuracy;
     }
     public WeaponStatHolderBase()

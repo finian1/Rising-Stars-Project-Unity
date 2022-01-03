@@ -9,8 +9,8 @@ public class EnemyScript_Agressive : EnemyScript_Base
     // Update is called once per frame
     protected override void Update()
     {
-        if (player != null)
-        { 
+        if (player != null && CanSeePlayer())
+        {
             FireAtPlayer();
         }
 
