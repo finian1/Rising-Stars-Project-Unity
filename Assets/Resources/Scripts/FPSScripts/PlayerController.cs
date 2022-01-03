@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
 
     //private CharacterController controller;
-    private Vector3 playerVelocity;
+    [SerializeField] private Vector3 playerVelocity;
+    [SerializeField] private Vector3 currentForceVelocity;
     private bool groundedPlayer;
     /*private float playerSpeed = 10.0f;
     private float jumpHeight = 1.0f;*/
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
     public GameObject weapon;
     public Material shotMaterial;
     private Weapon_Base currentWeaponScript;
+    private float decell = 0.25f;
+
   
     void Start()
     {
@@ -46,12 +49,14 @@ public class PlayerController : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Crystal"))
+        if (other.gameObject.CompareTag("Crystal"))
         {
-            PlayerStats.currency += collision.gameObject.GetComponent<CrystalScript>().crystalCost;
-            Destroy(collision.gameObject);
+            PlayerStats.currency += other.gameObject.GetComponent<CrystalScript>().crystalCost;
+            other.gameObject.GetComponent<CrystalScript>().CollectItem();
         }
     }
 
@@ -165,7 +170,11 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = new Vector3((transform.forward * Input.GetAxisRaw("Vertical")).x + (transform.right * Input.GetAxisRaw("Horizontal")).x, 0, (transform.forward * Input.GetAxisRaw("Vertical")).z + (transform.right * Input.GetAxisRaw("Horizontal")).z);
         move.Normalize();
-        characterController.Move(move * Time.deltaTime * movementSpeed);
+        playerVelocity.x = move.x * movementSpeed + currentForceVelocity.x;
+        playerVelocity.z = move.z * movementSpeed + currentForceVelocity.z;
+        
+
+        //characterController.Move(move * Time.deltaTime * movementSpeed);
 
         /*if (move != Vector3.zero)
         {
@@ -183,7 +192,19 @@ public class PlayerController : MonoBehaviour
         }
         //Debug.Log(doubleJumped);
         playerVelocity.y += gravityValue * Time.deltaTime;
-        characterController.Move(playerVelocity * Time.deltaTime);
+
+        characterController.Move(new Vector3(playerVelocity.x, 0.0f, playerVelocity.z) * Time.deltaTime);
+        characterController.Move(new Vector3(0.0f, playerVelocity.y, 0.0f) * Time.deltaTime);
+        //playerVelocity -= move * movementSpeed;
+
+        currentForceVelocity = Vector3.Lerp(currentForceVelocity, Vector3.zero, decell);
+        if(currentForceVelocity.magnitude < 0.1f)
+        {
+            currentForceVelocity = Vector3.zero;
+        }
+
+        Debug.Log(currentForceVelocity);
+        
     }
 
     private void TakeDamage(float val)
@@ -191,6 +212,11 @@ public class PlayerController : MonoBehaviour
         PlayerStats.health -= val;
     }
 
+    public void ApplyForce(Vector3 force)
+    {
+        Debug.Log("Applied force: " + force);
+        currentForceVelocity += force;
+    }
 
     
     private void MoveCamera()

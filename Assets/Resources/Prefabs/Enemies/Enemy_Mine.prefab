@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: 7893159740739853838}
   - component: {fileID: 7893159740739853825}
   - component: {fileID: 7893159740739853824}
-  - component: {fileID: 7893159740739853836}
   - component: {fileID: 3290503786656381171}
   - component: {fileID: 195459866924482166}
+  - component: {fileID: 8507032997607003069}
   m_Layer: 8
-  m_Name: Enemy_Basic
+  m_Name: Enemy_Mine
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d54c6de46b05bfb4cbfc4d957d3bdb5e, type: 2}
+  - {fileID: 2100000, guid: 75b42d8366b29864b9cc340ff0a3d3ba, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,31 +99,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7893159740739853836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7893159740739853827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d86116b47bd42ac49879f17f2517ea92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentState: 0
-  movementSpeed: 5
-  enemyWeapon: {fileID: 0}
-  currentNodeTarget: {fileID: 0}
-  nodeSearchRange: 10
-  player: {fileID: 0}
-  nodeMemory: []
-  navLayer: 7
-  solidLayer: 6
-  enemyHealth: 10
-  scoreCrystalPrefab: {fileID: 0}
-  numOfScoreCrystals: 5
-  destructionSound: {fileID: 0}
 --- !u!114 &3290503786656381171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +128,33 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8507032997607003069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7893159740739853827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf54e6403f36f7f45a832bd5fde5a284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  movementSpeed: 0
+  enemyWeapon: {fileID: 0}
+  currentNodeTarget: {fileID: 0}
+  nodeSearchRange: 0
+  player: {fileID: 0}
+  nodeMemory: []
+  navLayer: 7
+  solidLayer: 6
+  enemyHealth: Infinity
+  scoreCrystalPrefab: {fileID: 0}
+  numOfScoreCrystals: 0
+  destructionSound: {fileID: 0}
+  impactDamage: 20
+  impactRepulse: 100
 --- !u!1001 &3494748493087984311
 PrefabInstance:
   m_ObjectHideFlags: 0

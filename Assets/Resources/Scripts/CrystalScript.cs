@@ -8,19 +8,22 @@ public class CrystalScript : MonoBehaviour
     [SerializeField] public int crystalCost = 10;
     [SerializeField] private AudioClip collectionClip;
     [SerializeField] private AudioClip collisionClip;
+    [SerializeField] private float timeToDespawn;
     // Start is called before the first frame update
     void Start()
     {
         gameObject.transform.rotation = Random.rotation;
         GetComponent<Rigidbody>().AddForce(transform.forward * launchSpeed);
+        Destroy(this.gameObject, timeToDespawn);
     }
 
-    private void OnDestroy()
+    public void CollectItem()
     {
         if (collectionClip != null)
         {
             AudioSource.PlayClipAtPoint(collectionClip, gameObject.transform.position, 0.2f);
         }
+        Destroy(this.gameObject);
     }
 
     private void OnCollisionEnter(Collision collision)

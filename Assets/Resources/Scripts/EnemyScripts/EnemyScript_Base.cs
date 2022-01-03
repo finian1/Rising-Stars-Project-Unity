@@ -36,17 +36,28 @@ public class EnemyScript_Base : MonoBehaviour
 
     private void OnDestroy()
     {
+        CleanupScript.objectCache.Remove(this.gameObject);
+        
+        
+    }
+
+    public void DestroyEnemy()
+    {
         if (destructionSound != null)
         {
             AudioSource.PlayClipAtPoint(destructionSound, transform.position, 1.0f);
         }
         Color thisColor = GetComponent<MeshRenderer>().material.color;
-        for (int i = 0; i < numOfScoreCrystals; i++)
+        if (scoreCrystalPrefab != null)
         {
-            GameObject crystalTemp = Instantiate(scoreCrystalPrefab, transform.position, transform.rotation);
+            for (int i = 0; i < numOfScoreCrystals; i++)
+            {
+                GameObject crystalTemp = Instantiate(scoreCrystalPrefab, transform.position, transform.rotation);
 
-            crystalTemp.GetComponent<MeshRenderer>().material.color = new Color(thisColor.r, thisColor.g, thisColor.b, crystalTemp.GetComponent<MeshRenderer>().material.color.a);
+                crystalTemp.GetComponent<MeshRenderer>().material.color = new Color(thisColor.r, thisColor.g, thisColor.b, crystalTemp.GetComponent<MeshRenderer>().material.color.a);
+            }
         }
+        Destroy(this.gameObject);
     }
 
     protected bool CanSeePlayer()
@@ -76,6 +87,7 @@ public class EnemyScript_Base : MonoBehaviour
 
     private void Start()
     {
+        CleanupScript.objectCache.Add(this.gameObject);
         currentNodeTarget = FindClosestNode();
         CreateWeaponStats();
     }
@@ -95,7 +107,7 @@ public class EnemyScript_Base : MonoBehaviour
         if(enemyHealth <= 0)
         {
             PlayerStats.points += (int)PlayerStats.difficulty*10;
-            Destroy(gameObject);
+            DestroyEnemy();
         }
     }
 
@@ -116,8 +128,9 @@ public class EnemyScript_Base : MonoBehaviour
             {
                 CreateMiniGun(ref weaponStatHolder, PlayerStats.difficulty);
             }
+            enemyWeapon.init(weaponStatHolder);
         }
-        enemyWeapon.init(weaponStatHolder);
+        
     }
 
     private void DebugThis()

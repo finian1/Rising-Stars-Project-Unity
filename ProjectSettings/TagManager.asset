@@ -7,6 +7,7 @@ TagManager:
   - Navigation
   - Crystal
   - Solid
+  - Enemy
   layers:
   - Default
   - TransparentFX

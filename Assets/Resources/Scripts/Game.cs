@@ -116,6 +116,7 @@ public class Game : MonoBehaviour
     public void EndGame(bool winGame)
     {
         _ui.HideGame();
+        CleanupScript.Cleanup();
         Reset();
         chunkController.SetPlayerMarkerActive(false);
         _ui.ShowResult(success: winGame);

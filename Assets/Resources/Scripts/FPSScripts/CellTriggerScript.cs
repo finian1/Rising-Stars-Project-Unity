@@ -8,7 +8,7 @@ public class CellTriggerScript : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        thisCell.TriggerEntered(other);
+         thisCell.TriggerEntered(other);
     }
 
 }
