@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed;
     private float startSpeed;
     public float jumpForce;
+    private float startJump;
     public float maxCameraMovement;
 
     public bool allowPlayerMovement = true;
@@ -34,6 +35,10 @@ public class PlayerController : MonoBehaviour
     private Vector3 spawnPosition;
 
     public GameObject weapon;
+    public float weaponDamageScale = 1.0f;
+    private float startWeaponDamageScale;
+    public float weaponFireRateScale = 1.0f;
+    private float startWeaponFireRateScale;
     public Material shotMaterial;
     private Weapon_Base currentWeaponScript;
     private float decell = 0.25f;
@@ -41,6 +46,12 @@ public class PlayerController : MonoBehaviour
   
     void Start()
     {
+        startJump = jumpForce;
+        startSpeed = movementSpeed;
+        startWeaponDamageScale = weaponDamageScale;
+        startWeaponFireRateScale = weaponFireRateScale;
+
+
         startSpeed = movementSpeed;
         rb = GetComponent<Rigidbody>();
         characterController = GetComponent<CharacterController>();
@@ -49,7 +60,22 @@ public class PlayerController : MonoBehaviour
         //Cursor.lockState = CursorLockMode.Locked;
     }
 
-    
+    public void ResetMovement()
+    {
+        movementSpeed = startSpeed;
+    }
+    public void ResetJumpHeight()
+    {
+        jumpForce = startJump;
+    }
+    public void ResetWeaponDamage()
+    {
+        weaponDamageScale = startWeaponDamageScale;
+    }
+    public void ResetWeaponFireRate()
+    {
+        weaponFireRateScale = startWeaponFireRateScale;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -170,9 +196,9 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = new Vector3((transform.forward * Input.GetAxisRaw("Vertical")).x + (transform.right * Input.GetAxisRaw("Horizontal")).x, 0, (transform.forward * Input.GetAxisRaw("Vertical")).z + (transform.right * Input.GetAxisRaw("Horizontal")).z);
         move.Normalize();
-        playerVelocity.x = move.x * movementSpeed + currentForceVelocity.x;
-        playerVelocity.z = move.z * movementSpeed + currentForceVelocity.z;
-        
+        playerVelocity.x = move.x * movementSpeed;
+        playerVelocity.z = move.z * movementSpeed;
+        playerVelocity += currentForceVelocity;
 
         //characterController.Move(move * Time.deltaTime * movementSpeed);
 
@@ -196,11 +222,13 @@ public class PlayerController : MonoBehaviour
         characterController.Move(new Vector3(playerVelocity.x, 0.0f, playerVelocity.z) * Time.deltaTime);
         characterController.Move(new Vector3(0.0f, playerVelocity.y, 0.0f) * Time.deltaTime);
         //playerVelocity -= move * movementSpeed;
-
-        currentForceVelocity = Vector3.Lerp(currentForceVelocity, Vector3.zero, decell);
-        if(currentForceVelocity.magnitude < 0.1f)
+        if (currentForceVelocity.magnitude > 0)
         {
-            currentForceVelocity = Vector3.zero;
+            currentForceVelocity = Vector3.Lerp(currentForceVelocity, Vector3.zero, decell);
+            if (currentForceVelocity.magnitude < 0.1f)
+            {
+                currentForceVelocity = Vector3.zero;
+            }
         }
 
         Debug.Log(currentForceVelocity);

@@ -15,7 +15,7 @@ public class Weapon_Shotgun : Weapon_Base
         shotCount = stats.shotCount;
     }
 
-    public override void FireWeapon(bool isFiredByPlayer)
+    public override void FireWeapon(bool isFiredByPlayer, float damageScale = 1.0f, float fireRateScale = 1.0f)
     {
         base.FireWeapon(isFiredByPlayer);
         if (currentShotTimer >= 1 / fireRate)

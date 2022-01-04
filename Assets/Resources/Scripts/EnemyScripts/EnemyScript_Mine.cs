@@ -13,6 +13,7 @@ public class EnemyScript_Mine : EnemyScript_Base
         {
             collision.gameObject.SendMessage("TakeDamage", impactDamage, SendMessageOptions.DontRequireReceiver);
             Vector3 forceVector = (collision.transform.position - transform.position).normalized * impactRepulse;
+            forceVector = new Vector3(forceVector.x, forceVector.y/10.0f, forceVector.z);
             collision.gameObject.GetComponent<PlayerController>().ApplyForce(forceVector);
             DestroyEnemy();
         }

@@ -42,7 +42,7 @@ public class Weapon_MiniGun : Weapon_Base
         isFiring = false;
     }
 
-    public override void FireWeapon(bool isFiredByPlayer)
+    public override void FireWeapon(bool isFiredByPlayer, float damageScale = 1.0f, float fireRateScale = 1.0f)
     {
         base.FireWeapon(isFiredByPlayer);
         isFiring = true;

@@ -61,10 +61,11 @@ public class Weapon_Base : MonoBehaviour
         currentShotTimer += Time.deltaTime;
     }
 
-    public virtual void FireWeapon(bool isFiredByPlayer)
+    public virtual void FireWeapon(bool isFiredByPlayer, float damageScale = 1.0f, float fireRateScale = 1.0f)
     {
 
     }
+
 
     public virtual void StopFiring()
     {
