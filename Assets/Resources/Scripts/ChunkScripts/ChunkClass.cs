@@ -32,10 +32,13 @@ public class ChunkClass : MonoBehaviour
 
     public List<GameObject> nodes = new List<GameObject>();
 
-    private float spawnChance = 10;
+    private float enemySpawnChance = 10;
     private bool spawnedEnemies = false;
+    private float pickupSpawnChance = 5;
+    private bool spawnedPickups = false;
 
     public MapController mapController;
+    public Game gameController;
 
     private void Awake()
     {
@@ -64,20 +67,42 @@ public class ChunkClass : MonoBehaviour
         if (obstacleArray != null)
         {
             //Prepare for enemy spawns
-            if (finishedObstacles >= obstacleArray.Length && !spawnedEnemies)
+            if (finishedObstacles >= obstacleArray.Length && !spawnedEnemies && gameController.IsGameInProgress())
             {
-                GetAllAccesibleNodes();
-                if (Random.Range(0, 100) < spawnChance)
-                {
-                    GameObject[] enemyPrefabs = mapController.enemyPrefabs;
-                    GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
-                    temp.GetComponent<EnemyScript_Base>().player = playerObject;
-                }
-                spawnedEnemies = true;
+                SpawnEnemies();
+            }
+            if (finishedObstacles >= obstacleArray.Length && !spawnedPickups && gameController.IsGameInProgress())
+            {
+                SpawnPickups();
             }
         }
         
     }
+
+    private void SpawnEnemies()
+    {
+        GetAllAccesibleNodes();
+        if (Random.Range(0, 100) < enemySpawnChance)
+        {
+            GameObject[] enemyPrefabs = mapController.enemyPrefabs;
+            GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
+            temp.GetComponent<EnemyScript_Base>().player = playerObject;
+        }
+        spawnedEnemies = true;
+    }
+
+    private void SpawnPickups()
+    {
+        GetAllAccesibleNodes();
+        if (Random.Range(0, 100) < pickupSpawnChance)
+        {
+            GameObject[] pickupPrefabs = mapController.pickupPrefabs;
+            GameObject temp = Instantiate(pickupPrefabs[Random.Range(0, pickupPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
+        }
+        spawnedPickups = true;
+    }
+
+
     public void GetAllAccesibleNodes()
     {
         foreach (Transform obj in transform)

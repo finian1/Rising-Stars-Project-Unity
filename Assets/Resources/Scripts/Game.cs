@@ -11,7 +11,10 @@ public class Game : MonoBehaviour
     public GameObject mainMenu;
     public GameObject settingMenu;
     
-
+    public bool IsGameInProgress()
+    {
+        return _gameInProgress;
+    }
     public void OnClickedNewGame()
     {
         if (_board != null)

@@ -4650,6 +4650,10 @@ MonoBehaviour:
   - {fileID: 7893159740739853827, guid: 97e5d584d19eab34eb17ce23785a837c, type: 3}
   - {fileID: 7893159740739853827, guid: cfa5776db23735440bc5adb821bae285, type: 3}
   - {fileID: 7893159740739853827, guid: 7e68ad221035e2b40b165503abbbafee, type: 3}
+  pickupPrefabs:
+  - {fileID: 8274805177746012419, guid: 308d6648fd5f7fd4282ce328a26efeb6, type: 3}
+  - {fileID: 8274805177746012419, guid: 0faf9005216f8aa42bf307a563ea2e0c, type: 3}
+  gameController: {fileID: 703942846}
 --- !u!23 &1871643077
 MeshRenderer:
   m_ObjectHideFlags: 0

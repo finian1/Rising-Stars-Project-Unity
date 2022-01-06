@@ -18,7 +18,7 @@ public class Status_Base : MonoBehaviour
     private void Start()
     {
         GetComponent<MeshRenderer>().material.color = collectibleColour;
-
+        CleanupScript.objectCache.Add(transform.parent.gameObject);
     }
 
     private void Update()
@@ -63,6 +63,7 @@ public class Status_Base : MonoBehaviour
     protected virtual void EndBuff()
     {
         isActive = false;
+        CleanupScript.objectCache.Remove(transform.parent.gameObject);
         Destroy(transform.parent.gameObject);
     }
 

@@ -42,6 +42,8 @@ public class MapController : MonoBehaviour
     private Vector3 boardMidpoint;
 
     public GameObject[] enemyPrefabs;
+    public GameObject[] pickupPrefabs;
+    public Game gameController;
 
     private void FixedUpdate()
     {
@@ -107,6 +109,7 @@ public class MapController : MonoBehaviour
             }
             cells[i].SetID(i);
             cells[i].SetBoard(gameplayBoard);
+            cells[i].SetGame(gameController);
             cells[i].SetController(this);
             cells[i].InitializeCellPositions(-cellColumn * chunksPerCellX * chunkSizeX, cellRow * chunksPerCellY * chunkSizeY);
             
@@ -258,6 +261,7 @@ public class Cell : MonoBehaviour
     private MapController controller;
     private GameObject cellTrigger;
     private Board gameplayBoard;
+    private Game gameController;
     private bool revealed = false;
     private float cellSizeX;
     private float cellSizeZ;
@@ -323,6 +327,10 @@ public class Cell : MonoBehaviour
     {
         gameplayBoard = gameBoard;
     }
+    public void SetGame(Game game)
+    {
+        gameController = game;
+    }
 
     public void SetCellColour(Color newColour)
     {
@@ -380,6 +388,8 @@ public class Cell : MonoBehaviour
             foreach (GameObject chunk in cellChunks)
             {
                 ChunkClass chunkClass = chunk.GetComponent<ChunkClass>();
+
+                chunkClass.gameController = gameController;
 
                 chunkClass.SpawnObjects();
 
