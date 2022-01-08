@@ -187,6 +187,7 @@ public class Board : MonoBehaviour
 
         for (int row = 0; row < Height; ++row)
         {
+            //populate the 1D array with box objects, organising them into rows
             GameObject rowObj = new GameObject(string.Format("Row{0}", row), typeof(RectTransform));
             RectTransform rowRect = rowObj.transform as RectTransform;
             rowRect.SetParent(transform);
@@ -205,6 +206,7 @@ public class Board : MonoBehaviour
             }
         }
 
+        //Get the top right and bottom left positions of the 2D board (used for scaling from the large playing field to the small board.)
         float scaledPositionTopRightX = _grid[Width - 1].transform.position.x + (boxRect.sizeDelta.x * transform.parent.lossyScale.x) / 2;
         float scaledPositionTopRightY = _grid[Width - 1].transform.position.y + (boxRect.sizeDelta.x * transform.parent.lossyScale.y) / 2;
         boardTopRightPosition = new Vector3(scaledPositionTopRightX, scaledPositionTopRightY, _grid[Width - 1].transform.position.z);

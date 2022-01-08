@@ -7,6 +7,9 @@ public class UI : MonoBehaviour
     [SerializeField] private CanvasGroup Menu;
     [SerializeField] private CanvasGroup Game;
     [SerializeField] private CanvasGroup Result;
+    [SerializeField] private CanvasGroup Settings;
+    [SerializeField] private CanvasGroup Shop;
+    [SerializeField] private CanvasGroup Board;
     [SerializeField] private TMP_Text TimerText;
     [SerializeField] private TMP_Text ResultText;
 
@@ -33,6 +36,21 @@ public class UI : MonoBehaviour
         StartCoroutine(ShowCanvas(Result, 1.0f));
     }
 
+    public void ShowSettings()
+    {
+        StartCoroutine (ShowCanvas(Settings, 1.0f));
+    }
+
+    public void ShowShop()
+    {
+        StartCoroutine(ShowCanvas(Shop, 1.0f));
+    }
+
+    public void ShowBoard()
+    {
+        StartCoroutine(ShowCanvas(Board, 1.0f));
+    }
+
     public void HideMenu()
     {
         StartCoroutine(ShowCanvas(Menu, 0.0f));
@@ -46,6 +64,21 @@ public class UI : MonoBehaviour
     public void HideResult()
     {
         StartCoroutine(ShowCanvas(Result, 0.0f));
+    }
+
+    public void HideSettings()
+    {
+        StartCoroutine(ShowCanvas(Settings, 0.0f));
+    }
+
+    public void HideShop()
+    {
+        StartCoroutine(ShowCanvas(Shop, 0.0f));
+    }
+
+    public void HideBoard()
+    {
+        StartCoroutine(ShowCanvas(Board, 0.0f));
     }
 
     public void UpdateTimer(double gameTime)
@@ -77,6 +110,27 @@ public class UI : MonoBehaviour
             Result.alpha = 0.0f;
             Result.interactable = false;
             Result.blocksRaycasts = false;
+        }
+
+        if(Settings != null)
+        {
+            Settings.alpha = 0.0f;
+            Settings.interactable = false;
+            Settings.blocksRaycasts = false;
+        }
+
+        if(Shop != null)
+        {
+            Shop.alpha = 0.0f;
+            Shop.interactable = false;
+            Shop.blocksRaycasts = false;
+        }
+
+        if(Board != null)
+        {
+            Board.alpha = 0.0f;
+            Board.interactable = false;
+            Board.blocksRaycasts = false;
         }
     }
 

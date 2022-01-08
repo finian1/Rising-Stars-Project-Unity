@@ -10,6 +10,7 @@ public class Game : MonoBehaviour
     private bool _gameInProgress;
     public GameObject mainMenu;
     public GameObject settingMenu;
+    public ShopController shop;
     
     public bool IsGameInProgress()
     {
@@ -17,9 +18,11 @@ public class Game : MonoBehaviour
     }
     public void OnClickedNewGame()
     {
+        CleanupScript.Cleanup();
         if (_board != null)
         {
             //If board is initialized
+
             _board.RechargeBoxes();
             //chunkController.PopulateArrays(_board.GetWidth(), _board.GetHeight());
             //playerObject.SetActive(true);
@@ -28,6 +31,7 @@ public class Game : MonoBehaviour
         if (_ui != null)
         {
             _ui.HideMenu();
+            _ui.ShowBoard();
             _ui.ShowGame();
         }
     }
@@ -44,6 +48,7 @@ public class Game : MonoBehaviour
         if (_board != null)
         {
             _board.Clear();
+            CleanupScript.Cleanup();
             chunkController.DestroyCells();
             chunkController.DestroyBoarders();
             chunkController.SetPlayerMarkerActive(false);
@@ -53,14 +58,23 @@ public class Game : MonoBehaviour
         if (_ui != null)
         {
             _ui.HideResult();
+            _ui.ShowBoard();
             _ui.ShowMenu();
         }
     }
 
+    public void OnClickedShop()
+    {
+        _ui.HideBoard();
+        _ui.HideMenu();
+        _ui.ShowShop();
+        shop.SwitchedTo();
+    }
+
     public void OnClickedSettings()
     {
-        settingMenu.SetActive(true);
-        mainMenu.SetActive(false);
+        _ui.HideMenu();
+        _ui.ShowSettings();
     }
 
     private void Awake()
@@ -68,6 +82,9 @@ public class Game : MonoBehaviour
         _board = transform.parent.GetComponentInChildren<Board>();
         _ui = transform.parent.GetComponentInChildren<UI>();
         _gameInProgress = false;
+
+        PlayerStats.primaryWeapon = PlayerStats.weaponsOwned[0];
+        PlayerStats.secondaryWeapon = PlayerStats.weaponsOwned[0];
     }
 
     public void SetupBoard()

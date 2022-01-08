@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SettingController : MonoBehaviour
 {
+    [SerializeField] private UI _ui;
+
     public MapController chunkController;
     public Board boardController;
     public Game gameController;
@@ -85,8 +87,9 @@ public class SettingController : MonoBehaviour
         }
         boardController.InitializeEverything();
         gameController.SetupBoard();
-        mainMenu.SetActive(true);
-        settingMenu.SetActive(false);
+        _ui.HideSettings();
+        _ui.ShowBoard();
+        _ui.ShowMenu();
     }
 
 }

@@ -7,25 +7,29 @@ public static class PlayerStats
     public static float initialHealth = 100.0f;
     public static float health = initialHealth;
     public static int points;
-    public static int currency;
+    public static int currency = 1000;
     public static float difficulty = 1.0f;
-    public static WeaponStatHolderBase[] weaponsOwned =
+    public static List<WeaponStatHolderBase> weaponsOwned = new List<WeaponStatHolderBase>
     {
-        new WeaponStatHolderBase(typeof(Weapon_AssRifle), 10, 50, 10, 5, 0.1f, 0.1f, "TestyAssault"),
-        new WeaponStatHolderBase(typeof(Weapon_MiniGun), 6, 50, 15, 25, 0.1f, 0.1f, "TestyMini", wepStartFireRate: 1, wepTimeToRevUp: 10.0f, wepCoolDownSpeed: 1.0f),
-        new WeaponStatHolderBase(typeof(Weapon_Shotgun), 3, 20, 45, 1, 0.1f, 0.1f, "TestyShoty", wepShotCount: 10)
+        new WeaponStatHolderBase(typeof(Weapon_AssRifle), 10, 50, 10, 5, 0.1f, 0.1f, 0, "TestyAssault"),
+        new WeaponStatHolderBase(typeof(Weapon_MiniGun), 6, 50, 15, 25, 0.1f, 0.1f, 0, "TestyMini", mini_wepStartFireRate: 1, mini_wepTimeToRevUp: 10.0f, mini_wepCoolDownSpeed: 1.0f),
+        new WeaponStatHolderBase(typeof(Weapon_Shotgun), 3, 20, 45, 1, 0.1f, 0.1f, 0, "TestyShoty", shot_wepShotCount: 10)
     };
+    public static WeaponStatHolderBase primaryWeapon;
+    public static WeaponStatHolderBase secondaryWeapon;
+
 }
 
 public class WeaponStatHolderBase
 {
-    public WeaponStatHolderBase(System.Type wepType, float wepDamage, float wepRange, float wepInnacuracy, float wepFireRate, float wepShotLifetime, float wepShotWidth, string wepNickname = "Nameless",
-        /*minigun vars*/float wepStartFireRate = 0.0f, float wepTimeToRevUp = 0.0f, float wepCoolDownSpeed = 0.0f,
-        /*shotgun vars*/int wepShotCount = 0,
-        /*assault vars*/float wepInitInaccuracy = 0.0f
+    public WeaponStatHolderBase(System.Type wepType, float wepDamage, float wepRange, float wepInnacuracy, float wepFireRate, float wepShotLifetime, float wepShotWidth, int weaponCost = 0, string wepNickname = "Nameless",
+        /*minigun vars*/float mini_wepStartFireRate = 0.0f, float mini_wepTimeToRevUp = 0.0f, float mini_wepCoolDownSpeed = 0.0f,
+        /*shotgun vars*/int shot_wepShotCount = 0,
+        /*assault vars*/float ass_wepInitInaccuracy = 0.0f
         )
     {
         weaponType = wepType;
+        weaponValue = weaponCost;
         weaponNickname = wepNickname;
         shotDamage = wepDamage;
         range = wepRange;
@@ -34,13 +38,13 @@ public class WeaponStatHolderBase
         shotLifetime = wepShotLifetime;
         shotWidth = wepShotWidth;
 
-        startFireRate = wepStartFireRate;
-        timeToRevUp = wepTimeToRevUp;
-        coolDownSpeed = wepCoolDownSpeed;
+        startFireRate = mini_wepStartFireRate;
+        timeToRevUp = mini_wepTimeToRevUp;
+        coolDownSpeed = mini_wepCoolDownSpeed;
 
-        shotCount = wepShotCount;
+        shotCount = shot_wepShotCount;
 
-        initInaccuracy = wepInitInaccuracy;
+        initInaccuracy = ass_wepInitInaccuracy;
     }
     public WeaponStatHolderBase()
     {
@@ -63,6 +67,7 @@ public class WeaponStatHolderBase
     }
 
     public System.Type weaponType;
+    public int weaponValue;
     public string weaponNickname;
     public float shotDamage;
     public float range;

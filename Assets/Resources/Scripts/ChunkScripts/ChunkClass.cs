@@ -81,7 +81,7 @@ public class ChunkClass : MonoBehaviour
 
     private void SpawnEnemies()
     {
-        GetAllAccesibleNodes();
+        GetAllAccessibleNodes();
         if (Random.Range(0, 100) < enemySpawnChance)
         {
             GameObject[] enemyPrefabs = mapController.enemyPrefabs;
@@ -93,17 +93,25 @@ public class ChunkClass : MonoBehaviour
 
     private void SpawnPickups()
     {
-        GetAllAccesibleNodes();
+        GetAllAccessibleNodes();
         if (Random.Range(0, 100) < pickupSpawnChance)
         {
             GameObject[] pickupPrefabs = mapController.pickupPrefabs;
-            GameObject temp = Instantiate(pickupPrefabs[Random.Range(0, pickupPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
+
+            float pickupRayStart = 20.0f;
+            float spawnHeight = 1.0f;
+            Vector3 randNodePos = nodes[Random.Range(0, nodes.Count)].transform.position;
+            Vector3 rayStartPos = new Vector3(randNodePos.x, randNodePos.y+pickupRayStart, randNodePos.z);
+            RaycastHit hit;
+            Physics.Raycast(rayStartPos, Vector3.down, out hit, Mathf.Infinity, ~(1 | 7));
+
+            GameObject temp = Instantiate(pickupPrefabs[Random.Range(0, pickupPrefabs.Length)], new Vector3(hit.point.x, hit.point.y + spawnHeight, hit.point.z), transform.rotation);
         }
         spawnedPickups = true;
     }
 
 
-    public void GetAllAccesibleNodes()
+    public void GetAllAccessibleNodes()
     {
         foreach (Transform obj in transform)
         {
