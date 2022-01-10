@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    public Game gameController;
     private KeyCode mapKey = KeyCode.M;
     public GameObject playerCamera;
     public float maxVerticalRotation = 0;
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
     public Material shotMaterial;
     private Weapon_Base currentWeaponScript;
     private float decell = 0.25f;
-
+    public float currentCrystalMultiplier = 1.0f;
   
     void Start()
     {
@@ -111,7 +112,6 @@ public class PlayerController : MonoBehaviour
         if (allowPlayerMovement)
         {
             UpdatePlayer();
-
         }
         else
         {
@@ -120,16 +120,13 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            EquipWeapon(PlayerStats.weaponsOwned[0]);
+            EquipWeapon(PlayerStats.primaryWeapon);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            EquipWeapon(PlayerStats.weaponsOwned[1]);
+            EquipWeapon(PlayerStats.secondaryWeapon);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            EquipWeapon(PlayerStats.weaponsOwned[2]);
-        }
+        
     }
 
     void FixedUpdate()
@@ -184,6 +181,7 @@ public class PlayerController : MonoBehaviour
         currentWeaponScript = temp;
         temp.init(newWeapon);
         temp.SetupBase(playerCamera.GetComponent<Camera>(), shotMaterial);
+        currentCrystalMultiplier = newWeapon.crysMultiplier;
     }
 
     void UpdatePlayer()
@@ -238,6 +236,10 @@ public class PlayerController : MonoBehaviour
     private void TakeDamage(float val)
     {
         PlayerStats.health -= val;
+        if(PlayerStats.health <= 0)
+        {
+            gameController.EndGame(false);
+        }
     }
 
     public void ApplyForce(Vector3 force)

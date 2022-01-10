@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
+    [SerializeField] private Color[] dangerColours = new Color[8];
     private int numOfCellsX;
     private int numOfCellsY;
     private int chunksPerCellX = 3;
@@ -110,6 +111,7 @@ public class MapController : MonoBehaviour
             cells[i].SetID(i);
             cells[i].SetBoard(gameplayBoard);
             cells[i].SetGame(gameController);
+            cells[i].SetDangerColours(dangerColours);
             cells[i].SetController(this);
             cells[i].InitializeCellPositions(-cellColumn * chunksPerCellX * chunkSizeX, cellRow * chunksPerCellY * chunkSizeY);
             
@@ -250,10 +252,12 @@ public class MapController : MonoBehaviour
 
 public class Cell : MonoBehaviour
 {
+    private Color[] dangerColours = new Color[8];
     private int cellsX;
     private int cellsY;
     private Color hiddenColor = Color.white;
     private Color shownColor = Color.cyan;
+    private Color dangerColor = Color.black;
     private float triggerHeight = 50.0f;
     private int cellID;
     private float cellStartPosX;
@@ -275,6 +279,11 @@ public class Cell : MonoBehaviour
         {
             Destroy(chunk);
         }
+    }
+
+    public void SetDangerColours(Color[] colours)
+    {
+        dangerColours = colours;
     }
 
     public float GetCellSizeX()
@@ -408,7 +417,19 @@ public class Cell : MonoBehaviour
         {
             bool isDanger = gameplayBoard.CheckIfDanger(cellID);
             RevealCell();
-            SetCellColour(shownColor);
+            int dangerNearby = gameplayBoard.GetBox(cellID).DangerNearby;
+            if (isDanger)
+            {
+                SetCellColour(dangerColor);
+            }
+            else if (dangerNearby == 0)
+            {
+                SetCellColour(shownColor);
+            }
+            else
+            {
+                SetCellColour(dangerColours[dangerNearby - 1]);
+            }
             int boxRow = cellID / cellsX;
             for (int count = 0; count < _neighbours.Length; ++count)
             {

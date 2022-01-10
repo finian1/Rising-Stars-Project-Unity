@@ -21,6 +21,8 @@ public class Box : MonoBehaviour
     public bool IsDangerous { get; private set; }
     public bool IsActive { get { return _button != null && _button.interactable; } }
 
+    private float difficultyInc = 0.5f;
+
     private void OnDrawGizmos()
     {
         if (_board != null && _board.gameStarted)
@@ -117,11 +119,12 @@ public class Box : MonoBehaviour
             {
                 _textDisplay.enabled = true;
             }
-
+            PlayerStats.difficulty += difficultyInc;
             _changeCallback?.Invoke(this);
         }
         else
         {
+            
             _board.gameStarted = true;
             _board.BeginFPSPlay();
             _board.SetPlayerSpawnPoint(ID);

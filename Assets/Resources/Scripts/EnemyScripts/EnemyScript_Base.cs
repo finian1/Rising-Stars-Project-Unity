@@ -34,6 +34,8 @@ public class EnemyScript_Base : MonoBehaviour
 
     private bool debug = true;
 
+    private bool dead = false;
+
     private void OnDestroy()
     {
         CleanupScript.objectCache.Remove(this.gameObject);
@@ -50,7 +52,7 @@ public class EnemyScript_Base : MonoBehaviour
         Color thisColor = GetComponent<MeshRenderer>().material.color;
         if (scoreCrystalPrefab != null)
         {
-            for (int i = 0; i < numOfScoreCrystals; i++)
+            for (int i = 0; i < (float)numOfScoreCrystals * player.GetComponent<PlayerController>().currentCrystalMultiplier; i++)
             {
                 GameObject crystalTemp = Instantiate(scoreCrystalPrefab, transform.position, transform.rotation);
 
@@ -103,10 +105,11 @@ public class EnemyScript_Base : MonoBehaviour
     {
         enemyHealth -= val;
 
-        //Temp
-        if(enemyHealth <= 0)
+        
+        if(enemyHealth <= 0 && !dead)
         {
             PlayerStats.points += (int)PlayerStats.difficulty*10;
+            dead = true;
             DestroyEnemy();
         }
     }

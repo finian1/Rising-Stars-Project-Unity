@@ -103,6 +103,7 @@ public class Game : MonoBehaviour
         if (_ui != null)
         {
             _ui.ShowMenu();
+            _ui.ShowBoard();
         }
     }
 
@@ -136,6 +137,7 @@ public class Game : MonoBehaviour
     public void EndGame(bool winGame)
     {
         _ui.HideGame();
+        _ui.HideHUD();
         CleanupScript.Cleanup();
         Reset();
         chunkController.SetPlayerMarkerActive(false);

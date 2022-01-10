@@ -29,7 +29,7 @@ public class ShopController : MonoBehaviour
         int numOfButtons = 0;
         int wepNum = 0;
         float buttonSize = 150;
-
+        //If there were previous buttons, yeet them
         if(currentButtonList != null)
         {
             foreach(GameObject button in currentButtonList)
@@ -39,10 +39,13 @@ public class ShopController : MonoBehaviour
         }
         currentButtonList = new List<GameObject>();
 
+        //For each weapon in the weaponsforsale container
         foreach (WeaponStatHolderBase weapon in ShopContainer.weaponsForSale)
         {
+            //If the player currently does not own that exact weapon (A bit pointless at the moment)
             if (!PlayerStats.weaponsOwned.Contains(weapon))
             {
+                //Create a new button and set the values
                 GameObject temp = Instantiate(buttonTemplate, listContentObject.transform);
                 currentButtonList.Add(temp);
 
@@ -120,9 +123,29 @@ public class ShopController : MonoBehaviour
     {
         Debug.Log(id);
         currentSelectedWeapon = ShopContainer.weaponsForSale[id];
+
+        
+
         if (currentSelectedWeapon != null) {
-            statsText.text = "Price: " + currentSelectedWeapon.weaponValue + "\n"
-                + '"' + currentSelectedWeapon.weaponNickname + '"' + "\n";
+
+            statsText.text = "";
+            if (currentSelectedWeapon.weaponType == typeof(Weapon_AssRifle))
+            {
+                statsText.text += "Weapon type: Assault Rifle \n";
+            }else if (currentSelectedWeapon.weaponType == typeof(Weapon_MiniGun))
+            {
+                statsText.text += "Weapon type: Mini Gun \n";
+            }
+            else if (currentSelectedWeapon.weaponType == typeof(Weapon_Shotgun))
+            {
+                statsText.text += "Weapon type: Shot Gun \n";
+            }
+
+            statsText.text += "Price: " + currentSelectedWeapon.weaponValue + "\n";
+            statsText.text += '"' + currentSelectedWeapon.weaponNickname + '"' + "\n";
+            statsText.text += "Shot damage: " + currentSelectedWeapon.shotDamage + "\n";
+            statsText.text += "Fire rate: " + currentSelectedWeapon.fireRate + "\n";
+            statsText.text += "Crystal multiplier: " + currentSelectedWeapon.crysMultiplier + "\n";
         }
 
         if(currentSelectedWeapon.weaponValue > PlayerStats.currency)

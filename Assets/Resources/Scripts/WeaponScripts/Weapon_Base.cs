@@ -16,6 +16,7 @@ public class Weapon_Base : MonoBehaviour
     [SerializeField] protected float shotWidth;
     [SerializeField] protected Material shotMat;
     [SerializeField] protected AudioClip shotSound;
+    [SerializeField] protected float crystalMultiplier;
 
     protected string weaponSoundName;
 
@@ -47,6 +48,7 @@ public class Weapon_Base : MonoBehaviour
         shotLifetime = stats.shotLifetime;
         shotWidth = stats.shotWidth;
         firingOrigin = transform.GetChild(0).transform;
+        crystalMultiplier = stats.crysMultiplier;
     }
 
     public void SetupBase(Camera playerCam, Material shotMaterial)

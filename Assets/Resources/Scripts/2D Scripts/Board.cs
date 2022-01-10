@@ -5,7 +5,7 @@ using UnityEngine;
 public class Board : MonoBehaviour
 {
     public enum Event { ClickedBlank, ClickedNearDanger, ClickedDanger, Win };
-
+    public UI _ui;
     [SerializeField] private Box BoxPrefab;
     [SerializeField] private int Width = 10;
     [SerializeField] private int Height = 10;
@@ -84,6 +84,8 @@ public class Board : MonoBehaviour
     {
         chunkController.PopulateArrays(GetWidth(), GetHeight());
         chunkController.SetPlayerMarkerActive(true);
+        _ui.ShowHUD();
+        PlayerStats.difficulty = PlayerStats.initDifficulty;
         PlayerStats.health = PlayerStats.initialHealth;
         playerObject.SetActive(true);
     }
@@ -142,6 +144,11 @@ public class Board : MonoBehaviour
                 _grid[index].Charge(CountDangerNearby(dangerList, index), dangerList[index], OnClickedBox);
             }
         }
+    }
+
+    public Box GetBox(int index)
+    {
+        return _grid[index];
     }
 
     private void Awake()
