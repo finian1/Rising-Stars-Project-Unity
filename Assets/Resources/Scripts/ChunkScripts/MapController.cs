@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
+    [SerializeField] private GameObject trapPrefab;
     [SerializeField] private Color[] dangerColours = new Color[8];
     private int numOfCellsX;
     private int numOfCellsY;
@@ -111,6 +112,7 @@ public class MapController : MonoBehaviour
             cells[i].SetID(i);
             cells[i].SetBoard(gameplayBoard);
             cells[i].SetGame(gameController);
+            cells[i].SetTrapObject(trapPrefab);
             cells[i].SetDangerColours(dangerColours);
             cells[i].SetController(this);
             cells[i].InitializeCellPositions(-cellColumn * chunksPerCellX * chunkSizeX, cellRow * chunksPerCellY * chunkSizeY);
@@ -187,17 +189,17 @@ public class MapController : MonoBehaviour
             boarders[i] = Instantiate(boarderObject, transform);
 
         }
-        boarders[0].transform.position = new Vector3(boardMidpoint.x, boardMidpoint.y, boardMidpoint.z + YMapSize / 2);
+        boarders[0].transform.position = new Vector3(boardMidpoint.x, boardMidpoint.y, boardMidpoint.z + YMapSize / 2 + 0.01f);
         boarders[0].transform.localScale = new Vector3(XMapSize, boarderHeight, boarderThickness);
 
-        boarders[1].transform.position = new Vector3(boardMidpoint.x, boardMidpoint.y, boardMidpoint.z - YMapSize / 2);
+        boarders[1].transform.position = new Vector3(boardMidpoint.x, boardMidpoint.y, boardMidpoint.z - YMapSize / 2 - 0.01f);
         boarders[1].transform.localScale = new Vector3(XMapSize, boarderHeight, boarderThickness);
 
-        boarders[2].transform.position = new Vector3(boardMidpoint.x + XMapSize / 2, boardMidpoint.y, boardMidpoint.z);
+        boarders[2].transform.position = new Vector3(boardMidpoint.x + XMapSize / 2 + 0.01f, boardMidpoint.y, boardMidpoint.z);
         boarders[2].transform.rotation = Quaternion.Euler(0, 90, 0);
         boarders[2].transform.localScale = new Vector3(YMapSize, boarderHeight, boarderThickness);
 
-        boarders[3].transform.position = new Vector3(boardMidpoint.x - XMapSize / 2, boardMidpoint.y, boardMidpoint.z);
+        boarders[3].transform.position = new Vector3(boardMidpoint.x - XMapSize / 2 - 0.01f, boardMidpoint.y, boardMidpoint.z);
         boarders[3].transform.rotation = Quaternion.Euler(0, 90, 0);
         boarders[3].transform.localScale = new Vector3(YMapSize, boarderHeight, boarderThickness);
 
@@ -269,8 +271,120 @@ public class Cell : MonoBehaviour
     private bool revealed = false;
     private float cellSizeX;
     private float cellSizeZ;
+    private GameObject trap;
     public GameObject[] cellChunks;
     Vector2Int[] _neighbours;
+
+
+    public void InitializeCellPositions(float X, float Z)
+    {
+        float posShiftX = (controller.GetChunkSizeX() * controller.GetChunksPerCellX()) / 2 - (controller.GetChunkSizeX() / 2);
+        float posShiftZ = (controller.GetChunkSizeY() * controller.GetChunksPerCellY()) / 2 - (controller.GetChunkSizeY() / 2);
+        cellStartPosX = X;
+        cellStartPosZ = Z;
+
+        cellSizeX = (controller.GetChunkSizeX() * controller.GetChunksPerCellX());
+        cellSizeZ = (controller.GetChunkSizeY() * controller.GetChunksPerCellY());
+
+        cellTrigger = new GameObject();
+        cellTrigger.name = string.Format("Cell {0}", cellID);
+        cellTrigger.transform.SetParent(controller.transform);
+        cellTrigger.transform.localPosition = new Vector3(X + posShiftX, triggerHeight / 2, Z + posShiftZ);
+        cellTrigger.AddComponent<BoxCollider>().isTrigger = true;
+        cellTrigger.AddComponent<CellTriggerScript>().thisCell = this;
+        cellTrigger.GetComponent<BoxCollider>().size = new Vector3(cellSizeX, triggerHeight, cellSizeZ);
+        cellTrigger.layer = 9;
+        Rigidbody rigidBody = cellTrigger.AddComponent<Rigidbody>();
+        rigidBody.useGravity = false;
+        rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+
+
+
+        controller.GetBoardDimensions(ref cellsX, ref cellsY);
+        _neighbours = new Vector2Int[8]
+        {
+            new Vector2Int(-cellsX - 1, -1),
+            new Vector2Int(-cellsX, -1),
+            new Vector2Int(-cellsX + 1, -1),
+            new Vector2Int(-1, 0),
+            new Vector2Int(1, 0),
+            new Vector2Int(cellsX - 1, 1),
+            new Vector2Int(cellsX, 1 ),
+            new Vector2Int(cellsX + 1, 1)
+        };
+
+    }
+
+    public void RevealCell()
+    {
+        if (!revealed)
+        {
+
+            foreach (GameObject chunk in cellChunks)
+            {
+                ChunkClass chunkClass = chunk.GetComponent<ChunkClass>();
+
+                chunkClass.gameController = gameController;
+
+                chunkClass.SpawnObjects();
+
+                chunkClass.SetObstacleColours(hiddenColor);
+
+                chunkClass.RevealObstacles();
+                revealed = true;
+
+            }
+        }
+    }
+
+    private void TriggerTrap()
+    {
+        if (trap != null)
+        {
+            GameObject tempTrap = Instantiate(trap, cellTrigger.transform.position, cellTrigger.transform.rotation);
+            tempTrap.GetComponent<TrapScript>().ActivateTrap(this);
+        }
+    }
+
+    public void TriggerEntered(Collider other)
+    {
+        if (other.CompareTag("Player") && !PlayerStats.isInTrap)
+        {
+            bool isDanger = gameplayBoard.CheckIfDanger(cellID);
+            RevealCell();
+            int dangerNearby = gameplayBoard.GetBox(cellID).DangerNearby;
+            if (isDanger)
+            {
+                SetCellColour(dangerColor);
+                TriggerTrap();
+            }
+            else if (dangerNearby == 0)
+            {
+                SetCellColour(shownColor);
+            }
+            else
+            {
+                SetCellColour(dangerColours[dangerNearby - 1]);
+            }
+            //Reveal all surrounding cells
+            int boxRow = cellID / cellsX;
+            for (int count = 0; count < _neighbours.Length; ++count)
+            {
+                int neighbourIndex = cellID + _neighbours[count].x;
+                int expectedRow = boxRow + _neighbours[count].y;
+                int neighbourRow = neighbourIndex / cellsX;
+                if (expectedRow == neighbourRow && neighbourIndex >= 0 && neighbourIndex < cellsX * cellsY)
+                {
+                    controller.RevealCell(neighbourIndex);
+                }
+            }
+
+            gameplayBoard.ClickBox(cellID);
+            cellTrigger.SetActive(false);
+
+
+        }
+    }
 
     public void DestroyCell()
     {
@@ -279,6 +393,11 @@ public class Cell : MonoBehaviour
         {
             Destroy(chunk);
         }
+    }
+
+    public void SetTrapObject(GameObject trapPrefab)
+    {
+        trap = trapPrefab;
     }
 
     public void SetDangerColours(Color[] colours)
@@ -350,103 +469,7 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void InitializeCellPositions(float X, float Z)
-    {
-        float posShiftX = (controller.GetChunkSizeX() * controller.GetChunksPerCellX()) / 2 - (controller.GetChunkSizeX() / 2);
-        float posShiftZ = (controller.GetChunkSizeY() * controller.GetChunksPerCellY()) / 2 - (controller.GetChunkSizeY() / 2);
-        cellStartPosX = X;
-        cellStartPosZ = Z;
 
-        cellSizeX = (controller.GetChunkSizeX() * controller.GetChunksPerCellX());
-        cellSizeZ = (controller.GetChunkSizeY() * controller.GetChunksPerCellY());
-
-        cellTrigger = new GameObject();
-        cellTrigger.name = string.Format("Cell {0}", cellID);
-        cellTrigger.transform.SetParent(controller.transform);
-        cellTrigger.transform.localPosition = new Vector3(X + posShiftX, triggerHeight/2, Z + posShiftZ);
-        cellTrigger.AddComponent<BoxCollider>().isTrigger = true;
-        cellTrigger.AddComponent<CellTriggerScript>().thisCell = this;
-        cellTrigger.GetComponent<BoxCollider>().size = new Vector3(cellSizeX, triggerHeight, cellSizeZ);
-        cellTrigger.layer = 9;
-        Rigidbody rigidBody = cellTrigger.AddComponent<Rigidbody>();
-        rigidBody.useGravity = false;
-        rigidBody.constraints = RigidbodyConstraints.FreezeAll;
-        
-        
-        
-        controller.GetBoardDimensions(ref cellsX, ref cellsY);
-        _neighbours = new Vector2Int[8]
-        {
-            new Vector2Int(-cellsX - 1, -1),
-            new Vector2Int(-cellsX, -1),
-            new Vector2Int(-cellsX + 1, -1),
-            new Vector2Int(-1, 0),
-            new Vector2Int(1, 0),
-            new Vector2Int(cellsX - 1, 1),
-            new Vector2Int(cellsX, 1 ),
-            new Vector2Int(cellsX + 1, 1)
-        };
-
-    }
-
-    public void RevealCell()
-    {
-        if (!revealed)
-        {
-         
-            foreach (GameObject chunk in cellChunks)
-            {
-                ChunkClass chunkClass = chunk.GetComponent<ChunkClass>();
-
-                chunkClass.gameController = gameController;
-
-                chunkClass.SpawnObjects();
-
-                chunkClass.SetObstacleColours(hiddenColor);
-                
-                chunkClass.RevealObstacles();
-                revealed = true;
-                
-            }
-        }
-    }
-
-    public void TriggerEntered(Collider other)
-    {        
-        if (other.CompareTag("Player"))
-        {
-            bool isDanger = gameplayBoard.CheckIfDanger(cellID);
-            RevealCell();
-            int dangerNearby = gameplayBoard.GetBox(cellID).DangerNearby;
-            if (isDanger)
-            {
-                SetCellColour(dangerColor);
-            }
-            else if (dangerNearby == 0)
-            {
-                SetCellColour(shownColor);
-            }
-            else
-            {
-                SetCellColour(dangerColours[dangerNearby - 1]);
-            }
-            int boxRow = cellID / cellsX;
-            for (int count = 0; count < _neighbours.Length; ++count)
-            {
-                int neighbourIndex = cellID + _neighbours[count].x;
-                int expectedRow = boxRow + _neighbours[count].y;
-                int neighbourRow = neighbourIndex / cellsX;
-                if (expectedRow == neighbourRow && neighbourIndex >= 0 && neighbourIndex < cellsX*cellsY)
-                {
-                    controller.RevealCell(neighbourIndex);
-                }
-            }
-            gameplayBoard.ClickBox(cellID);
-            cellTrigger.SetActive(false);
-
-
-        }
-    }
 
     
 }

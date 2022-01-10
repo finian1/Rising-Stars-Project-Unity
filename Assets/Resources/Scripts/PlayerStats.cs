@@ -16,6 +16,8 @@ public static class PlayerStats
     };
     public static WeaponStatHolderBase primaryWeapon;
     public static WeaponStatHolderBase secondaryWeapon;
+    public static bool isInTrap;
+
 
 }
 

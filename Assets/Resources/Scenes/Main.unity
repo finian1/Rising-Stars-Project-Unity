@@ -8544,6 +8544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf81ba5f03ef124cb8379e83547bd6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trapPrefab: {fileID: 6777147329949710121, guid: 6a0a3d50b0ad11e4aa5451f0292d4b80, type: 3}
   dangerColours:
   - {r: 1, g: 0.7971698, b: 0.89749444, a: 1}
   - {r: 1, g: 0.6462264, b: 0.6983326, a: 1}
