@@ -23,6 +23,7 @@ MonoBehaviour:
   shotWidth: 0
   shotMat: {fileID: 0}
   shotSound: {fileID: 0}
+  crystalMultiplier: 0
   startFireRate: 0
   timeToRevUp: 0
   coolDownSpeed: 0
@@ -174,9 +175,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9e1d9dd71180e41468ee73c0da845b61, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 0397eaf3d9699be43af6da14116e4c92, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.097
+  m_Volume: 0.276
   m_Pitch: 1
   Loop: 1
   Mute: 0

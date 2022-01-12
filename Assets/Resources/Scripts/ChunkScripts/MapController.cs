@@ -282,6 +282,7 @@ public class Cell : MonoBehaviour
     public GameObject[] cellChunks;
     Vector2Int[] _neighbours;
 
+    
 
     public void InitializeCellPositions(float X, float Z)
     {
@@ -445,7 +446,7 @@ public class Cell : MonoBehaviour
         }
 
         gameplayBoard.ClickBox(cellID);
-        //cellTrigger.SetActive(false);
+        cellTrigger.SetActive(false);
     }
 
     public void DestroyCell()
@@ -455,6 +456,11 @@ public class Cell : MonoBehaviour
         {
             Destroy(chunk);
         }
+    }
+
+    public CellTriggerScript GetTriggerScript()
+    {
+        return cellTrigger.GetComponent<CellTriggerScript>();
     }
 
     public void SetTrapObject(GameObject trapPrefab)

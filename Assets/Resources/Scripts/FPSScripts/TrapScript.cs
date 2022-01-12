@@ -37,6 +37,7 @@ public class TrapScript : MonoBehaviour
         PlayerStats.isInTrap = false;
         foreach (Cell neighbourCell in neighbourCells)
         {
+            neighbourCell.GetTriggerScript().TriggerIfPlayer();
             neighbourCell.SetToDefaultColour();
         }
     }

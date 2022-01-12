@@ -37,6 +37,8 @@ public class ChunkClass : MonoBehaviour
     private float pickupSpawnChance = 5;
     private bool spawnedPickups = false;
 
+    private bool gotNodes = false;
+
     public MapController mapController;
     public Game gameController;
 
@@ -81,7 +83,10 @@ public class ChunkClass : MonoBehaviour
 
     public void SpawnEnemies(float spawnChance)
     {
-        GetAllAccessibleNodes();
+        if (!gotNodes)
+        {
+            GetAllAccessibleNodes();
+        }
         if (nodes.Count != 0)
         {
             if (Random.Range(0, 100) < spawnChance)
@@ -97,7 +102,10 @@ public class ChunkClass : MonoBehaviour
 
     private void SpawnPickups()
     {
-        GetAllAccessibleNodes();
+        if (!gotNodes)
+        {
+            GetAllAccessibleNodes();
+        }
         if (Random.Range(0, 100) < pickupSpawnChance)
         {
             GameObject[] pickupPrefabs = mapController.pickupPrefabs;
