@@ -23,7 +23,7 @@ public class Weapon_Base : MonoBehaviour
     
 
 
-    protected float currentShotTimer;
+    protected float currentShotTimer = 0.0f;
     protected bool isFiring;
     // Start is called before the first frame update
     void Start()
@@ -60,7 +60,7 @@ public class Weapon_Base : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        currentShotTimer += Time.deltaTime;
+        currentShotTimer -= Time.deltaTime;
     }
 
     public virtual void FireWeapon(bool isFiredByPlayer, float damageScale = 1.0f, float fireRateScale = 1.0f)

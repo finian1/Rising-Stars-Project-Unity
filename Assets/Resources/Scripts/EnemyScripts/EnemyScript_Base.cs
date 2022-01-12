@@ -209,11 +209,11 @@ public class EnemyScript_Base : MonoBehaviour
             float currentShortestDist = 1000.0f;
             GameObject currNode = null;
             prevCheckDebug = possibleNodes.ToArray();
-            Debug.Log("---NEW AGRESSIVE NODE---");
+            //Debug.Log("---NEW AGRESSIVE NODE---");
             foreach (GameObject node in possibleNodes)
             {
                 float nodeDistToPlayer = (node.transform.position - player.transform.position).magnitude;
-                Debug.Log("Node distance to player: " + nodeDistToPlayer);
+                //Debug.Log("Node distance to player: " + nodeDistToPlayer);
 
                 if (nodeDistToPlayer < currentShortestDist)
                 {

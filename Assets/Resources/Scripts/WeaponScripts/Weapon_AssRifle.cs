@@ -16,11 +16,11 @@ public class Weapon_AssRifle : Weapon_Base
     public override void FireWeapon(bool isFiredByPlayer, float damageScale = 1.0f, float fireRateScale = 1.0f)
     {
         base.FireWeapon(isFiredByPlayer);
-        if(currentShotTimer >= 1/fireRate)
+        if(currentShotTimer <= 0.0f)
         {
             GameObject hitObject = null;
             FireHitscanShot(isFiredByPlayer, ref hitObject);
-            currentShotTimer = 0;
+            currentShotTimer = 1 / fireRate;
         }
     }
 }

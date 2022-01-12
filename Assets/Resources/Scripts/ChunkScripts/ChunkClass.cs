@@ -82,11 +82,15 @@ public class ChunkClass : MonoBehaviour
     public void SpawnEnemies(float spawnChance)
     {
         GetAllAccessibleNodes();
-        if (Random.Range(0, 100) < spawnChance)
+        if (nodes.Count != 0)
         {
-            GameObject[] enemyPrefabs = mapController.enemyPrefabs;
-            GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
-            temp.GetComponent<EnemyScript_Base>().player = playerObject;
+            if (Random.Range(0, 100) < spawnChance)
+            {
+                GameObject[] enemyPrefabs = mapController.enemyPrefabs;
+                Debug.Log(nodes.Count);
+                GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
+                temp.GetComponent<EnemyScript_Base>().player = playerObject;
+            }
         }
         spawnedEnemies = true;
     }
