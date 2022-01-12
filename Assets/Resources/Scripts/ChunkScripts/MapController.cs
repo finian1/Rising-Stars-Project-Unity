@@ -21,7 +21,7 @@ public class MapController : MonoBehaviour
         new Chunk_Room(),
         new Chunk_Void()
     };
-    private Cell[] cells;
+    public Cell[] cells;
     public GameObject chunkBase;
     public GameObject voidChunk;
     public GameObject playerObject;
@@ -224,6 +224,12 @@ public class MapController : MonoBehaviour
         Gizmos.DrawSphere(FPSTopRightPosition, 1);
         Gizmos.DrawSphere(FPSBottomLeftPosition, 1);
     }
+
+    public int GetNumOfCellsWidth()
+    {
+        return numOfCellsX;
+    }
+
     public void RevealCell(int index)
     {
         cells[index].RevealCell();
@@ -268,7 +274,8 @@ public class Cell : MonoBehaviour
     private GameObject cellTrigger;
     private Board gameplayBoard;
     private Game gameController;
-    private bool revealed = false;
+    private bool revealed = false; //for if the objects have been revealed
+    private bool triggered = false; //For if the palyer has walked into the cell
     private float cellSizeX;
     private float cellSizeZ;
     private GameObject trap;
@@ -315,6 +322,37 @@ public class Cell : MonoBehaviour
 
     }
 
+    public Cell[] GetNeighbourCells()
+    {
+        List<Cell> tempNeighbours = new List<Cell>();
+        int boxRow = cellID / controller.GetNumOfCellsWidth();
+        for (int count = 0; count < _neighbours.Length; ++count)
+        {
+            int neighbourIndex = cellID + _neighbours[count].x;
+            int expectedRow = boxRow + _neighbours[count].y;
+            int neighbourRow = neighbourIndex / controller.GetNumOfCellsWidth();
+            if (expectedRow == neighbourRow && neighbourIndex >= 0)
+            {
+                tempNeighbours.Add(controller.cells[neighbourIndex]);
+            }
+            //result += (expectedRow == neighbourRow && neighbourIndex >= 0 && neighbourIndex < danger.Count && danger[neighbourIndex]) ? 1 : 0;
+        }
+        return tempNeighbours.ToArray();
+    }
+
+    public void SetToDangerColour()
+    {
+        SetCellColour(dangerColor);
+    }
+
+    public void SpawnEnemies(float spawnChance)
+    {
+        foreach(GameObject chunk in cellChunks)
+        {
+            chunk.GetComponent<ChunkClass>().SpawnEnemies(spawnChance);
+        }
+    }
+
     public void RevealCell()
     {
         if (!revealed)
@@ -337,21 +375,15 @@ public class Cell : MonoBehaviour
         }
     }
 
-    private void TriggerTrap()
+    public void SetToDefaultColour()
     {
-        if (trap != null)
+        if (!triggered)
         {
-            GameObject tempTrap = Instantiate(trap, cellTrigger.transform.position, cellTrigger.transform.rotation);
-            tempTrap.GetComponent<TrapScript>().ActivateTrap(this);
+            SetCellColour(hiddenColor);
         }
-    }
-
-    public void TriggerEntered(Collider other)
-    {
-        if (other.CompareTag("Player") && !PlayerStats.isInTrap)
+        else
         {
             bool isDanger = gameplayBoard.CheckIfDanger(cellID);
-            RevealCell();
             int dangerNearby = gameplayBoard.GetBox(cellID).DangerNearby;
             if (isDanger)
             {
@@ -366,24 +398,54 @@ public class Cell : MonoBehaviour
             {
                 SetCellColour(dangerColours[dangerNearby - 1]);
             }
-            //Reveal all surrounding cells
-            int boxRow = cellID / cellsX;
-            for (int count = 0; count < _neighbours.Length; ++count)
-            {
-                int neighbourIndex = cellID + _neighbours[count].x;
-                int expectedRow = boxRow + _neighbours[count].y;
-                int neighbourRow = neighbourIndex / cellsX;
-                if (expectedRow == neighbourRow && neighbourIndex >= 0 && neighbourIndex < cellsX * cellsY)
-                {
-                    controller.RevealCell(neighbourIndex);
-                }
-            }
+        }
+    }
 
-            gameplayBoard.ClickBox(cellID);
-            cellTrigger.SetActive(false);
+    private void TriggerTrap()
+    {
+        if (trap != null)
+        {
+            GameObject tempTrap = Instantiate(trap, cellTrigger.transform.position, cellTrigger.transform.rotation);
+            tempTrap.GetComponent<TrapScript>().ActivateTrap(this);
+        }
+    }
 
+    public void TriggerEntered(Collider other)
+    {
+        if (other.CompareTag("Player") && !PlayerStats.isInTrap && !triggered)
+        {
+
+            Trigger();
 
         }
+    }
+
+    
+
+    private void Trigger()
+    {
+        triggered = true;
+
+
+
+        RevealCell();
+        SetToDefaultColour();
+
+        //Reveal all surrounding cells
+        int boxRow = cellID / cellsX;
+        for (int count = 0; count < _neighbours.Length; ++count)
+        {
+            int neighbourIndex = cellID + _neighbours[count].x;
+            int expectedRow = boxRow + _neighbours[count].y;
+            int neighbourRow = neighbourIndex / cellsX;
+            if (expectedRow == neighbourRow && neighbourIndex >= 0 && neighbourIndex < cellsX * cellsY)
+            {
+                controller.RevealCell(neighbourIndex);
+            }
+        }
+
+        gameplayBoard.ClickBox(cellID);
+        //cellTrigger.SetActive(false);
     }
 
     public void DestroyCell()

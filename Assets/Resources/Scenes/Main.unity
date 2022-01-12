@@ -8554,6 +8554,7 @@ MonoBehaviour:
   - {r: 1, g: 0.46135116, b: 0, a: 1}
   - {r: 1, g: 0.17098692, b: 0, a: 1}
   - {r: 0.6320754, g: 0.12913369, b: 0, a: 1}
+  cells: []
   chunkBase: {fileID: 5131038892230026013, guid: 43c72ff4660b5734bb28207d83798a29, type: 3}
   voidChunk: {fileID: 5131038892230026013, guid: 7b0002ac81522754ca71e40d8465cecb, type: 3}
   playerObject: {fileID: 2076198009}
@@ -9437,6 +9438,10 @@ PrefabInstance:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 703942846}
+    - target: {fileID: 3029761217789753476, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+      propertyPath: far clip plane
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6595275188543734596, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
       propertyPath: m_Name
       value: Weapon_AssaultRifle

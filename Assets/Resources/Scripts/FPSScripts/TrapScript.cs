@@ -8,6 +8,12 @@ public class TrapScript : MonoBehaviour
     [SerializeField] private float trapRevealTime;
     [SerializeField] private float boarderThickness = 0.5f;
     [SerializeField] private float boarderHeight = 50.0f;
+    [SerializeField] private float trapSize = 3.0f;
+    [SerializeField] private float timeForTrap = 40.0f;
+    [SerializeField] private float timeBetweenWaves = 10.0f;
+
+    private Cell[] neighbourCells;
+    private Cell cellLink;
 
     void Start()
     {
@@ -16,6 +22,9 @@ public class TrapScript : MonoBehaviour
 
     private void OnDestroy()
     {
+        PlayerStats.isInTrap = false;
+
+
         CleanupScript.objectCache.Remove(this.gameObject);
         foreach(GameObject boarder in trapBoarders)
         {
@@ -23,8 +32,19 @@ public class TrapScript : MonoBehaviour
         }
     }
 
+    public void DeactivateTrap()
+    {
+        PlayerStats.isInTrap = false;
+        foreach (Cell neighbourCell in neighbourCells)
+        {
+            neighbourCell.SetToDefaultColour();
+        }
+    }
+
     public void ActivateTrap(Cell cell)
     {
+        cellLink = cell;
+        PlayerStats.isInTrap = true;
         float cellSizeX = cell.GetCellSizeX();
         float cellSizeZ = cell.GetCellSizeZ();
 
@@ -37,10 +57,10 @@ public class TrapScript : MonoBehaviour
         };
         Vector3[] boarderScale = new Vector3[4]
         {
-            new Vector3(boarderThickness, boarderHeight, cellSizeZ*3),
-            new Vector3(boarderThickness, boarderHeight, cellSizeZ*3),
-            new Vector3(cellSizeX*3, boarderHeight, boarderThickness),
-            new Vector3(cellSizeX*3, boarderHeight, boarderThickness),
+            new Vector3(boarderThickness, boarderHeight, cellSizeZ*trapSize),
+            new Vector3(boarderThickness, boarderHeight, cellSizeZ*trapSize),
+            new Vector3(cellSizeX*trapSize, boarderHeight, boarderThickness),
+            new Vector3(cellSizeX*trapSize, boarderHeight, boarderThickness),
         };
 
 
@@ -49,7 +69,52 @@ public class TrapScript : MonoBehaviour
             trapBoarders[i].transform.position = boarderPos[i];
             trapBoarders[i].transform.localScale = boarderScale[i];
         }
+        neighbourCells = cell.GetNeighbourCells();
+        foreach(Cell neighbourCell in neighbourCells)
+        {  
+             neighbourCell.SetToDangerColour();
+        }
+
+
         StartCoroutine(FadeObjectsIn());
+        StartCoroutine(SpawnWaves(timeBetweenWaves));
+        StartCoroutine(DeactivateByTimer(timeForTrap));
+    }
+
+    private void SpawnWave()
+    {
+        foreach (Cell neighbourCell in neighbourCells)
+        {
+            neighbourCell.SpawnEnemies(20.0f);
+        }
+    }
+
+    private IEnumerator SpawnWaves(float timeBetween)
+    {
+        float timer = 0.0f;
+        while (true)
+        {
+            timer -= Time.deltaTime;
+            if(timer <= 0.0f)
+            {
+                SpawnWave();
+                timer = timeBetween;
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator DeactivateByTimer(float timeToDeactivate)
+    {
+        float timer = 0.0f;
+
+        while(timer < timeToDeactivate)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        DeactivateTrap();
+        Destroy(gameObject);
     }
 
     private IEnumerator FadeObjectsIn()

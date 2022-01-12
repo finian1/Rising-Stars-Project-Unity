@@ -10,5 +10,9 @@ public class CellTriggerScript : MonoBehaviour
     {
          thisCell.TriggerEntered(other);
     }
+    public void OnTriggerStay(Collider other)
+    {
+        thisCell.TriggerEntered(other);
+    }
 
 }

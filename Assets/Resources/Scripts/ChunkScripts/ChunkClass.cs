@@ -69,7 +69,7 @@ public class ChunkClass : MonoBehaviour
             //Prepare for enemy spawns
             if (finishedObstacles >= obstacleArray.Length && !spawnedEnemies && gameController.IsGameInProgress())
             {
-                SpawnEnemies();
+                SpawnEnemies(enemySpawnChance);
             }
             if (finishedObstacles >= obstacleArray.Length && !spawnedPickups && gameController.IsGameInProgress())
             {
@@ -79,10 +79,10 @@ public class ChunkClass : MonoBehaviour
         
     }
 
-    private void SpawnEnemies()
+    public void SpawnEnemies(float spawnChance)
     {
         GetAllAccessibleNodes();
-        if (Random.Range(0, 100) < enemySpawnChance)
+        if (Random.Range(0, 100) < spawnChance)
         {
             GameObject[] enemyPrefabs = mapController.enemyPrefabs;
             GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
@@ -113,6 +113,7 @@ public class ChunkClass : MonoBehaviour
 
     public void GetAllAccessibleNodes()
     {
+        nodes.Clear();
         foreach (Transform obj in transform)
         {
             if (obj.CompareTag("Navigation") && !Physics2D.OverlapPoint(obj.transform.position))
