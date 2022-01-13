@@ -8575,6 +8575,7 @@ MonoBehaviour:
   pickupPrefabs:
   - {fileID: 8274805177746012419, guid: 308d6648fd5f7fd4282ce328a26efeb6, type: 3}
   - {fileID: 8274805177746012419, guid: 0faf9005216f8aa42bf307a563ea2e0c, type: 3}
+  - {fileID: 8274805177746012419, guid: 23ad7ac2186ffac49a2ee07596c32e42, type: 3}
   gameController: {fileID: 703942846}
 --- !u!23 &1871643077
 MeshRenderer:
