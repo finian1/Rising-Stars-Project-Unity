@@ -13,6 +13,7 @@ public class EnemyScript_Base : MonoBehaviour
         AttackingPlayer
     }
     public EnemyStates currentState;
+    [SerializeField] protected GameObject visualCube;
 
     [SerializeField] protected float movementSpeed;
     [SerializeField] protected WeaponStatHolderBase weaponStatHolder;
@@ -23,10 +24,14 @@ public class EnemyScript_Base : MonoBehaviour
     [SerializeField] protected List<GameObject> nodeMemory = new List<GameObject>();
     [SerializeField] protected int navLayer = 7;
     [SerializeField] protected int solidLayer = 6;
+    [SerializeField] protected float startEnemyHealth = 10.0f;
     [SerializeField] protected float enemyHealth = 10.0f;
     [SerializeField] protected GameObject scoreCrystalPrefab;
     [SerializeField] int numOfScoreCrystals = 5;
     [SerializeField] AudioClip destructionSound;
+
+    [SerializeField] protected ProgressBar healthBar;
+    [SerializeField] protected GameObject healthCanvas;
 
     private GameObject prevNode;
     private GameObject[] prevCheckDebug;
@@ -49,7 +54,7 @@ public class EnemyScript_Base : MonoBehaviour
         {
             AudioSource.PlayClipAtPoint(destructionSound, transform.position, 1.0f);
         }
-        Color thisColor = GetComponent<MeshRenderer>().material.color;
+        Color thisColor = visualCube.GetComponent<MeshRenderer>().material.color;
         if (scoreCrystalPrefab != null)
         {
             for (int i = 0; i < (float)numOfScoreCrystals * player.GetComponent<PlayerController>().currentCrystalMultiplier; i++)
@@ -90,21 +95,32 @@ public class EnemyScript_Base : MonoBehaviour
     private void Start()
     {
         CleanupScript.objectCache.Add(this.gameObject);
+        enemyHealth = startEnemyHealth;
         currentNodeTarget = FindClosestNode();
         CreateWeaponStats();
+        UpdateHealthBar();
     }
     protected virtual void Update()
     {
+        
         if (debug)
         {
             DebugThis();
         }
     }
 
+    private void UpdateHealthBar()
+    {
+        if (healthBar != null)
+        {
+            healthBar.BarValue = (enemyHealth / startEnemyHealth)*100;
+        }
+    }
+
     private void TakeDamage(float val)
     {
         enemyHealth -= val;
-
+        UpdateHealthBar();
         
         if(enemyHealth <= 0 && !dead)
         {
@@ -257,6 +273,10 @@ public class EnemyScript_Base : MonoBehaviour
 
     protected void MoveTowards(GameObject node)
     {
+        if (healthCanvas != null)
+        {
+            healthCanvas.gameObject.transform.LookAt(player.transform.position);
+        }
         transform.position = Vector3.MoveTowards(transform.position, node.transform.position, movementSpeed * Time.deltaTime);
     }
 

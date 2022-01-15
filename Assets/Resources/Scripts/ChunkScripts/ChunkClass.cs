@@ -92,7 +92,7 @@ public class ChunkClass : MonoBehaviour
             if (Random.Range(0, 100) < spawnChance)
             {
                 GameObject[] enemyPrefabs = mapController.enemyPrefabs;
-                Debug.Log(nodes.Count);
+                //Debug.Log(nodes.Count);
                 GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
                 temp.GetComponent<EnemyScript_Base>().player = playerObject;
             }

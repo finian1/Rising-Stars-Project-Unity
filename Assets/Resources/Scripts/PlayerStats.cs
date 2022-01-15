@@ -12,18 +12,58 @@ public static class PlayerStats
     public static float initDifficulty = 1.0f;
     public static List<WeaponStatHolderBase> weaponsOwned = new List<WeaponStatHolderBase>
     {
-        new WeaponStatHolderBase(typeof(Weapon_AssRifle), 5, 50, 10, 5, 0.1f, 0.1f, 1.0f, 0, "Starter Assault Rifle")
+        new WeaponStatHolderBase(typeof(Weapon_AssRifle), 
+            wepDamage : 5, 
+            wepRange : 50, 
+            wepInnacuracy : 10, 
+            wepFireRate : 5, 
+            wepShotLifetime : 0.1f, 
+            wepShotWidth : 0.1f, 
+            wepColour : Color.green, 
+            crystalMultiplier : 1.0f, 
+            weaponCost : 0, 
+            wepNickname : "Starter Assault Rifle")
     };
     public static WeaponStatHolderBase primaryWeapon;
     public static WeaponStatHolderBase secondaryWeapon;
     public static bool isInTrap;
+
+    //Stat Levels
+    public static int startBuffPrice = 1000;
+    public static int priceIncreasePerLevel = 100;
+
+    public static int healthLevel = 0;
+    public static float buffPerLevel_Health = 10;
+
+    public static int jumpLevel = 0;
+    public static float buffPerLevel_Jump = 1;
+
+    public static int speedLevel = 0;
+    public static float buffPerLevel_Speed = 1;
+
+    public static int crystalDropLevel = 0;
+    public static float buffPerLevel_CrystalDrop = 1;
+
+    public static int crystalWorthLevel = 0;
+    public static float buffPerLevel_CrystalWorth = 2;
 
 
 }
 
 public class WeaponStatHolderBase
 {
-    public WeaponStatHolderBase(System.Type wepType, float wepDamage, float wepRange, float wepInnacuracy, float wepFireRate, float wepShotLifetime, float wepShotWidth, float crystalMultiplier = 1.0f, int weaponCost = 0, string wepNickname = "Nameless",
+    public WeaponStatHolderBase(
+        System.Type wepType,
+        float wepDamage,
+        float wepRange,
+        float wepInnacuracy,
+        float wepFireRate,
+        float wepShotLifetime,
+        float wepShotWidth,
+        Color wepColour,
+        float crystalMultiplier = 1.0f,
+        int weaponCost = 0,
+        string wepNickname = "Nameless",
         /*minigun vars*/float mini_wepStartFireRate = 0.0f, float mini_wepTimeToRevUp = 0.0f, float mini_wepCoolDownSpeed = 0.0f,
         /*shotgun vars*/int shot_wepShotCount = 0,
         /*assault vars*/float ass_wepInitInaccuracy = 0.0f
@@ -38,6 +78,7 @@ public class WeaponStatHolderBase
         fireRate = wepFireRate;
         shotLifetime = wepShotLifetime;
         shotWidth = wepShotWidth;
+        weaponColour = wepColour;
         crysMultiplier = crystalMultiplier;
 
         startFireRate = mini_wepStartFireRate;
@@ -59,6 +100,7 @@ public class WeaponStatHolderBase
         shotLifetime = 0.0f;
         shotWidth = 0.0f;
         crysMultiplier = 1.0f;
+        weaponColour = Color.white;
 
         startFireRate = 0.0f;
         timeToRevUp = 0.0f;
@@ -79,6 +121,7 @@ public class WeaponStatHolderBase
     public float shotLifetime;
     public float shotWidth;
     public float crysMultiplier;
+    public Color weaponColour;
     //Minigun vars
     public float startFireRate;
     public float timeToRevUp;

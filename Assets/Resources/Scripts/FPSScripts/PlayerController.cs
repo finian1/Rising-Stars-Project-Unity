@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     //private CharacterController controller;
     [SerializeField] private Vector3 playerVelocity;
     [SerializeField] private Vector3 currentForceVelocity;
+    [SerializeField] private Material matToChange;
     private bool groundedPlayer;
     /*private float playerSpeed = 10.0f;
     private float jumpHeight = 1.0f;*/
@@ -91,6 +92,7 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         allowPlayerMovement = true;
+        EquipWeapon(PlayerStats.primaryWeapon);
     }
     private void Update()
     {
@@ -181,6 +183,19 @@ public class PlayerController : MonoBehaviour
         currentWeaponScript = temp;
         temp.init(newWeapon);
         temp.SetupBase(playerCamera.GetComponent<Camera>(), shotMaterial);
+
+        //Material[] mats = weapon.GetComponent<Renderer>().materials;
+        //foreach(Material mat in mats)
+        //{
+        //    Debug.Log(mat.name);
+        //    if(mat.name == nameOfMatToChange)
+        //    {
+        //        mat.SetColor("_EmissionColor", newWeapon.weaponColour);
+        //        break;
+        //    }
+        //}
+        matToChange.SetColor("_EmissionColor", newWeapon.weaponColour);
+
         currentCrystalMultiplier = newWeapon.crysMultiplier;
     }
 
@@ -229,7 +244,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Debug.Log(currentForceVelocity);
+        //Debug.Log(currentForceVelocity);
         
     }
 

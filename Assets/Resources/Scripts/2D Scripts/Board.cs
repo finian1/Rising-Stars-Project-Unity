@@ -87,6 +87,7 @@ public class Board : MonoBehaviour
         _ui.ShowHUD();
         PlayerStats.difficulty = PlayerStats.initDifficulty;
         PlayerStats.health = PlayerStats.initialHealth;
+        playerObject.GetComponent<PlayerController>().EquipWeapon(PlayerStats.primaryWeapon);
         playerObject.SetActive(true);
     }
     /// <summary>

@@ -124,7 +124,10 @@ public class Box : MonoBehaviour
         }
         else
         {
-            
+            if (IsDangerous)
+            {
+                IsDangerous = false;
+            }
             _board.gameStarted = true;
             _board.BeginFPSPlay();
             _board.SetPlayerSpawnPoint(ID);

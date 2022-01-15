@@ -24,6 +24,7 @@ public class Weapon_MiniGun : Weapon_Base
     protected override void Update()
     {
         base.Update();
+        Debug.Log(currentRevPercent);
         if (!isFiring)
         {
             if (currentRevPercent > 0)
@@ -57,12 +58,12 @@ public class Weapon_MiniGun : Weapon_Base
         }
         
         currentFireRate = startFireRate + ((fireRate - startFireRate) * currentRevPercent);
-        Debug.Log(currentRevPercent);
+        //Debug.Log(currentRevPercent);
         if (currentShotTimer <= 0.0f)
         {
             GameObject hitObject = null;
             FireHitscanShot(isFiredByPlayer, ref hitObject);
-            currentShotTimer = 1 / fireRate;
+            currentShotTimer = 1 / currentFireRate;
         }
 
     }
