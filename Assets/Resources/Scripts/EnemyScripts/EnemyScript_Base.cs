@@ -54,7 +54,11 @@ public class EnemyScript_Base : MonoBehaviour
         {
             AudioSource.PlayClipAtPoint(destructionSound, transform.position, 1.0f);
         }
-        Color thisColor = visualCube.GetComponent<MeshRenderer>().material.color;
+        Color thisColor = Color.white;
+        if (visualCube != null)
+        {
+            thisColor = visualCube.GetComponent<MeshRenderer>().material.color;
+        }
         if (scoreCrystalPrefab != null)
         {
             for (int i = 0; i < (float)numOfScoreCrystals * player.GetComponent<PlayerController>().currentCrystalMultiplier; i++)
