@@ -12,7 +12,7 @@ public class UIStatsController : MonoBehaviour
 
     public void Update()
     {
-        playerHealthText.text = PlayerStats.health + "/" + PlayerStats.initialHealth;
+        playerHealthText.text = PlayerStats.health + "/" + PlayerStats.starterHealth;
         playerScoreText.text = string.Format("{0:000000}", PlayerStats.points);
         playerCurrencyText.text = "Crystals: " + PlayerStats.currency;
     }

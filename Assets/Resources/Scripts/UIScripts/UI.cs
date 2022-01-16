@@ -11,6 +11,7 @@ public class UI : MonoBehaviour
     [SerializeField] private CanvasGroup Shop;
     [SerializeField] private CanvasGroup Board;
     [SerializeField] private CanvasGroup HUD;
+    [SerializeField] private CanvasGroup Buffs;
     [SerializeField] private TMP_Text TimerText;
     [SerializeField] private TMP_Text ResultText;
 
@@ -57,6 +58,11 @@ public class UI : MonoBehaviour
         StartCoroutine(ShowCanvas(HUD, 1.0f));
     }
 
+    public void ShowBuffs()
+    {
+        StartCoroutine(ShowCanvas(Buffs, 1.0f));
+    }
+
     public void HideMenu()
     {
         StartCoroutine(ShowCanvas(Menu, 0.0f));
@@ -90,6 +96,10 @@ public class UI : MonoBehaviour
     public void HideHUD()
     {
         StartCoroutine(ShowCanvas(HUD, 0.0f));
+    }
+    public void HideBuffs()
+    {
+        StartCoroutine (ShowCanvas(Buffs, 0.0f));
     }
 
     public void UpdateTimer(double gameTime)
@@ -149,6 +159,13 @@ public class UI : MonoBehaviour
             HUD.alpha = 0.0f;
             HUD.interactable = false;
             HUD.blocksRaycasts = false;
+        }
+
+        if(Buffs != null)
+        {
+            Buffs.alpha = 0.0f;
+            Buffs.interactable = false;
+            Buffs.blocksRaycasts = false;
         }
     }
 

@@ -6,16 +6,17 @@ public static class PlayerStats
 {
     public static float initialHealth = 100.0f;
     public static float health = initialHealth;
+    public static float starterHealth = initialHealth;
     public static int points;
-    public static int currency = 1000;
+    public static int currency = 10000;
     public static float difficulty = 1.0f;
     public static float initDifficulty = 1.0f;
     public static List<WeaponStatHolderBase> weaponsOwned = new List<WeaponStatHolderBase>
     {
         new WeaponStatHolderBase(typeof(Weapon_AssRifle), 
-            wepDamage : 5, 
+            wepDamage : 2, 
             wepRange : 50, 
-            wepInnacuracy : 10, 
+            wepInnacuracy : 2, 
             wepFireRate : 5, 
             wepShotLifetime : 0.1f, 
             wepShotWidth : 0.1f, 
@@ -29,6 +30,7 @@ public static class PlayerStats
     public static bool isInTrap;
 
     //Stat Levels
+    public static int maxBuffLevel = 10;
     public static int startBuffPrice = 1000;
     public static int priceIncreasePerLevel = 100;
 
@@ -47,6 +49,10 @@ public static class PlayerStats
     public static int crystalWorthLevel = 0;
     public static float buffPerLevel_CrystalWorth = 2;
 
+    public static int GetBuffPrice(int level)
+    {
+        return startBuffPrice + (level * priceIncreasePerLevel);
+    }
 
 }
 

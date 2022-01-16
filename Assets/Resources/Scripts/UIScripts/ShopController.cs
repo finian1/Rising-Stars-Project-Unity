@@ -11,7 +11,6 @@ public class ShopController : MonoBehaviour
     [SerializeField] private Text statsText;
     [SerializeField] private GameObject listContentObject;
     [SerializeField] private ScrollRect shopList;
-    [SerializeField] private Text crystalText;
     [SerializeField] private Button buyButton;
     [SerializeField] private Dropdown primaryWeaponSelection;
     [SerializeField] private Dropdown secondaryWeaponSelection;
@@ -21,7 +20,6 @@ public class ShopController : MonoBehaviour
     void Start()
     {
         RefreshList();
-        UpdateCrystalCount();
     }
 
     public void RefreshList()
@@ -97,7 +95,6 @@ public class ShopController : MonoBehaviour
     {
         statsText.text = "Welcome to the shop!";
         RefreshList();
-        UpdateCrystalCount();
     }
 
     public void PurchaseWeapon()
@@ -110,14 +107,9 @@ public class ShopController : MonoBehaviour
             currentSelectedWeapon = null;
             statsText.text = "Purchased!";
             RefreshList();
-            UpdateCrystalCount();
         }
     }
 
-    public void UpdateCrystalCount()
-    {
-        crystalText.text = "Crystals: " + PlayerStats.currency;
-    }
 
     void SelectWeapon(int id)
     {
@@ -164,4 +156,11 @@ public class ShopController : MonoBehaviour
         _ui.ShowBoard();
         _ui.ShowMenu();
     }
+
+    public void ShowBuffs()
+    {
+        _ui.HideShop();
+        _ui.ShowBuffs();
+    }
+
 }

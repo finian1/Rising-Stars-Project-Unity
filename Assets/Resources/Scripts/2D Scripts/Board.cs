@@ -86,7 +86,8 @@ public class Board : MonoBehaviour
         chunkController.SetPlayerMarkerActive(true);
         _ui.ShowHUD();
         PlayerStats.difficulty = PlayerStats.initDifficulty;
-        PlayerStats.health = PlayerStats.initialHealth;
+        PlayerStats.starterHealth = PlayerStats.initialHealth + (PlayerStats.healthLevel * PlayerStats.buffPerLevel_Health);
+        PlayerStats.health = PlayerStats.starterHealth;
         playerObject.GetComponent<PlayerController>().EquipWeapon(PlayerStats.primaryWeapon);
         playerObject.SetActive(true);
     }

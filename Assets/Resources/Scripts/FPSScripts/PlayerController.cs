@@ -209,8 +209,8 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = new Vector3((transform.forward * Input.GetAxisRaw("Vertical")).x + (transform.right * Input.GetAxisRaw("Horizontal")).x, 0, (transform.forward * Input.GetAxisRaw("Vertical")).z + (transform.right * Input.GetAxisRaw("Horizontal")).z);
         move.Normalize();
-        playerVelocity.x = move.x * movementSpeed;
-        playerVelocity.z = move.z * movementSpeed;
+        playerVelocity.x = move.x * (movementSpeed + (PlayerStats.speedLevel * PlayerStats.buffPerLevel_Speed));
+        playerVelocity.z = move.z * (movementSpeed + (PlayerStats.speedLevel * PlayerStats.buffPerLevel_Speed));
         playerVelocity += currentForceVelocity;
 
         //characterController.Move(move * Time.deltaTime * movementSpeed);
