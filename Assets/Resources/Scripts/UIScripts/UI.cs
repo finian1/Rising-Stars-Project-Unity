@@ -4,14 +4,23 @@ using System.Collections;
 
 public class UI : MonoBehaviour
 {
+    [SerializeField] private Camera uiCamera;
     [SerializeField] private CanvasGroup Menu;
+    [SerializeField] private Color menuColor;
     [SerializeField] private CanvasGroup Game;
+    [SerializeField] private Color gameColor;
     [SerializeField] private CanvasGroup Result;
+    [SerializeField] private Color resultColor;
     [SerializeField] private CanvasGroup Settings;
+    [SerializeField] private Color settingColor;
     [SerializeField] private CanvasGroup Shop;
+    [SerializeField] private Color shopColor;
     [SerializeField] private CanvasGroup Board;
-    [SerializeField] private CanvasGroup HUD;
+    [SerializeField] private Color boardColor;
     [SerializeField] private CanvasGroup Buffs;
+    [SerializeField] private Color buffsColor;
+    [SerializeField] private CanvasGroup HUD;
+
     [SerializeField] private TMP_Text TimerText;
     [SerializeField] private TMP_Text ResultText;
 
@@ -21,11 +30,13 @@ public class UI : MonoBehaviour
     public void ShowMenu()
     {
         StartCoroutine(ShowCanvas(Menu, 1.0f));
+        StartCoroutine(SetBackgroundColour(menuColor));
     }
 
     public void ShowGame()
     {
         StartCoroutine(ShowCanvas(Game, 1.0f));
+        StartCoroutine(SetBackgroundColour(gameColor));
     }
 
     public void ShowResult(bool success)
@@ -36,31 +47,37 @@ public class UI : MonoBehaviour
         }
 
         StartCoroutine(ShowCanvas(Result, 1.0f));
+        StartCoroutine(SetBackgroundColour(resultColor));
     }
 
     public void ShowSettings()
     {
         StartCoroutine (ShowCanvas(Settings, 1.0f));
+        StartCoroutine(SetBackgroundColour(settingColor));
     }
 
     public void ShowShop()
     {
         StartCoroutine(ShowCanvas(Shop, 1.0f));
+        StartCoroutine(SetBackgroundColour(shopColor));
     }
 
     public void ShowBoard()
     {
         StartCoroutine(ShowCanvas(Board, 1.0f));
+        StartCoroutine(SetBackgroundColour(boardColor));
     }
 
     public void ShowHUD()
     {
         StartCoroutine(ShowCanvas(HUD, 1.0f));
+        
     }
 
     public void ShowBuffs()
     {
         StartCoroutine(ShowCanvas(Buffs, 1.0f));
+        StartCoroutine(SetBackgroundColour(buffsColor));
     }
 
     public void HideMenu()
@@ -192,6 +209,21 @@ public class UI : MonoBehaviour
             {
                 t = Mathf.Clamp(t + Time.deltaTime, 0.0f, AnimationTime);
                 group.alpha = Mathf.SmoothStep(startAlpha, target, t / AnimationTime);
+                yield return null;
+            }
+        }
+    }
+    private IEnumerator SetBackgroundColour(Color newColour)
+    {
+        if (newColour != null)
+        {
+            Color currentColour = uiCamera.backgroundColor;
+            float t = 0.0f;
+
+            while (t < AnimationTime)
+            {
+                t = Mathf.Clamp(t + Time.deltaTime, 0.0f, AnimationTime);
+                uiCamera.backgroundColor = Color.Lerp(currentColour, newColour, t / AnimationTime);
                 yield return null;
             }
         }

@@ -208,24 +208,18 @@ public class PlayerController : MonoBehaviour
 
     void UpdatePlayer()
     {
+        //Check if player is grounded
         groundedPlayer = characterController.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
             playerVelocity.y = 0f;
         }
-
+        //Get directional vector for current movement from input
         Vector3 move = new Vector3((transform.forward * Input.GetAxisRaw("Vertical")).x + (transform.right * Input.GetAxisRaw("Horizontal")).x, 0, (transform.forward * Input.GetAxisRaw("Vertical")).z + (transform.right * Input.GetAxisRaw("Horizontal")).z);
         move.Normalize();
         playerVelocity.x = move.x * (movementSpeed + (PlayerStats.speedLevel * PlayerStats.buffPerLevel_Speed));
         playerVelocity.z = move.z * (movementSpeed + (PlayerStats.speedLevel * PlayerStats.buffPerLevel_Speed));
         playerVelocity += currentForceVelocity;
-
-        //characterController.Move(move * Time.deltaTime * movementSpeed);
-
-        /*if (move != Vector3.zero)
-        {
-            gameObject.transform.forward = move;
-        }*/
 
         // Changes the height position of the player..
         float thisJumpForce = jumpForce + (PlayerStats.jumpLevel * PlayerStats.buffPerLevel_Jump);
@@ -237,7 +231,6 @@ public class PlayerController : MonoBehaviour
             doubleJumped = true;
             playerVelocity.y = Mathf.Sqrt(thisJumpForce * -3.0f * gravityValue);
         }
-        //Debug.Log(doubleJumped);
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         characterController.Move(new Vector3(playerVelocity.x, 0.0f, playerVelocity.z) * Time.deltaTime);

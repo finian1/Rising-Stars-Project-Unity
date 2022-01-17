@@ -9123,14 +9123,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4900498c743508849b3ab7dea31373a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiCamera: {fileID: 963194227}
   Menu: {fileID: 962616680}
+  menuColor: {r: 0, g: 0.6162147, b: 0.6226415, a: 0}
   Game: {fileID: 159724146}
+  gameColor: {r: 0.7264151, g: 0.50103134, b: 0, a: 0}
   Result: {fileID: 2099091003}
+  resultColor: {r: 0.745283, g: 0, b: 0.7042432, a: 0}
   Settings: {fileID: 1776787781}
+  settingColor: {r: 0, g: 0.08274291, b: 0.6415094, a: 0}
   Shop: {fileID: 1114436118}
+  shopColor: {r: 0, g: 0.5754717, b: 0.14574349, a: 0}
   Board: {fileID: 1312689711}
-  HUD: {fileID: 1461980031}
+  boardColor: {r: 0.6886792, g: 0.63084304, b: 0, a: 0}
   Buffs: {fileID: 87586883}
+  buffsColor: {r: 0.6886792, g: 0, b: 0, a: 0}
+  HUD: {fileID: 1461980031}
   TimerText: {fileID: 1247004930}
   ResultText: {fileID: 1740374727}
 --- !u!1 &1511248135
