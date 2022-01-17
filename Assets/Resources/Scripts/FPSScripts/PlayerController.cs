@@ -78,12 +78,19 @@ public class PlayerController : MonoBehaviour
     {
         weaponFireRateScale = startWeaponFireRateScale;
     }
+    public void ResetPlayer()
+    {
+        ResetMovement();
+        ResetJumpHeight();
+        ResetWeaponDamage();
+        ResetWeaponFireRate();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Crystal"))
         {
-            PlayerStats.currency += other.gameObject.GetComponent<CrystalScript>().crystalCost;
+            PlayerStats.currency += other.gameObject.GetComponent<CrystalScript>().crystalCost + (PlayerStats.crystalWorthLevel * PlayerStats.buffPerLevel_CrystalWorth);
             other.gameObject.GetComponent<CrystalScript>().CollectItem();
         }
     }
@@ -221,13 +228,14 @@ public class PlayerController : MonoBehaviour
         }*/
 
         // Changes the height position of the player..
+        float thisJumpForce = jumpForce + (PlayerStats.jumpLevel * PlayerStats.buffPerLevel_Jump);
         if (Input.GetKeyDown(jumpKey) && groundedPlayer)
         {
-            playerVelocity.y += Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
+            playerVelocity.y += Mathf.Sqrt(thisJumpForce * -3.0f * gravityValue);
         }else if(Input.GetKeyDown(jumpKey) && !doubleJumped)
         {
             doubleJumped = true;
-            playerVelocity.y = Mathf.Sqrt(jumpForce * -3.0f * gravityValue);
+            playerVelocity.y = Mathf.Sqrt(thisJumpForce * -3.0f * gravityValue);
         }
         //Debug.Log(doubleJumped);
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -253,6 +261,7 @@ public class PlayerController : MonoBehaviour
         PlayerStats.health -= val;
         if(PlayerStats.health <= 0)
         {
+            ResetPlayer();
             gameController.EndGame(false);
         }
     }

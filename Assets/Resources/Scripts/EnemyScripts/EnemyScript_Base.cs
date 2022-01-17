@@ -50,18 +50,23 @@ public class EnemyScript_Base : MonoBehaviour
 
     public void DestroyEnemy()
     {
+        //Play audio clip
         if (destructionSound != null)
         {
             AudioSource.PlayClipAtPoint(destructionSound, transform.position, 1.0f);
         }
         Color thisColor = Color.white;
+        //Set crystal colour to enemy colour
         if (visualCube != null)
         {
             thisColor = visualCube.GetComponent<MeshRenderer>().material.color;
         }
+        //Spawn death crystals
         if (scoreCrystalPrefab != null)
         {
-            for (int i = 0; i < (float)numOfScoreCrystals * player.GetComponent<PlayerController>().currentCrystalMultiplier; i++)
+            for (int i = 0; 
+                i < (float)numOfScoreCrystals * player.GetComponent<PlayerController>().currentCrystalMultiplier + (PlayerStats.buffPerLevel_CrystalDrop * PlayerStats.crystalDropLevel); 
+                i++)
             {
                 GameObject crystalTemp = Instantiate(scoreCrystalPrefab, transform.position, transform.rotation);
 
@@ -271,6 +276,10 @@ public class EnemyScript_Base : MonoBehaviour
 
     protected void FireAtPlayer()
     {
+        /*Vector3 dir = player.transform.position - transform.position;
+        Quaternion toRotation = Quaternion.FromToRotation(enemyWeapon.gameObject.transform.forward, dir);
+        Debug.Log(Quaternion.Lerp(enemyWeapon.gameObject.transform.rotation, toRotation, 0.5f).eulerAngles);
+        enemyWeapon.gameObject.transform.rotation = Quaternion.Lerp(enemyWeapon.gameObject.transform.rotation, toRotation, 0.5f);*/
         enemyWeapon.gameObject.transform.LookAt(player.transform.position, Vector3.up);
         enemyWeapon.FireWeapon(false);
     }

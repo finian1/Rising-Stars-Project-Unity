@@ -47,7 +47,7 @@ public static class PlayerStats
     public static float buffPerLevel_CrystalDrop = 1;
 
     public static int crystalWorthLevel = 0;
-    public static float buffPerLevel_CrystalWorth = 2;
+    public static int buffPerLevel_CrystalWorth = 2;
 
     public static int GetBuffPrice(int level)
     {
