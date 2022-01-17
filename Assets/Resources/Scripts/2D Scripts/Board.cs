@@ -6,6 +6,7 @@ public class Board : MonoBehaviour
 {
     public enum Event { ClickedBlank, ClickedNearDanger, ClickedDanger, Win };
     public UI _ui;
+    public Game gameController;
     [SerializeField] private Box BoxPrefab;
     [SerializeField] private int Width = 10;
     [SerializeField] private int Height = 10;
@@ -24,6 +25,7 @@ public class Board : MonoBehaviour
     public bool gameStarted = false;
 
     public MapController chunkController;
+    public GameObject playerPrefab;
     public GameObject playerObject;
     public float platformSpawnHeight;
     public GameObject spawnPlatform;
@@ -88,8 +90,7 @@ public class Board : MonoBehaviour
         PlayerStats.difficulty = PlayerStats.initDifficulty;
         PlayerStats.starterHealth = PlayerStats.initialHealth + (PlayerStats.healthLevel * PlayerStats.buffPerLevel_Health);
         PlayerStats.health = PlayerStats.starterHealth;
-        playerObject.GetComponent<PlayerController>().EquipWeapon(PlayerStats.primaryWeapon);
-        playerObject.SetActive(true);
+        
     }
     /// <summary>
     /// Set the player's spawn point to be in the middle of the given cell, and spawn on top of the spawn platform.
@@ -101,7 +102,15 @@ public class Board : MonoBehaviour
         Debug.Log(cellPos);
         GameObject temp = Instantiate(spawnPlatform);
         temp.transform.position = new Vector3(cellPos.x, cellPos.y + platformSpawnHeight, cellPos.z);
-        playerObject.transform.position = new Vector3(cellPos.x, cellPos.y + platformSpawnHeight + 1.0f, cellPos.z);
+        playerObject = Instantiate(playerPrefab, new Vector3(cellPos.x, cellPos.y + platformSpawnHeight + 1.0f, cellPos.z), transform.rotation);
+        chunkController.playerObject = playerObject;
+        chunkController.SetChunksPlayerObject();
+        gameController.playerObject = playerObject;
+        playerObject.GetComponent<PlayerController>().SetGameController(gameController);
+        playerObject.GetComponent<PlayerController>().EquipWeapon(PlayerStats.primaryWeapon);
+
+        playerObject.SetActive(true);
+        //playerObject.transform.position = new Vector3(cellPos.x, cellPos.y + platformSpawnHeight + 1.0f, cellPos.z);
     }
     /// <summary>
     /// Simulates a click on a given box.

@@ -52,7 +52,7 @@ public class Game : MonoBehaviour
             chunkController.DestroyCells();
             chunkController.DestroyBoarders();
             chunkController.SetPlayerMarkerActive(false);
-            playerObject.SetActive(false);
+            //playerObject.SetActive(false);
         }
 
         if (_ui != null)
@@ -147,8 +147,12 @@ public class Game : MonoBehaviour
     private void Reset()
     {
         Cursor.lockState = CursorLockMode.None;
-        playerObject.transform.position = new Vector3(0, 0, 0);
-        playerObject.SetActive(false);
+        if(playerObject != null)
+        {
+            Destroy(playerObject);
+        }
+        //playerObject.transform.position = new Vector3(0, 0, 0);
+        //playerObject.SetActive(false);
         _board.gameStarted = false;
     }
 }

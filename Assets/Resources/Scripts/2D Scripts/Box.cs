@@ -129,8 +129,10 @@ public class Box : MonoBehaviour
                 IsDangerous = false;
             }
             _board.gameStarted = true;
+
             _board.BeginFPSPlay();
             _board.SetPlayerSpawnPoint(ID);
+
         }
     }
 

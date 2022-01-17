@@ -139,6 +139,7 @@ MonoBehaviour:
   allowPlayerMovement: 1
   playerVelocity: {x: 0, y: 0, z: 0}
   currentForceVelocity: {x: 0, y: 0, z: 0}
+  matToChange: {fileID: 2100000, guid: a99fcff7a1cf21e4e8871b9848b69be6, type: 2}
   jumpKey: 32
   weapon: {fileID: 7681749918785084276}
   weaponDamageScale: 1

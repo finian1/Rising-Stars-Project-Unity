@@ -3288,7 +3288,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &582272450
 GameObject:
@@ -4442,7 +4442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chunkController: {fileID: 1871643076}
-  playerObject: {fileID: 2076198009}
+  playerObject: {fileID: 0}
   mainMenu: {fileID: 962616677}
   settingMenu: {fileID: 1776787778}
   shop: {fileID: 1114436119}
@@ -8140,6 +8140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ui: {fileID: 1487839065}
+  gameController: {fileID: 703942846}
   BoxPrefab: {fileID: 5712487045383550580, guid: 3f2e2c290dad5944e84f3a290e42b147, type: 3}
   Width: 10
   Height: 9
@@ -8150,7 +8151,8 @@ MonoBehaviour:
   YBoardSize: 0
   gameStarted: 0
   chunkController: {fileID: 1871643076}
-  playerObject: {fileID: 2076198009}
+  playerPrefab: {fileID: 3029761217614091625, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
+  playerObject: {fileID: 0}
   platformSpawnHeight: 20
   spawnPlatform: {fileID: 946261676605163631, guid: 2e51c3ba6ac764c41bd48ebdc08c5d71, type: 3}
 --- !u!225 &1312689711
@@ -8813,7 +8815,7 @@ RectTransform:
   - {fileID: 1649973757}
   - {fileID: 218302798}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10654,7 +10656,7 @@ MonoBehaviour:
   cells: []
   chunkBase: {fileID: 5131038892230026013, guid: 43c72ff4660b5734bb28207d83798a29, type: 3}
   voidChunk: {fileID: 5131038892230026013, guid: 7b0002ac81522754ca71e40d8465cecb, type: 3}
-  playerObject: {fileID: 2076198009}
+  playerObject: {fileID: 0}
   boarderTrigger: {fileID: 1795158878}
   gameplayBoard: {fileID: 1312689710}
   FPSTopRightPosition: {x: 0, y: 0, z: 0}
@@ -11742,11 +11744,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2074487801}
   m_CullTransparentMesh: 1
---- !u!1 &2076198009 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3029761217614091625, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-  m_PrefabInstance: {fileID: 3029761216133517584}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2085151502
 GameObject:
   m_ObjectHideFlags: 0
@@ -11975,83 +11972,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e74c170a6086ca4f9a68edea6148ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &3029761216133517584
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3029761217614091625, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_Name
-      value: PlayerCharacter
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091627, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: d54c6de46b05bfb4cbfc4d957d3bdb5e, type: 2}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091629, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3029761217614091631, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: test
-      value: 
-      objectReference: {fileID: 2100000, guid: a99fcff7a1cf21e4e8871b9848b69be6, type: 2}
-    - target: {fileID: 3029761217614091631, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: matToChange
-      value: 
-      objectReference: {fileID: 2100000, guid: a99fcff7a1cf21e4e8871b9848b69be6, type: 2}
-    - target: {fileID: 3029761217614091631, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: gameController
-      value: 
-      objectReference: {fileID: 703942846}
-    - target: {fileID: 3029761217614091631, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
-      propertyPath: nameOfMatToChange
-      value: Pistol_TubeGlass (Instance)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1525ab7d02f3a644a93638e6aef76192, type: 3}
 --- !u!1001 &5647471243644405654
 PrefabInstance:
   m_ObjectHideFlags: 0

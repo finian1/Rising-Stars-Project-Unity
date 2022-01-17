@@ -78,12 +78,15 @@ public class MapController : MonoBehaviour
 
     private void UpdateMinimapPosition()
     {
-        Vector3 playerPos = playerObject.transform.position - FPSBottomLeftPosition;
-        playerPos = new Vector3(playerPos.x * scaleX, 0, playerPos.z * scaleY);
-        //Debug.Log(playerPos);
-        playerPositionOnMinimap = new Vector3(gameplayBoard.boardBottomLeftPosition.x + playerPos.x, gameplayBoard.boardBottomLeftPosition.y + playerPos.z, -5.0f);
-        playerMarker.transform.position = playerPositionOnMinimap;
-        playerMarker.transform.rotation = Quaternion.Euler(180, 0, (playerObject.transform.rotation.eulerAngles.y - 90.0f));
+        if (playerObject != null)
+        {
+            Vector3 playerPos = playerObject.transform.position - FPSBottomLeftPosition;
+            playerPos = new Vector3(playerPos.x * scaleX, 0, playerPos.z * scaleY);
+            //Debug.Log(playerPos);
+            playerPositionOnMinimap = new Vector3(gameplayBoard.boardBottomLeftPosition.x + playerPos.x, gameplayBoard.boardBottomLeftPosition.y + playerPos.z, -5.0f);
+            playerMarker.transform.position = playerPositionOnMinimap;
+            playerMarker.transform.rotation = Quaternion.Euler(180, 0, (playerObject.transform.rotation.eulerAngles.y - 90.0f));
+        }
     }
     /// <summary>
     /// Populate all arrays and spawn in the board
@@ -142,7 +145,6 @@ public class MapController : MonoBehaviour
                 
                 cells[i].cellChunks[j].AddComponent(chunkType);
                 cells[i].cellChunks[j].GetComponent<ChunkClass>().mapController = this;
-                cells[i].cellChunks[j].GetComponent<ChunkClass>().playerObject = playerObject;
                 cells[i].cellChunks[j].transform.localPosition = new Vector3(cells[i].GetStartX() + chunkColumn * chunkSizeX, 0,cells[i].GetStartY() + chunkRow * chunkSizeY);
                 
             }
@@ -161,6 +163,17 @@ public class MapController : MonoBehaviour
         boarderTrigger.transform.position = boardMidpoint;
         SetBoarders();
         SetPlayerMarkerActive(true);
+    }
+
+    public void SetChunksPlayerObject()
+    {
+        for (int i = 0; i < cells.Length; i++)
+        {
+            for (int j = 0; j < cells[i].cellChunks.Length; j++)
+            {
+                cells[i].cellChunks[j].GetComponent<ChunkClass>().playerObject = playerObject;
+            }
+        }
     }
 
     public void SetPlayerMarkerActive(bool val)

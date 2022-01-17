@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public Game gameController;
+    private Game gameController;
     private KeyCode mapKey = KeyCode.M;
     public GameObject playerCamera;
     public float maxVerticalRotation = 0;
@@ -61,7 +61,10 @@ public class PlayerController : MonoBehaviour
         spawnPosition = gameObject.transform.position;
         //Cursor.lockState = CursorLockMode.Locked;
     }
-
+    public void SetGameController(Game controller)
+    {
+        gameController = controller;
+    }
     public void ResetMovement()
     {
         movementSpeed = startSpeed;
@@ -141,7 +144,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         
-        if (allowPlayerMovement)
+        if (allowPlayerMovement && !PlayerStats.pausedGame)
         {
             //Jump();
             //UpdatePlayer();
@@ -256,6 +259,7 @@ public class PlayerController : MonoBehaviour
         {
             ResetPlayer();
             gameController.EndGame(false);
+            Destroy(gameObject);
         }
     }
 

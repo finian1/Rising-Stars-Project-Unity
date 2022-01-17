@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class PlayerStats
 {
+    public static bool pausedGame = false;
     public static float initialHealth = 100.0f;
     public static float health = initialHealth;
     public static float starterHealth = initialHealth;

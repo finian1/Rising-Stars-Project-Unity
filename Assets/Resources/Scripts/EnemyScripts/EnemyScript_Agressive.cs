@@ -9,30 +9,33 @@ public class EnemyScript_Agressive : EnemyScript_Base
     // Update is called once per frame
     protected override void Update()
     {
-        if (player != null && CanSeePlayer())
+        if (!PlayerStats.pausedGame)
         {
-            FireAtPlayer();
-        }
-
-        if (currentNodeTarget != null)
-        {
-            MoveTowards(currentNodeTarget);
-            Debug.DrawLine(transform.position, currentNodeTarget.transform.position, Color.green);
-            if (transform.position == currentNodeTarget.transform.position)
+            if (player != null && CanSeePlayer())
             {
-                if (player != null)
+                FireAtPlayer();
+            }
+
+            if (currentNodeTarget != null)
+            {
+                MoveTowards(currentNodeTarget);
+                Debug.DrawLine(transform.position, currentNodeTarget.transform.position, Color.green);
+                if (transform.position == currentNodeTarget.transform.position)
                 {
-                    currentNodeTarget = PickAgressiveNode();
-                    if (currentNodeTarget != null)
+                    if (player != null)
                     {
-                        nodeMemory.Add(currentNodeTarget);
+                        currentNodeTarget = PickAgressiveNode();
+                        if (currentNodeTarget != null)
+                        {
+                            nodeMemory.Add(currentNodeTarget);
+                        }
                     }
                 }
             }
-        }
-        else
-        {
-            currentNodeTarget = FindClosestNode();
+            else
+            {
+                currentNodeTarget = FindClosestNode();
+            }
         }
     }
 }
