@@ -22,7 +22,6 @@ public class Chunk_Cubes : ChunkClass
 
     public override void SpawnObjects()
     {
-        //This isn't working just yet
         cubeObstacle = Resources.Load("Prefabs/ObstaclePrefabs/CubeObstacle_Static", typeof(GameObject)) as GameObject;
         obstacleScript = cubeObstacle.GetComponent<ObstacleScript>();
         numOfCubesX = (int)(chunkSizeX / cubeSize);

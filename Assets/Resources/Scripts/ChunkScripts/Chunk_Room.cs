@@ -6,6 +6,13 @@ public class Chunk_Room : ChunkClass
 {
     // Start is called before the first frame update
     private GameObject roomObject;
+    private string[] prefabNames =
+    {
+        "Prefabs/ObstaclePrefabs/RoomPrefab",
+        "Prefabs/ObstaclePrefabs/TreePrefab1",
+        "Prefabs/ObstaclePrefabs/TreePrefab2"
+
+    };
     ObstacleScript obstacleScript;
     float[] rotations =
     {
@@ -14,7 +21,7 @@ public class Chunk_Room : ChunkClass
     public override void SpawnObjects()
     {
         obstacleArray = new GameObject[1];
-        roomObject = Resources.Load("Prefabs/ObstaclePrefabs/RoomPrefab", typeof(GameObject)) as GameObject;
+        roomObject = Resources.Load(prefabNames[Random.Range(0, prefabNames.Length)], typeof(GameObject)) as GameObject;
         obstacleScript = roomObject.GetComponent<ObstacleScript>();
 
         obstacleArray[0] = Instantiate(roomObject, this.transform);
