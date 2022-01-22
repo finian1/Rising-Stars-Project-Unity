@@ -32,15 +32,18 @@ public class ChunkClass : MonoBehaviour
 
     public List<GameObject> nodes = new List<GameObject>();
 
-    private float enemySpawnChance = 10;
+    private float enemySpawnChance = 2.0f;
     private bool spawnedEnemies = false;
-    private float pickupSpawnChance = 5;
+    private float pickupSpawnChance = 10.0f;
     private bool spawnedPickups = false;
 
     private bool gotNodes = false;
 
     public MapController mapController;
     public Game gameController;
+
+    private float safeDistToPlayer = 10.0f;
+    private float spawnSizeCheck = 1.0f;
 
     private void Awake()
     {
@@ -89,12 +92,18 @@ public class ChunkClass : MonoBehaviour
         }
         if (nodes.Count != 0)
         {
-            if (Random.Range(0, 100) < spawnChance)
+            foreach(GameObject node in nodes)
             {
-                GameObject[] enemyPrefabs = mapController.enemyPrefabs;
-                //Debug.Log(nodes.Count);
-                GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], nodes[Random.Range(0, nodes.Count)].transform.position, transform.rotation);
-                temp.GetComponent<EnemyScript_Base>().player = playerObject;
+                if(Vector3.Distance(node.transform.position, playerObject.transform.position) > safeDistToPlayer)
+                {
+                    if (Random.Range(0, 100) < spawnChance)
+                    {
+                        GameObject[] enemyPrefabs = mapController.enemyPrefabs;
+                        GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], node.transform.position, transform.rotation);
+                        temp.GetComponent<EnemyScript_Base>().player = playerObject;
+                    }
+
+                }
             }
         }
         spawnedEnemies = true;
@@ -106,29 +115,32 @@ public class ChunkClass : MonoBehaviour
         {
             GetAllAccessibleNodes();
         }
-        if (Random.Range(0, 100) < pickupSpawnChance)
+        if (nodes.Count != 0)
         {
-            GameObject[] pickupPrefabs = mapController.pickupPrefabs;
+            if (Random.Range(0, 100) < pickupSpawnChance)
+            {
+                GameObject[] pickupPrefabs = mapController.pickupPrefabs;
 
-            float pickupRayStart = 20.0f;
-            float spawnHeight = 1.0f;
-            Vector3 randNodePos = nodes[Random.Range(0, nodes.Count)].transform.position;
-            Vector3 rayStartPos = new Vector3(randNodePos.x, randNodePos.y+pickupRayStart, randNodePos.z);
-            RaycastHit hit;
-            Physics.Raycast(rayStartPos, Vector3.down, out hit, Mathf.Infinity, ~(1 | 7));
+                float pickupRayStart = 20.0f;
+                float spawnHeight = 1.0f;
+                Vector3 randNodePos = nodes[Random.Range(0, nodes.Count)].transform.position;
+                Vector3 rayStartPos = new Vector3(randNodePos.x, randNodePos.y + pickupRayStart, randNodePos.z);
+                RaycastHit hit;
+                Physics.Raycast(rayStartPos, Vector3.down, out hit, Mathf.Infinity, ~(1 | 7));
 
-            GameObject temp = Instantiate(pickupPrefabs[Random.Range(0, pickupPrefabs.Length)], new Vector3(hit.point.x, hit.point.y + spawnHeight, hit.point.z), transform.rotation);
+                GameObject temp = Instantiate(pickupPrefabs[Random.Range(0, pickupPrefabs.Length)], new Vector3(hit.point.x, hit.point.y + spawnHeight, hit.point.z), transform.rotation);
+            }
         }
         spawnedPickups = true;
     }
 
-
+    //Gets all nodes within the chunk that are not overlapping any objects
     public void GetAllAccessibleNodes()
     {
         nodes.Clear();
         foreach (Transform obj in transform)
         {
-            if (obj.CompareTag("Navigation") && !Physics2D.OverlapPoint(obj.transform.position))
+            if (obj.CompareTag("Navigation") && Physics.OverlapSphere(obj.transform.position, spawnSizeCheck).Length == 0)
             {
                 nodes.Add(obj.gameObject);
             }
@@ -143,6 +155,7 @@ public class ChunkClass : MonoBehaviour
         }
     }
 
+    //No longer used, initially linked all nodes together
     public void ActivateNodes()
     {
         foreach (GameObject obstacle in obstacleArray)
@@ -160,19 +173,19 @@ public class ChunkClass : MonoBehaviour
             }
         }
     }
-
+    //Used to keep track of how many obstacles in the chunk have finished revealing
     public void FinishObstacleReveal()
     {
         finishedObstacles++;
     }
-
+    //Fade the entire chunk to a new colour
     public void FadeToColour(Color newColour)
     {
         //Debug.Log("Trying to fade!");
         newChunkColour = newColour;
         fadingColour = true;
     }
-
+    //Set all obstacles within the chunk to a certain colour
     public void SetObstacleColours(Color newColour)
     {
         foreach(Transform child in this.transform)

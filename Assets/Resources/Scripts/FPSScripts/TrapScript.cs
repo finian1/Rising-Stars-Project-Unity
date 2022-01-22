@@ -11,6 +11,7 @@ public class TrapScript : MonoBehaviour
     [SerializeField] private float trapSize = 3.0f;
     [SerializeField] private float timeForTrap = 40.0f;
     [SerializeField] private float timeBetweenWaves = 10.0f;
+    [SerializeField] private float trapEnemySpawnChances = 2.0f;
 
     private Cell[] neighbourCells;
     private Cell cellLink;
@@ -86,7 +87,7 @@ public class TrapScript : MonoBehaviour
     {
         foreach (Cell neighbourCell in neighbourCells)
         {
-            neighbourCell.SpawnEnemies(20.0f);
+            neighbourCell.SpawnEnemies(trapEnemySpawnChances);
         }
     }
 

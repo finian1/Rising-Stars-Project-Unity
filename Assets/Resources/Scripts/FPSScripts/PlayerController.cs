@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Game gameController;
-    private KeyCode mapKey = KeyCode.M;
     public GameObject playerCamera;
     public float maxVerticalRotation = 0;
     private float currentVerticalRotation = 0;
@@ -106,80 +105,100 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKey(mapKey) && allowPlayerMovement)
+        if(Input.GetKeyDown(PlayerStats.pauseKey) && PlayerStats.pausedGame)
         {
-            allowPlayerMovement = false;
-            playerCamera.SetActive(false);
-        }else if(!Input.GetKey(mapKey) && !allowPlayerMovement)
-        {
-            allowPlayerMovement=true;
-            playerCamera.SetActive(true);
-        }
+            gameController.UnpauseGame();
 
-        if (characterController.isGrounded)
-        {
-            doubleJumped = false;
         }
-        
-        if (allowPlayerMovement)
+        if (!PlayerStats.pausedGame)
         {
-            UpdatePlayer();
-        }
-        else
-        {
-            characterController.Move(Vector3.zero);
-        }
+            if (Input.GetKey(PlayerStats.pauseKey))
+            {
+                playerCamera.SetActive(true);
+                gameController.PauseGame();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            EquipWeapon(PlayerStats.primaryWeapon);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            EquipWeapon(PlayerStats.secondaryWeapon);
+            if (Input.GetKey(PlayerStats.mapKey) && allowPlayerMovement)
+            {
+                allowPlayerMovement = false;
+                playerCamera.SetActive(false);
+            }
+            else if (!Input.GetKey(PlayerStats.mapKey) && !allowPlayerMovement)
+            {
+                allowPlayerMovement = true;
+                playerCamera.SetActive(true);
+            }
+
+            if (characterController.isGrounded)
+            {
+                doubleJumped = false;
+            }
+
+            if (allowPlayerMovement)
+            {
+                UpdatePlayer();
+            }
+            else
+            {
+                characterController.Move(Vector3.zero);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                EquipWeapon(PlayerStats.primaryWeapon);
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                EquipWeapon(PlayerStats.secondaryWeapon);
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+
+                if (weapon.GetComponent<Weapon_Base>() != null)
+                {
+                    weapon.GetComponent<Weapon_Base>().FireWeapon(true);
+                }
+            }
+            else
+            {
+                if (weapon.GetComponent<Weapon_Base>() != null)
+                {
+                    weapon.GetComponent<Weapon_Base>().StopFiring();
+                }
+            }
         }
         
     }
 
     void FixedUpdate()
     {
-        
-        if (allowPlayerMovement && !PlayerStats.pausedGame)
+        if (!PlayerStats.pausedGame)
         {
-            //Jump();
-            //UpdatePlayer();
-            MoveCamera();
-            
-            //MovePlayer();
-            //characterController.Move(playerVelocity * Time.deltaTime);
-            /*if (Input.GetKey(KeyCode.B))
+            if (allowPlayerMovement)
             {
-                allowCameraMovement = false;
-                bookUI.SetActive(true);
-                bookUI.GetComponent<UIController>().SetPage();
-                Cursor.lockState = CursorLockMode.None;
-            }*/
+                //Jump();
+                //UpdatePlayer();
+                MoveCamera();
 
-        }
-        if (Input.GetMouseButton(0))
-        {
+                //MovePlayer();
+                //characterController.Move(playerVelocity * Time.deltaTime);
+                /*if (Input.GetKey(KeyCode.B))
+                {
+                    allowCameraMovement = false;
+                    bookUI.SetActive(true);
+                    bookUI.GetComponent<UIController>().SetPage();
+                    Cursor.lockState = CursorLockMode.None;
+                }*/
 
-            if(weapon.GetComponent<Weapon_Base>() != null)
-            {
-                weapon.GetComponent<Weapon_Base>().FireWeapon(true);
             }
+           
         }
-        else
-        {
-            if (weapon.GetComponent<Weapon_Base>() != null)
-            {
-                weapon.GetComponent<Weapon_Base>().StopFiring();
-            }
-        }
-
         
 
     }
+
+    
 
     public void EquipWeapon(WeaponStatHolderBase newWeapon)
     {

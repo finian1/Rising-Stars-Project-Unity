@@ -5,16 +5,26 @@ using UnityEngine;
 public class SpawnPlatformScript : MonoBehaviour
 {
     private Vector3 decentSpeed = new Vector3(0,-1,0);
+
+    private void Start()
+    {
+        CleanupScript.objectCache.Add(this.gameObject);
+    }
+
     public void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-           Destroy(gameObject);
+            CleanupScript.objectCache.Remove(this.gameObject);
+            Destroy(gameObject);
         }
     }
 
     private void Update()
     {
-        transform.position += decentSpeed * Time.deltaTime;
+        if (!PlayerStats.pausedGame)
+        {
+            transform.position += decentSpeed * Time.deltaTime;
+        }
     }
 }

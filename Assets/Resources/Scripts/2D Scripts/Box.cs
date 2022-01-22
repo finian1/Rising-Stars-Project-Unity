@@ -21,7 +21,7 @@ public class Box : MonoBehaviour
     public bool IsDangerous { get; private set; }
     public bool IsActive { get { return _button != null && _button.interactable; } }
 
-    private float difficultyInc = 0.5f;
+    private float difficultyInc = 0.1f;
 
     private void OnDrawGizmos()
     {

@@ -77,6 +77,20 @@ public class Game : MonoBehaviour
         _ui.ShowSettings();
     }
 
+    public void PauseGame()
+    {
+        _ui.ShowPaused();
+        PlayerStats.pausedGame = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void UnpauseGame()
+    {
+        _ui.HidePaused();
+        PlayerStats.pausedGame = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     private void Awake()
     {
         _board = transform.parent.GetComponentInChildren<Board>();
@@ -136,6 +150,12 @@ public class Game : MonoBehaviour
 
     public void EndGame(bool winGame)
     {
+        UnpauseGame();
+        if(playerObject != null)
+        {
+            Destroy(playerObject);
+        }
+        _ui.HidePaused();
         _ui.HideGame();
         _ui.HideHUD();
         CleanupScript.Cleanup();

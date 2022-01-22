@@ -8,6 +8,9 @@ public class SpinnyScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        gameObject.transform.Rotate(rotationSpeeds*Time.deltaTime);
+        if (!PlayerStats.pausedGame)
+        {
+            gameObject.transform.Rotate(rotationSpeeds * Time.deltaTime);
+        }
     }
 }

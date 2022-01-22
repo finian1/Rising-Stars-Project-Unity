@@ -21,7 +21,7 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   shotLifetime: 0
   shotWidth: 0
-  shotMat: {fileID: 0}
+  shotMat: {fileID: 2100000, guid: 1e53dc9e7f10d9e4395d98d68b9d4d7b, type: 2}
   shotSound: {fileID: 0}
   crystalMultiplier: 0
   startFireRate: 0

@@ -4,12 +4,15 @@ using UnityEngine;
 
 public static class PlayerStats
 {
+    public static KeyCode mapKey = KeyCode.M;
+    public static KeyCode pauseKey = KeyCode.Escape;
+
     public static bool pausedGame = false;
     public static float initialHealth = 100.0f;
     public static float health = initialHealth;
     public static float starterHealth = initialHealth;
     public static int points;
-    public static int currency = 10000;
+    public static int currency = 250;
     public static float difficulty = 1.0f;
     public static float initDifficulty = 1.0f;
     public static List<WeaponStatHolderBase> weaponsOwned = new List<WeaponStatHolderBase>

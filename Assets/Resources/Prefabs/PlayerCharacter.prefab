@@ -22,7 +22,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3029761217614091629
 Transform:
   m_ObjectHideFlags: 0
@@ -129,7 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a981467b0073bcc4297852bc8aa52350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameController: {fileID: 0}
   playerCamera: {fileID: 3029761217789753473}
   maxVerticalRotation: 80
   rotationSpeed: 360
@@ -144,7 +143,7 @@ MonoBehaviour:
   weapon: {fileID: 7681749918785084276}
   weaponDamageScale: 1
   weaponFireRateScale: 1
-  shotMaterial: {fileID: 2100000, guid: f4e0bfb4c082f72469533623b5fdf9b5, type: 2}
+  shotMaterial: {fileID: 2100000, guid: a030fbe26ce491e4494ccd6d7429a928, type: 2}
   currentCrystalMultiplier: 1
 --- !u!143 &3029761217614091665
 CharacterController:

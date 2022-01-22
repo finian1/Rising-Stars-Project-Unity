@@ -20,6 +20,7 @@ public class UI : MonoBehaviour
     [SerializeField] private CanvasGroup Buffs;
     [SerializeField] private Color buffsColor;
     [SerializeField] private CanvasGroup HUD;
+    [SerializeField] private CanvasGroup Paused;
 
     [SerializeField] private TMP_Text TimerText;
     [SerializeField] private TMP_Text ResultText;
@@ -48,6 +49,11 @@ public class UI : MonoBehaviour
 
         StartCoroutine(ShowCanvas(Result, 1.0f));
         StartCoroutine(SetBackgroundColour(resultColor));
+    }
+
+    public void ShowPaused()
+    {
+        StartCoroutine(ShowCanvas(Paused, 1.0f));
     }
 
     public void ShowSettings()
@@ -83,6 +89,11 @@ public class UI : MonoBehaviour
     public void HideMenu()
     {
         StartCoroutine(ShowCanvas(Menu, 0.0f));
+    }
+
+    public void HidePaused()
+    {
+        StartCoroutine(ShowCanvas(Paused, 0.0f));
     }
 
     public void HideGame()
@@ -183,6 +194,13 @@ public class UI : MonoBehaviour
             Buffs.alpha = 0.0f;
             Buffs.interactable = false;
             Buffs.blocksRaycasts = false;
+        }
+
+        if(Paused != null)
+        {
+            Paused.alpha = 0.0f;
+            Paused.interactable = false;
+            Paused.blocksRaycasts = false;
         }
     }
 

@@ -321,7 +321,7 @@ public class EnemyScript_Base : MonoBehaviour
         float minRange = 20;
         float maxRange = 50;
 
-        float minDamage = 5;
+        float minDamage = 1;
         float maxDamage = 20;
 
         float minFireRate = 4;
@@ -382,7 +382,7 @@ public class EnemyScript_Base : MonoBehaviour
         float minRange = 10;
         float maxRange = 50;
 
-        float minDamage = 2;
+        float minDamage = 1;
         float maxDamage = 10;
 
         float minFireRate = 5;
