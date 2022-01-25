@@ -12,7 +12,7 @@ public static class PlayerStats
     public static float health = initialHealth;
     public static float starterHealth = initialHealth;
     public static int points;
-    public static int currency = 250;
+    public static int currency = 10000;
     public static float difficulty = 1.0f;
     public static float initDifficulty = 1.0f;
     public static List<WeaponStatHolderBase> weaponsOwned = new List<WeaponStatHolderBase>
@@ -53,10 +53,20 @@ public static class PlayerStats
     public static int crystalWorthLevel = 0;
     public static int buffPerLevel_CrystalWorth = 2;
 
+    public static float currentMouseSensitivity = 1.0f;
+    public static float maxMouseSensitivity = 2.0f;
+    public static float minMouseSensitivity = 0.1f;
+
     public static int GetBuffPrice(int level)
     {
         return startBuffPrice + (level * priceIncreasePerLevel);
     }
+
+    public static Vector2 minimapOffset = new Vector2(0,0);
+    public static Vector2 minimapScale = new Vector2(1,1);
+    public static bool allowMapMovement = false;
+    public static float mapMovementSpeed = 10.0f;
+    public static float mapScaleSensitivity = 1.0f;
 
 }
 

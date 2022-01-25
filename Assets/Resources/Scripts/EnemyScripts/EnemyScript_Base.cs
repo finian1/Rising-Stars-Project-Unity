@@ -157,6 +157,7 @@ public class EnemyScript_Base : MonoBehaviour
                 CreateMiniGun(ref weaponStatHolder, PlayerStats.difficulty);
             }
             enemyWeapon.init(weaponStatHolder);
+            enemyWeapon.SetShotColour(visualCube.GetComponent<MeshRenderer>().material.color);
         }
         
     }

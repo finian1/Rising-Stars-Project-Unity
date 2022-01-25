@@ -17,6 +17,7 @@ public class Weapon_Base : MonoBehaviour
     [SerializeField] protected Material shotMat;
     [SerializeField] protected AudioClip shotSound;
     [SerializeField] protected float crystalMultiplier;
+    [SerializeField] protected Color shotColor;
 
     protected string weaponSoundName;
 
@@ -49,6 +50,11 @@ public class Weapon_Base : MonoBehaviour
         shotWidth = stats.shotWidth;
         firingOrigin = transform.GetChild(0).transform;
         crystalMultiplier = stats.crysMultiplier;
+    }
+
+    public void SetShotColour(Color newColor)
+    {
+        shotColor = newColor;
     }
 
     public void SetupBase(Camera playerCam, Material shotMaterial)
@@ -138,6 +144,7 @@ public class Weapon_Base : MonoBehaviour
         myLine.AddComponent<LineRenderer>();
         LineRenderer lr = myLine.GetComponent<LineRenderer>();
         lr.material = shotMat;
+        lr.material.SetColor("_EmissionColor", shotColor);
         lr.startColor = color;
         lr.endColor = color;
         lr.startWidth = shotWidth;

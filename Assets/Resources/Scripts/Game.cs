@@ -5,7 +5,7 @@ public class Game : MonoBehaviour
     public MapController chunkController;
     public GameObject playerObject;
     private Board _board;
-    private UI _ui;
+    public UI _ui;
     private double _gameStartTime;
     private bool _gameInProgress;
     public GameObject mainMenu;
@@ -27,11 +27,13 @@ public class Game : MonoBehaviour
             //chunkController.PopulateArrays(_board.GetWidth(), _board.GetHeight());
             //playerObject.SetActive(true);
         }
-
+        PlayerStats.allowMapMovement = true;
         if (_ui != null)
         {
             _ui.HideMenu();
             _ui.ShowBoard();
+            _ui.ShowSpawnInstructions();
+            _ui.HideMenuInstructions();
             _ui.ShowGame();
         }
     }
@@ -45,6 +47,7 @@ public class Game : MonoBehaviour
 
     public void OnClickedReset()
     {
+        PlayerStats.allowMapMovement = false;
         if (_board != null)
         {
             _board.Clear();
@@ -67,6 +70,7 @@ public class Game : MonoBehaviour
     {
         _ui.HideBoard();
         _ui.HideMenu();
+        _ui.HideMenuInstructions();
         _ui.ShowShop();
         shop.SwitchedTo();
     }
@@ -74,6 +78,7 @@ public class Game : MonoBehaviour
     public void OnClickedSettings()
     {
         _ui.HideMenu();
+        _ui.HideMenuInstructions();
         _ui.ShowSettings();
     }
 
@@ -117,7 +122,8 @@ public class Game : MonoBehaviour
         if (_ui != null)
         {
             _ui.ShowMenu();
-            _ui.ShowBoard();
+            //_ui.ShowBoard();
+            _ui.ShowMenuInstructions();
         }
     }
 
@@ -155,6 +161,9 @@ public class Game : MonoBehaviour
         {
             Destroy(playerObject);
         }
+        _gameInProgress = false;
+        PlayerStats.allowMapMovement = true;
+        _ui.ShowBoard();
         _ui.HidePaused();
         _ui.HideGame();
         _ui.HideHUD();

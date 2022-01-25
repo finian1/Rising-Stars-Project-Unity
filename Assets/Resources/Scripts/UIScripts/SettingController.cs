@@ -21,7 +21,12 @@ public class SettingController : MonoBehaviour
     private int newDangerSize = 0;
 
     // Start is called before the first frame update
-    
+
+    public void SetMouseSensitivity(float val)
+    {
+        PlayerStats.currentMouseSensitivity = PlayerStats.minMouseSensitivity + ((PlayerStats.maxMouseSensitivity - PlayerStats.minMouseSensitivity) * val);
+    }
+
     public void SetCellSize(int size)
     {
         newCellSizeX = size;

@@ -115,17 +115,20 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(PlayerStats.pauseKey))
             {
                 playerCamera.SetActive(true);
+                
                 gameController.PauseGame();
             }
 
             if (Input.GetKey(PlayerStats.mapKey) && allowPlayerMovement)
             {
                 allowPlayerMovement = false;
+                gameController._ui.ShowBoard();
                 playerCamera.SetActive(false);
             }
             else if (!Input.GetKey(PlayerStats.mapKey) && !allowPlayerMovement)
             {
                 allowPlayerMovement = true;
+                gameController._ui.HideBoard();
                 playerCamera.SetActive(true);
             }
 
@@ -212,7 +215,7 @@ public class PlayerController : MonoBehaviour
         currentWeaponScript = temp;
         temp.init(newWeapon);
         temp.SetupBase(playerCamera.GetComponent<Camera>(), shotMaterial);
-
+        temp.SetShotColour(newWeapon.weaponColour); 
         //Material[] mats = weapon.GetComponent<Renderer>().materials;
         //foreach(Material mat in mats)
         //{
@@ -294,14 +297,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Mouse X") != 0)
         {
             Quaternion rotation;
-            rotation = Quaternion.Euler(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed, 0);
+            rotation = Quaternion.Euler(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed * PlayerStats.currentMouseSensitivity, 0);
             //Debug.Log(Input.GetAxis("Mouse X"));
             rb.MoveRotation(rb.rotation * rotation);
     }
         if (Input.GetAxis("Mouse Y") != 0)
         {
             float camRotation;
-            camRotation = -Input.GetAxis("Mouse Y") * Time.deltaTime * rotationSpeed;
+            camRotation = -Input.GetAxis("Mouse Y") * Time.deltaTime * rotationSpeed * PlayerStats.currentMouseSensitivity;
             currentVerticalRotation = Mathf.Clamp(currentVerticalRotation + camRotation, -maxVerticalRotation, maxVerticalRotation);
             playerCamera.transform.localRotation = Quaternion.Euler(new Vector3(currentVerticalRotation, 0, 0));
 

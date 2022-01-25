@@ -124,10 +124,13 @@ public class Box : MonoBehaviour
         }
         else
         {
+            PlayerStats.allowMapMovement = false;
             if (IsDangerous)
             {
                 IsDangerous = false;
             }
+            _board._ui.HideBoard();
+            _board._ui.HideSpawnInstructions();
             _board.gameStarted = true;
 
             _board.BeginFPSPlay();

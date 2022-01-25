@@ -21,6 +21,8 @@ public class UI : MonoBehaviour
     [SerializeField] private Color buffsColor;
     [SerializeField] private CanvasGroup HUD;
     [SerializeField] private CanvasGroup Paused;
+    [SerializeField] private CanvasGroup SpawnInstructions;
+    [SerializeField] private CanvasGroup MenuInstructions;
 
     [SerializeField] private TMP_Text TimerText;
     [SerializeField] private TMP_Text ResultText;
@@ -38,6 +40,16 @@ public class UI : MonoBehaviour
     {
         StartCoroutine(ShowCanvas(Game, 1.0f));
         StartCoroutine(SetBackgroundColour(gameColor));
+    }
+
+    public void ShowSpawnInstructions()
+    {
+        StartCoroutine(ShowCanvas(SpawnInstructions, 1.0f));
+    }
+
+    public void ShowMenuInstructions()
+    {
+        StartCoroutine(ShowCanvas(MenuInstructions, 1.0f));
     }
 
     public void ShowResult(bool success)
@@ -89,6 +101,16 @@ public class UI : MonoBehaviour
     public void HideMenu()
     {
         StartCoroutine(ShowCanvas(Menu, 0.0f));
+    }
+
+    public void HideSpawnInstructions()
+    {
+        StartCoroutine(ShowCanvas(SpawnInstructions, 0.0f));
+    }
+
+    public void HideMenuInstructions()
+    {
+        StartCoroutine(ShowCanvas(MenuInstructions, 0.0f));
     }
 
     public void HidePaused()
@@ -202,6 +224,21 @@ public class UI : MonoBehaviour
             Paused.interactable = false;
             Paused.blocksRaycasts = false;
         }
+
+        if(SpawnInstructions != null)
+        {
+            SpawnInstructions.alpha = 0.0f;
+            SpawnInstructions.interactable = false;
+            SpawnInstructions.blocksRaycasts = false;
+        }
+
+        if(MenuInstructions != null)
+        {
+            MenuInstructions.alpha = 0.0f;
+            MenuInstructions.interactable = false;
+            MenuInstructions.blocksRaycasts = false;
+        }
+        
     }
 
     private static string FormatTime(double seconds)

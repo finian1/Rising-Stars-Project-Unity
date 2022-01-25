@@ -30,7 +30,9 @@ public class MapController : MonoBehaviour
     public Vector3 FPSTopRightPosition;
     public Vector3 FPSBottomLeftPosition;
     public Vector3 playerPositionOnMinimap;
+
     public GameObject playerMarker;
+
     public GameObject boarderObject;
     public float boarderThickness;
     public float boarderHeight;
@@ -83,7 +85,11 @@ public class MapController : MonoBehaviour
             Vector3 playerPos = playerObject.transform.position - FPSBottomLeftPosition;
             playerPos = new Vector3(playerPos.x * scaleX, 0, playerPos.z * scaleY);
             //Debug.Log(playerPos);
-            playerPositionOnMinimap = new Vector3(gameplayBoard.boardBottomLeftPosition.x + playerPos.x, gameplayBoard.boardBottomLeftPosition.y + playerPos.z, -5.0f);
+            //Vector3 boardPos = Camera.main.ScreenToWorldPoint(gameplayBoard.transform.position);
+            playerPositionOnMinimap = new Vector3(
+                gameplayBoard.boardBottomLeftPosition.x + playerPos.x, 
+                gameplayBoard.boardBottomLeftPosition.y + playerPos.z, 
+                -5.0f);
             playerMarker.transform.position = playerPositionOnMinimap;
             playerMarker.transform.rotation = Quaternion.Euler(180, 0, (playerObject.transform.rotation.eulerAngles.y - 90.0f));
         }
