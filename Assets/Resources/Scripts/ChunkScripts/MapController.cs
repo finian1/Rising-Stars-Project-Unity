@@ -48,6 +48,7 @@ public class MapController : MonoBehaviour
     public GameObject[] enemyPrefabs;
     public GameObject[] pickupPrefabs;
     public Game gameController;
+    public MusicSystem _musicSystem;
 
     private void FixedUpdate()
     {
@@ -166,7 +167,7 @@ public class MapController : MonoBehaviour
         boarderTrigger.transform.localScale = new Vector3(XMapSize, 50, YMapSize);
         
         boardMidpoint = Vector3.Lerp(FPSTopRightPosition, FPSBottomLeftPosition, 0.5f);
-        boarderTrigger.transform.position = boardMidpoint;
+        
         SetBoarders();
         SetPlayerMarkerActive(true);
     }
@@ -426,7 +427,8 @@ public class Cell : MonoBehaviour
         if (trap != null)
         {
             GameObject tempTrap = Instantiate(trap, cellTrigger.transform.position, cellTrigger.transform.rotation);
-            tempTrap.GetComponent<TrapScript>().ActivateTrap(this);
+            controller._musicSystem.PlayTrappedMusic();
+            tempTrap.GetComponent<TrapScript>().ActivateTrap(this, controller._musicSystem);
         }
     }
 

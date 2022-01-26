@@ -6,6 +6,7 @@ public class Game : MonoBehaviour
     public GameObject playerObject;
     private Board _board;
     public UI _ui;
+    public MusicSystem _musicSystem;
     private double _gameStartTime;
     private bool _gameInProgress;
     public GameObject mainMenu;
@@ -27,7 +28,6 @@ public class Game : MonoBehaviour
             //chunkController.PopulateArrays(_board.GetWidth(), _board.GetHeight());
             //playerObject.SetActive(true);
         }
-        PlayerStats.allowMapMovement = true;
         if (_ui != null)
         {
             _ui.HideMenu();
@@ -35,6 +35,10 @@ public class Game : MonoBehaviour
             _ui.ShowSpawnInstructions();
             _ui.HideMenuInstructions();
             _ui.ShowGame();
+        }
+        if (_musicSystem != null)
+        {
+            _musicSystem.PlayStandardMusic();
         }
     }
 
@@ -47,7 +51,6 @@ public class Game : MonoBehaviour
 
     public void OnClickedReset()
     {
-        PlayerStats.allowMapMovement = false;
         if (_board != null)
         {
             _board.Clear();
@@ -61,8 +64,9 @@ public class Game : MonoBehaviour
         if (_ui != null)
         {
             _ui.HideResult();
-            _ui.ShowBoard();
+            //_ui.ShowBoard();
             _ui.ShowMenu();
+            _ui.ShowMenuInstructions();
         }
     }
 
@@ -113,6 +117,11 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
+        if (_musicSystem != null)
+        {
+            _musicSystem.PlayMenuMusic();
+        }
+
         if (_board != null)
         {
             chunkController.SetPlayerMarkerActive(false);
@@ -162,7 +171,6 @@ public class Game : MonoBehaviour
             Destroy(playerObject);
         }
         _gameInProgress = false;
-        PlayerStats.allowMapMovement = true;
         _ui.ShowBoard();
         _ui.HidePaused();
         _ui.HideGame();
@@ -171,6 +179,10 @@ public class Game : MonoBehaviour
         Reset();
         chunkController.SetPlayerMarkerActive(false);
         _ui.ShowResult(success: winGame);
+        if (_musicSystem != null)
+        {
+            _musicSystem.PlayMenuMusic();
+        }
     }
 
     private void Reset()

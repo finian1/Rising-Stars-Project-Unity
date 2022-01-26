@@ -153,7 +153,8 @@ public class ShopController : MonoBehaviour
     public void Done()
     {
         _ui.HideShop();
-        _ui.ShowBoard();
+        //_ui.ShowBoard();
+        _ui.ShowMenuInstructions();
         _ui.ShowMenu();
     }
 

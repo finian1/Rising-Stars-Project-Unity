@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SettingController : MonoBehaviour
 {
     [SerializeField] private UI _ui;
+    [SerializeField] private MusicSystem _musicSystem;
 
     public MapController chunkController;
     public Board boardController;
@@ -69,6 +70,12 @@ public class SettingController : MonoBehaviour
             newDangerSize = val;
         }
     }
+    public void SetVolume(float val)
+    {
+        PlayerStats.musicVolume = val;
+        _musicSystem.UpdateMusicVolume();
+    }
+
     public void Done()
     {
         boardController.DestroyBoxes();
@@ -93,8 +100,9 @@ public class SettingController : MonoBehaviour
         boardController.InitializeEverything();
         gameController.SetupBoard();
         _ui.HideSettings();
-        _ui.ShowBoard();
+        //_ui.ShowBoard();
         _ui.ShowMenu();
+        _ui.ShowMenuInstructions();
     }
 
 }

@@ -15,6 +15,7 @@ public class TrapScript : MonoBehaviour
 
     private Cell[] neighbourCells;
     private Cell cellLink;
+    private MusicSystem _musicSystem;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class TrapScript : MonoBehaviour
     public void DeactivateTrap()
     {
         PlayerStats.isInTrap = false;
+        _musicSystem.PlayStandardMusic();
         foreach (Cell neighbourCell in neighbourCells)
         {
             neighbourCell.GetTriggerScript().TriggerIfPlayer();
@@ -43,8 +45,9 @@ public class TrapScript : MonoBehaviour
         }
     }
 
-    public void ActivateTrap(Cell cell)
+    public void ActivateTrap(Cell cell, MusicSystem musicSystem)
     {
+        _musicSystem = musicSystem;
         cellLink = cell;
         PlayerStats.isInTrap = true;
         float cellSizeX = cell.GetCellSizeX();
@@ -96,11 +99,14 @@ public class TrapScript : MonoBehaviour
         float timer = 0.0f;
         while (true)
         {
-            timer -= Time.deltaTime;
-            if(timer <= 0.0f)
+            if (!PlayerStats.pausedGame)
             {
-                SpawnWave();
-                timer = timeBetween;
+                timer -= Time.deltaTime;
+                if (timer <= 0.0f)
+                {
+                    SpawnWave();
+                    timer = timeBetween;
+                }
             }
             yield return null;
         }
@@ -112,7 +118,10 @@ public class TrapScript : MonoBehaviour
 
         while(timer < timeToDeactivate)
         {
-            timer += Time.deltaTime;
+            if (!PlayerStats.pausedGame)
+            {
+                timer += Time.deltaTime;
+            }
             yield return null;
         }
         DeactivateTrap();

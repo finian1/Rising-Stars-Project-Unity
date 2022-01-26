@@ -60,6 +60,12 @@ public class PlayerController : MonoBehaviour
         spawnPosition = gameObject.transform.position;
         //Cursor.lockState = CursorLockMode.Locked;
     }
+
+    private void OnDestroy()
+    {
+        Camera.main.GetComponent<AudioListener>().enabled = true;
+    }
+
     public void SetGameController(Game controller)
     {
         gameController = controller;
@@ -99,6 +105,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+
+        Camera.main.GetComponent<AudioListener>().enabled = false;
         Cursor.lockState = CursorLockMode.Locked;
         allowPlayerMovement = true;
         EquipWeapon(PlayerStats.primaryWeapon);
@@ -123,12 +131,15 @@ public class PlayerController : MonoBehaviour
             {
                 allowPlayerMovement = false;
                 gameController._ui.ShowBoard();
+                Camera.main.GetComponent<AudioListener>().enabled = true;
                 playerCamera.SetActive(false);
+                
             }
             else if (!Input.GetKey(PlayerStats.mapKey) && !allowPlayerMovement)
             {
                 allowPlayerMovement = true;
                 gameController._ui.HideBoard();
+                Camera.main.GetComponent<AudioListener>().enabled = false;
                 playerCamera.SetActive(true);
             }
 

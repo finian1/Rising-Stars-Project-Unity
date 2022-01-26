@@ -124,7 +124,6 @@ public class Box : MonoBehaviour
         }
         else
         {
-            PlayerStats.allowMapMovement = false;
             if (IsDangerous)
             {
                 IsDangerous = false;
