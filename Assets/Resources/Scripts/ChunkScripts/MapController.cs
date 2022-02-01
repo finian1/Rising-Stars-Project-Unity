@@ -167,7 +167,10 @@ public class MapController : MonoBehaviour
         boarderTrigger.transform.localScale = new Vector3(XMapSize, 50, YMapSize);
         
         boardMidpoint = Vector3.Lerp(FPSTopRightPosition, FPSBottomLeftPosition, 0.5f);
-        
+
+        boarderTrigger.transform.position = boardMidpoint;
+
+
         SetBoarders();
         SetPlayerMarkerActive(true);
     }
@@ -409,7 +412,7 @@ public class Cell : MonoBehaviour
             if (isDanger)
             {
                 SetCellColour(dangerColor);
-                TriggerTrap();
+                
             }
             else if (dangerNearby == 0)
             {
@@ -426,9 +429,15 @@ public class Cell : MonoBehaviour
     {
         if (trap != null)
         {
+            PlayerStats.isInTrap = true;
             GameObject tempTrap = Instantiate(trap, cellTrigger.transform.position, cellTrigger.transform.rotation);
             controller._musicSystem.PlayTrappedMusic();
             tempTrap.GetComponent<TrapScript>().ActivateTrap(this, controller._musicSystem);
+            
+            foreach (Cell neighbourCell in GetNeighbourCells())
+            {
+                neighbourCell.SetToDangerColour();
+            }
         }
     }
 
@@ -464,6 +473,10 @@ public class Cell : MonoBehaviour
             {
                 controller.RevealCell(neighbourIndex);
             }
+        }
+        if (gameplayBoard.CheckIfDanger(cellID))
+        {
+            TriggerTrap();
         }
 
         gameplayBoard.ClickBox(cellID);

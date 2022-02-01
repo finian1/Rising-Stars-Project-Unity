@@ -96,6 +96,12 @@ public class ShopController : MonoBehaviour
         statsText.text = "Welcome to the shop!";
         RefreshList();
     }
+    public void RestrictScroll(Vector2 val)
+    {
+        float maxScroll = buttonTemplate.GetComponent<RectTransform>().sizeDelta.y * currentButtonList.Count - buttonTemplate.GetComponent<RectTransform>().sizeDelta.y;
+        RectTransform contentTransform = shopList.content.GetComponent<RectTransform>();
+        contentTransform.localPosition = new Vector3(contentTransform.localPosition.x, Mathf.Clamp(contentTransform.localPosition.y, 0, maxScroll), contentTransform.localPosition.z);
+    }
 
     public void PurchaseWeapon()
     {

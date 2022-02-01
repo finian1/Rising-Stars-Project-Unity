@@ -106,6 +106,20 @@ public static class ShopContainer
             wepNickname : "Mini Boy", 
             mini_wepStartFireRate : 1, 
             mini_wepTimeToRevUp : 10, 
-            mini_wepCoolDownSpeed : 3)
+            mini_wepCoolDownSpeed : 3),
+        new WeaponStatHolderBase(typeof(Weapon_MiniGun),
+            wepDamage : 2,
+            wepRange : 25,
+            wepInnacuracy : 20,
+            wepFireRate : 50,
+            wepShotLifetime : 0.1f,
+            wepShotWidth : 0.1f,
+            weaponCost: 1000,
+            wepColour : new Color(0.972f, 1, 0.078f),
+            crystalMultiplier : 1.0f,
+            wepNickname : "Slow n' Steady",
+            mini_wepStartFireRate : 1,
+            mini_wepTimeToRevUp : 30,
+            mini_wepCoolDownSpeed : 5)
         };
 }

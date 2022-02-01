@@ -38,6 +38,7 @@ public class TrapScript : MonoBehaviour
     {
         PlayerStats.isInTrap = false;
         _musicSystem.PlayStandardMusic();
+        
         foreach (Cell neighbourCell in neighbourCells)
         {
             neighbourCell.GetTriggerScript().TriggerIfPlayer();
@@ -47,6 +48,7 @@ public class TrapScript : MonoBehaviour
 
     public void ActivateTrap(Cell cell, MusicSystem musicSystem)
     {
+        neighbourCells = cell.GetNeighbourCells();
         _musicSystem = musicSystem;
         cellLink = cell;
         PlayerStats.isInTrap = true;
@@ -74,11 +76,7 @@ public class TrapScript : MonoBehaviour
             trapBoarders[i].transform.position = boarderPos[i];
             trapBoarders[i].transform.localScale = boarderScale[i];
         }
-        neighbourCells = cell.GetNeighbourCells();
-        foreach(Cell neighbourCell in neighbourCells)
-        {  
-             neighbourCell.SetToDangerColour();
-        }
+        
 
 
         StartCoroutine(FadeObjectsIn());

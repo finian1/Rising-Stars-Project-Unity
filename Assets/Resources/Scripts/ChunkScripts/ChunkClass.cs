@@ -96,7 +96,7 @@ public class ChunkClass : MonoBehaviour
             int tempSpawns = 0;
             foreach(GameObject node in nodes)
             {
-                if(Vector3.Distance(node.transform.position, playerObject.transform.position) > safeDistToPlayer)
+                if(Vector3.Distance(node.transform.position, playerObject.transform.position) > safeDistToPlayer && tempSpawns < maxSpawnsPerChunk)
                 {
                     if (Random.Range(0, 100) < spawnChance)
                     {
@@ -104,10 +104,6 @@ public class ChunkClass : MonoBehaviour
                         GameObject[] enemyPrefabs = mapController.enemyPrefabs;
                         GameObject temp = Instantiate(enemyPrefabs[Random.Range(0, enemyPrefabs.Length)], node.transform.position, transform.rotation);
                         temp.GetComponent<EnemyScript_Base>().player = playerObject;
-                    }
-                    if(tempSpawns >= maxSpawnsPerChunk)
-                    {
-                        break;
                     }
                 }
             }

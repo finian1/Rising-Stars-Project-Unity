@@ -88,6 +88,7 @@ public class Board : MonoBehaviour
         chunkController.SetPlayerMarkerActive(true);
         _ui.ShowHUD();
         PlayerStats.difficulty = PlayerStats.initDifficulty;
+        //Set the player's starter health based on the current health buff value
         PlayerStats.starterHealth = PlayerStats.initialHealth + (PlayerStats.healthLevel * PlayerStats.buffPerLevel_Health);
         PlayerStats.health = PlayerStats.starterHealth;
         
@@ -206,13 +207,13 @@ public class Board : MonoBehaviour
         for (int row = 0; row < Height; ++row)
         {
             //populate the 1D array with box objects, organising them into rows
-            GameObject rowObj = new GameObject(string.Format("Row{0}", row), typeof(RectTransform));
-            RectTransform rowRect = rowObj.transform as RectTransform;
+            GameObject rowObj = new GameObject(string.Format("Row{0}", row), typeof(RectTransform)); //Creates an objects to store each row of boxes
+            RectTransform rowRect = rowObj.transform as RectTransform; 
             rowRect.SetParent(transform);
             rowRect.anchoredPosition = new Vector2(_rect.anchoredPosition.x, startPosition.y - (boxRect.sizeDelta.y * row));
             rowRect.sizeDelta = new Vector2(boxRect.sizeDelta.x * Width, boxRect.sizeDelta.y);
             rowRect.localScale = Vector2.one;
-
+            //Populate each column in the given row
             for (int column = 0; column < Width; ++column)
             {
                 int index = row * Width + column;
@@ -228,9 +229,11 @@ public class Board : MonoBehaviour
         float scaledPositionTopRightX = _grid[Width - 1].transform.position.x + (boxRect.sizeDelta.x * transform.parent.lossyScale.x) / 2;
         float scaledPositionTopRightY = _grid[Width - 1].transform.position.y + (boxRect.sizeDelta.x * transform.parent.lossyScale.y) / 2;
         boardTopRightPosition = new Vector3(scaledPositionTopRightX, scaledPositionTopRightY, _grid[Width - 1].transform.position.z);
+
         float scaledPositionBottomLeftX = _grid[Width * Height - Width].transform.position.x - (boxRect.sizeDelta.x * transform.parent.lossyScale.x) / 2;
         float scaledPositionBottomLeftY = _grid[Width * Height - Width].transform.position.y - (boxRect.sizeDelta.x * transform.parent.lossyScale.y) / 2;
         boardBottomLeftPosition = new Vector3(scaledPositionBottomLeftX, scaledPositionBottomLeftY, _grid[Width * Height - Width].transform.position.z);
+
         XBoardSize = Mathf.Abs(boardTopRightPosition.x - boardBottomLeftPosition.x);
         YBoardSize = Mathf.Abs(boardTopRightPosition.y - boardBottomLeftPosition.y);
 
@@ -251,7 +254,12 @@ public class Board : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-
+    /// <summary>
+    /// Counts how many boxes are dangerous around the given index
+    /// </summary>
+    /// <param name="danger"></param>
+    /// <param name="index"></param>
+    /// <returns>Number of dangerous boxes</returns>
     private int CountDangerNearby(List<bool> danger, int index)
     {
         int result = 0;
@@ -274,7 +282,10 @@ public class Board : MonoBehaviour
 
         return result;
     }
-
+    /// <summary>
+    /// Box is clicked
+    /// </summary>
+    /// <param name="box"></param>
     private void OnClickedBox(Box box)
     {
         Event clickEvent = Event.ClickedBlank;
@@ -299,7 +310,10 @@ public class Board : MonoBehaviour
 
         _clickEvent?.Invoke(clickEvent);
     }
-
+    /// <summary>
+    /// Checks if any inactive boxes do not contain danger.
+    /// </summary>
+    /// <returns>Returns true if all non-danger cells are revealed.</returns>
     private bool CheckForWin()
     {
         bool Result = true;
@@ -314,7 +328,10 @@ public class Board : MonoBehaviour
 
         return Result;
     }
-
+    /// <summary>
+    /// Triggers recursion to clear non-dangerous cells 
+    /// </summary>
+    /// <param name="box"></param>
     private void ClearNearbyBlanks(Box box)
     {
         RecursiveClearBlanks(box);

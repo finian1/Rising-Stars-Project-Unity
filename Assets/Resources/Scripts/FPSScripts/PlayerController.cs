@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
     private Weapon_Base currentWeaponScript;
     private float decell = 0.25f;
     public float currentCrystalMultiplier = 1.0f;
+    private float timeSinceLastGrounded = 0.0f;
+    private float timeToAllowJump = 0.1f;
   
     void Start()
     {
@@ -113,6 +115,14 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        if (!characterController.isGrounded)
+        {
+            timeSinceLastGrounded += Time.deltaTime;
+        }
+        else
+        {
+            timeSinceLastGrounded = 0.0f;
+        }
         if(Input.GetKeyDown(PlayerStats.pauseKey) && PlayerStats.pausedGame)
         {
             gameController.UnpauseGame();
@@ -130,6 +140,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(PlayerStats.mapKey) && allowPlayerMovement)
             {
                 allowPlayerMovement = false;
+                PlayerStats.lookingAtMap = true;
                 gameController._ui.ShowBoard();
                 Camera.main.GetComponent<AudioListener>().enabled = true;
                 playerCamera.SetActive(false);
@@ -138,6 +149,7 @@ public class PlayerController : MonoBehaviour
             else if (!Input.GetKey(PlayerStats.mapKey) && !allowPlayerMovement)
             {
                 allowPlayerMovement = true;
+                PlayerStats.lookingAtMap = false;
                 gameController._ui.HideBoard();
                 Camera.main.GetComponent<AudioListener>().enabled = false;
                 playerCamera.SetActive(true);
@@ -259,9 +271,9 @@ public class PlayerController : MonoBehaviour
 
         // Changes the height position of the player..
         float thisJumpForce = jumpForce + (PlayerStats.jumpLevel * PlayerStats.buffPerLevel_Jump);
-        if (Input.GetKeyDown(jumpKey) && groundedPlayer)
+        if (Input.GetKeyDown(jumpKey) && (groundedPlayer || timeSinceLastGrounded <= timeToAllowJump))
         {
-            playerVelocity.y += Mathf.Sqrt(thisJumpForce * -3.0f * gravityValue);
+            playerVelocity.y = Mathf.Sqrt(thisJumpForce * -3.0f * gravityValue);
         }else if(Input.GetKeyDown(jumpKey) && !doubleJumped)
         {
             doubleJumped = true;

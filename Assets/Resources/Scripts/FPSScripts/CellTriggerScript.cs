@@ -21,7 +21,7 @@ public class CellTriggerScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            hasPlayer = true;
+            hasPlayer = false;
         }
     }
 

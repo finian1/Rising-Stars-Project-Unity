@@ -22,7 +22,7 @@ public class SpawnPlatformScript : MonoBehaviour
 
     private void Update()
     {
-        if (!PlayerStats.pausedGame)
+        if (!PlayerStats.pausedGame && ! PlayerStats.lookingAtMap)
         {
             transform.position += decentSpeed * Time.deltaTime;
         }

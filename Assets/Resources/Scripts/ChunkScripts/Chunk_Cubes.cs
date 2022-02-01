@@ -19,9 +19,12 @@ public class Chunk_Cubes : ChunkClass
     {
         
     }
-
+    /// <summary>
+    /// Populates and spawns all of the required cube objects to make the floor.
+    /// </summary>
     public override void SpawnObjects()
     {
+        //Load the cube prefab
         cubeObstacle = Resources.Load("Prefabs/ObstaclePrefabs/CubeObstacle_Static", typeof(GameObject)) as GameObject;
         obstacleScript = cubeObstacle.GetComponent<ObstacleScript>();
         numOfCubesX = (int)(chunkSizeX / cubeSize);
@@ -73,7 +76,10 @@ public class Chunk_Cubes : ChunkClass
         }
 
     }
-
+    /// <summary>
+    /// Sets the final height of each object in the array to the average of the surrounding objects
+    /// </summary>
+    /// <param name="array"></param>
     private void Smooth(ref float[] array)
     {
         float[] prevYArray = new float[array.Length];
