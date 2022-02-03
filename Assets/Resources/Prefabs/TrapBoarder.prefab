@@ -54,7 +54,11 @@ MonoBehaviour:
   - {fileID: 2202644473036539278}
   trapRevealTime: 1
   boarderThickness: 0.5
-  boarderHeight: 50
+  boarderHeight: 200
+  trapSize: 3
+  timeForTrap: 40
+  timeBetweenWaves: 10
+  trapEnemySpawnChances: 3
 --- !u!1001 &6777147327940502511
 PrefabInstance:
   m_ObjectHideFlags: 0
