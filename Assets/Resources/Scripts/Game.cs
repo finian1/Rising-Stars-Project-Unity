@@ -20,6 +20,7 @@ public class Game : MonoBehaviour
     public void OnClickedNewGame()
     {
         CleanupScript.Cleanup();
+        PlayerStats.isInTrap = false;
         if (_board != null)
         {
             //If board is initialized

@@ -24,7 +24,7 @@ public class Weapon_MiniGun : Weapon_Base
     protected override void Update()
     {
         base.Update();
-        Debug.Log(currentRevPercent);
+        //Debug.Log(currentRevPercent);
         if (!isFiring)
         {
             if (currentRevPercent > 0)

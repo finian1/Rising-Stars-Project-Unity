@@ -21,10 +21,14 @@ public class TrapScript : MonoBehaviour
     {
         CleanupScript.objectCache.Add(this.gameObject);
     }
+    private void Update()
+    {
+        Debug.Log(PlayerStats.isInTrap);
+    }
 
     private void OnDestroy()
     {
-        PlayerStats.isInTrap = false;
+        //PlayerStats.isInTrap = false;
 
 
         CleanupScript.objectCache.Remove(this.gameObject);
@@ -41,8 +45,9 @@ public class TrapScript : MonoBehaviour
         
         foreach (Cell neighbourCell in neighbourCells)
         {
-            neighbourCell.GetTriggerScript().TriggerIfPlayer();
             neighbourCell.SetToDefaultColour();
+            neighbourCell.GetTriggerScript().TriggerIfPlayer();
+            
         }
     }
 

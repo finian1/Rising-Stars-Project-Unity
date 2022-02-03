@@ -9,7 +9,7 @@ public static class PlayerStats
 
     public static bool pausedGame = false;
     public static bool lookingAtMap = false;
-    public static float initialHealth = 10000000000000000000.0f;
+    public static float initialHealth = 100.0f;
     public static float health = initialHealth;
     public static float starterHealth = initialHealth;
     public static int points;
