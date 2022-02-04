@@ -24,6 +24,7 @@ MonoBehaviour:
   shotMat: {fileID: 2100000, guid: 1e53dc9e7f10d9e4395d98d68b9d4d7b, type: 2}
   shotSound: {fileID: 0}
   crystalMultiplier: 0
+  shotColor: {r: 0, g: 0, b: 0, a: 0}
   startFireRate: 0
   timeToRevUp: 0
   coolDownSpeed: 0
@@ -308,7 +309,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7893159740739853827}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0397eaf3d9699be43af6da14116e4c92, type: 3}
@@ -423,6 +424,10 @@ PrefabInstance:
     - target: {fileID: 1825481033360878, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
       propertyPath: m_Name
       value: UI ProgressBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 82446079618180222, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114165064244077878, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
       propertyPath: m_Text
@@ -632,6 +637,10 @@ PrefabInstance:
     - target: {fileID: 3248054293320712447, guid: 8c0378d4c011ccf4ab5ccca8d7f49aa7, type: 3}
       propertyPath: m_Name
       value: Weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3248054293320712447, guid: 8c0378d4c011ccf4ab5ccca8d7f49aa7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5608096572500112012, guid: 8c0378d4c011ccf4ab5ccca8d7f49aa7, type: 3}
       propertyPath: m_LocalPosition.z
