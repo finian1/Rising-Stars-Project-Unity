@@ -14,6 +14,9 @@ public class ShopController : MonoBehaviour
     [SerializeField] private Button buyButton;
     [SerializeField] private Dropdown primaryWeaponSelection;
     [SerializeField] private Dropdown secondaryWeaponSelection;
+    [SerializeField] private Color shotgunButtonColor = Color.white;
+    [SerializeField] private Color minigunButtonColor = Color.white;
+    [SerializeField] private Color assaultButtonColor = Color.white;
     private WeaponStatHolderBase currentSelectedWeapon;
     private List<GameObject> currentButtonList;
 
@@ -52,6 +55,19 @@ public class ShopController : MonoBehaviour
 
 
                 int tempInt = wepNum;
+                if(weapon.weaponType == typeof(Weapon_AssRifle))
+                {
+                    temp.GetComponent<Image>().color = assaultButtonColor;
+                }
+                if (weapon.weaponType == typeof(Weapon_Shotgun))
+                {
+                    temp.GetComponent<Image>().color = shotgunButtonColor;
+                }
+                if (weapon.weaponType == typeof(Weapon_MiniGun))
+                {
+                    temp.GetComponent<Image>().color = minigunButtonColor;
+                }
+
                 temp.GetComponent<Button>().onClick.AddListener(delegate { SelectWeapon(tempInt); });
                 numOfButtons++;
                 wepNum++;
